@@ -14,7 +14,15 @@ public class InventorySlot : MonoBehaviour
 
 	#region Properties
 
-	public InventoryItem ItemInSlot { get => itemInSlot; set => itemInSlot = value; }
+	public InventoryItem ItemInSlot 
+	{ 
+		get => itemInSlot; 
+		set
+		{
+			itemInSlot = value;
+			UpdateInventoryIcon();
+		}
+	}
 
 	#endregion
 

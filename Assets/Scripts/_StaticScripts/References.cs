@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class References
+public static class References
 {
-    public class UI 
+    public static class UI 
 	{
-		public Canvas canvas;
+		public static Canvas canvas;
 	}
 }
