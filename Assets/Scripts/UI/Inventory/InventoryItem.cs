@@ -6,7 +6,7 @@ public class InventoryItem : MonoBehaviour
 
 	[SerializeField]
 	private Sprite inventoryIcon;
-	private InventorySlot inventorySlot;
+	private Slot slotInInventory;
 
 	#endregion
 
@@ -14,7 +14,7 @@ public class InventoryItem : MonoBehaviour
 
 	public Sprite InventoryIcon { get => inventoryIcon; set => inventoryIcon = value; }
 
-	public InventorySlot InventorySlot { get => inventorySlot; set => inventorySlot = value; }
+	public Slot SlotInInventory { get => slotInInventory; set => slotInInventory = value; }
 
 	#endregion
 }

@@ -52,7 +52,7 @@ public class ManageInventory : MonoBehaviour
 		{
 			var pointerEventData     = new PointerEventData(null);
 			var raycastResults       = new List<RaycastResult>();
-			var inventorySlotClicked = null as InventorySlot;
+			var inventorySlotClicked = null as Slot;
 			var itemClicked          = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
@@ -72,7 +72,7 @@ public class ManageInventory : MonoBehaviour
 	{
 		// If we're already holding an item, put down the current one first
 		// Otherwise, we'll just be setting ItemInSlot to null
-		itemClicked.InventorySlot.ItemInSlot = itemHeld;
+		itemClicked.SlotInInventory.ItemInSlot = itemHeld;
 		itemHeld = itemClicked;
 
 		if (!itemHeldObject) itemHeldObject = Instantiate(itemHeldPrefab, Input.mousePosition, Quaternion.identity, canvas.transform);
@@ -83,33 +83,33 @@ public class ManageInventory : MonoBehaviour
 	{
 		if (Input.GetButtonDown("Fire1")) 
 		{
-			var pointerEventData     = new PointerEventData(null);
-			var raycastResults       = new List<RaycastResult>();
-			var inventorySlotClicked = null as InventorySlot;
-			var itemClicked          = null as InventoryItem;
+			var pointerEventData = new PointerEventData(null);
+			var raycastResults   = new List<RaycastResult>();
+			var slotClicked      = null as Slot;
+			var itemClicked      = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			inventorySlotClicked = GetInventorySlot(raycastResults);
-			if (!inventorySlotClicked) return;
+			slotClicked = GetInventorySlot(raycastResults);
+			if (!slotClicked) return;
 
 			// If the slot already has an item,
-			if (inventorySlotClicked.ItemInSlot) 
+			if (slotClicked.ItemInSlot) 
 			{
 				// Put this one down and pick up that one instead
-				PickUpItem(inventorySlotClicked.ItemInSlot);
+				PickUpItem(slotClicked.ItemInSlot);
 				return;
 			}
 			
-			PutDownItem(inventorySlotClicked);
+			PutDownItem(slotClicked);
 		}
 	}
 
-	private void PutDownItem(InventorySlot inventorySlot)
+	private void PutDownItem(Slot slot)
 	{
-		inventorySlot.ItemInSlot = itemHeld;
-		itemHeld = null;
+		slot.ItemInSlot = itemHeld;
+		itemHeld        = null;
 		Destroy(itemHeldObject);
 	}
 
@@ -120,11 +120,11 @@ public class ManageInventory : MonoBehaviour
 		itemHeldObject.transform.position = Input.mousePosition;
 	}
 
-	private InventorySlot GetInventorySlot(List<RaycastResult> results) 
+	private Slot GetInventorySlot(List<RaycastResult> results) 
 	{
 		foreach(var result in results)
 		{
-			var inventorySlot = result.gameObject.GetComponent<InventorySlot>();
+			var inventorySlot = result.gameObject.GetComponent<Slot>();
 			if (inventorySlot) return inventorySlot;
 		}
 
