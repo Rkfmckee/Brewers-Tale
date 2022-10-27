@@ -20,7 +20,7 @@ public class InventorySlot : MonoBehaviour
 		set
 		{
 			itemInSlot = value;
-			UpdateInventoryIcon();
+			UpdateInventorySlot();
 		}
 	}
 
@@ -31,14 +31,16 @@ public class InventorySlot : MonoBehaviour
 	private void Awake() {
 		itemInSlotIcon = transform.Find("ItemIcon").GetComponent<Image>();
 		
-		UpdateInventoryIcon();
+		UpdateInventorySlot();
 	}
 
 	#endregion
 
 	#region Methods
 
-	private void UpdateInventoryIcon() {
+	private void UpdateInventorySlot() {
+		if (itemInSlot) itemInSlot.InventorySlot = this;
+		
 		itemInSlotIcon.sprite = itemInSlot ? itemInSlot.InventoryIcon : null;
 		itemInSlotIcon.color  = itemInSlot ? Color.white : Color.clear;
 	}

@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PickUpItem : MonoBehaviour
+public class ManageInventory : MonoBehaviour
 {
 	#region Fields
 
 	private InventoryItem itemHeld;
+	private InventoryItem itemToSwap;
 	private GameObject itemHeldObject;
 
 	private GraphicRaycaster graphicRaycaster;
@@ -24,7 +25,7 @@ public class PickUpItem : MonoBehaviour
 
 	private void Start()
 	{
-		canvas = References.UI.canvas;
+		canvas           = References.UI.canvas;
 		graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
 	}
 
@@ -63,19 +64,19 @@ public class PickUpItem : MonoBehaviour
 			itemClicked = inventorySlotClicked.ItemInSlot;
 			if (!itemClicked) return;
 
-			// Pick up the item, and remove it from the inventory slot
-			itemHeld = itemClicked;
-			itemHeldObject = Instantiate(itemHeldPrefab, Input.mousePosition, Quaternion.identity, canvas.transform);
-			itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
-			inventorySlotClicked.ItemInSlot = null;
+			PickUpItem(itemClicked);
 		}
 	}
 
-	private void ItemHeldFollowMouse()
+	private void PickUpItem(InventoryItem itemClicked)
 	{
-		if (!itemHeld || !itemHeldObject) return;
+		// If we're already holding an item, put down the current one first
+		// Otherwise, we'll just be setting ItemInSlot to null
+		itemClicked.InventorySlot.ItemInSlot = itemHeld;
+		itemHeld = itemClicked;
 
-		itemHeldObject.transform.position = Input.mousePosition;
+		if (!itemHeldObject) itemHeldObject = Instantiate(itemHeldPrefab, Input.mousePosition, Quaternion.identity, canvas.transform);
+		itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
 	}
 
 	private void PutDownItemIfClicked()
@@ -93,23 +94,30 @@ public class PickUpItem : MonoBehaviour
 			inventorySlotClicked = GetInventorySlot(raycastResults);
 			if (!inventorySlotClicked) return;
 
+			// If the slot already has an item,
 			if (inventorySlotClicked.ItemInSlot) 
 			{
-				// If the slot already has an item, put this one down and pick up that one instead
-				var newItemHeld = inventorySlotClicked.ItemInSlot;
-
-				inventorySlotClicked.ItemInSlot = itemHeld;
-				itemHeld = newItemHeld;
-				itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
-
+				// Put this one down and pick up that one instead
+				PickUpItem(inventorySlotClicked.ItemInSlot);
 				return;
 			}
 			
-			// Put down the item
-			inventorySlotClicked.ItemInSlot = itemHeld;
-			itemHeld = null;
-			Destroy(itemHeldObject);
+			PutDownItem(inventorySlotClicked);
 		}
+	}
+
+	private void PutDownItem(InventorySlot inventorySlot)
+	{
+		inventorySlot.ItemInSlot = itemHeld;
+		itemHeld = null;
+		Destroy(itemHeldObject);
+	}
+
+	private void ItemHeldFollowMouse()
+	{
+		if (!itemHeld || !itemHeldObject) return;
+
+		itemHeldObject.transform.position = Input.mousePosition;
 	}
 
 	private InventorySlot GetInventorySlot(List<RaycastResult> results) 
