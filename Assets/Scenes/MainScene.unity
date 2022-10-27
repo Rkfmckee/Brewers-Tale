@@ -1753,6 +1753,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1932164202}
     m_Modifications:
+    - target: {fileID: 580860780877724344, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
+      propertyPath: itemInSlot
+      value: 
+      objectReference: {fileID: 6754350727938187954, guid: 9523927dcdbde1c49a7aa064d6e99f78, type: 3}
     - target: {fileID: 3194841236901466258, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: m_Name
       value: InventorySlot

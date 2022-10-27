@@ -92,7 +92,18 @@ public class PickUpItem : MonoBehaviour
 
 			inventorySlotClicked = GetInventorySlot(raycastResults);
 			if (!inventorySlotClicked) return;
-			if (inventorySlotClicked.ItemInSlot) return;
+
+			if (inventorySlotClicked.ItemInSlot) 
+			{
+				// If the slot already has an item, put this one down and pick up that one instead
+				var newItemHeld = inventorySlotClicked.ItemInSlot;
+
+				inventorySlotClicked.ItemInSlot = itemHeld;
+				itemHeld = newItemHeld;
+				itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
+
+				return;
+			}
 			
 			// Put down the item
 			inventorySlotClicked.ItemInSlot = itemHeld;
