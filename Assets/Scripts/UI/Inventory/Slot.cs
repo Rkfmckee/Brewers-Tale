@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Slot : MonoBehaviour {
+public abstract class Slot : MonoBehaviour
+{
 	#region Fields
 
 	[SerializeField]
@@ -13,9 +14,9 @@ public abstract class Slot : MonoBehaviour {
 
 	#region Properties
 
-	public InventoryItem ItemInSlot 
-	{ 
-		get => itemInSlot; 
+	public InventoryItem ItemInSlot
+	{
+		get => itemInSlot;
 		set
 		{
 			itemInSlot = value;
@@ -27,9 +28,10 @@ public abstract class Slot : MonoBehaviour {
 
 	#region Events
 
-	private void Awake() {
+	private void Awake()
+	{
 		itemInSlotIcon = transform.Find("ItemIcon").GetComponent<Image>();
-		
+
 		UpdateInventorySlot();
 	}
 
@@ -37,9 +39,10 @@ public abstract class Slot : MonoBehaviour {
 
 	#region Methods
 
-	private void UpdateInventorySlot() {
+	private void UpdateInventorySlot()
+	{
 		if (itemInSlot) itemInSlot.SlotInInventory = this;
-		
+
 		itemInSlotIcon.sprite = itemInSlot ? itemInSlot.InventoryIcon : null;
 		itemInSlotIcon.color  = itemInSlot ? Color.white : Color.clear;
 	}

@@ -1,4 +1,4 @@
-public class InventorySlot : Slot
+public class InventorySlot : InventoryCraftingSlot
 {
 	
 }

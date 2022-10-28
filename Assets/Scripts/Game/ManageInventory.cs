@@ -17,15 +17,24 @@ public class ManageInventory : MonoBehaviour
 
 	#endregion
 
+	#region Properties
+
+	public InventoryItem ItemHeld { get => itemHeld; set => itemHeld = value; }
+
+	#endregion
+
 	#region Events
 
-	private void Awake() {
+	private void Awake()
+	{
+		References.ManageInventory = this;
+
 		itemHeldPrefab = Resources.Load<GameObject>("Prefabs/Inventory/ItemHeld");
 	}
 
 	private void Start()
 	{
-		canvas           = References.UI.canvas;
+		canvas           = References.UI.Canvas;
 		graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
 	}
 
@@ -50,18 +59,18 @@ public class ManageInventory : MonoBehaviour
 	{
 		if (Input.GetButtonDown("Fire1")) 
 		{
-			var pointerEventData     = new PointerEventData(null);
-			var raycastResults       = new List<RaycastResult>();
-			var inventorySlotClicked = null as Slot;
-			var itemClicked          = null as InventoryItem;
+			var pointerEventData = new PointerEventData(null);
+			var raycastResults   = new List<RaycastResult>();
+			var slotClicked      = null as InventoryCraftingSlot;
+			var itemClicked      = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			inventorySlotClicked = GetInventorySlot(raycastResults);
-			if (!inventorySlotClicked) return;
+			slotClicked = GetInventorySlot(raycastResults);
+			if (!slotClicked) return;
 
-			itemClicked = inventorySlotClicked.ItemInSlot;
+			itemClicked = slotClicked.ItemInSlot;
 			if (!itemClicked) return;
 
 			PickUpItem(itemClicked);
@@ -85,7 +94,7 @@ public class ManageInventory : MonoBehaviour
 		{
 			var pointerEventData = new PointerEventData(null);
 			var raycastResults   = new List<RaycastResult>();
-			var slotClicked      = null as Slot;
+			var slotClicked      = null as InventoryCraftingSlot;
 			var itemClicked      = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
@@ -106,7 +115,7 @@ public class ManageInventory : MonoBehaviour
 		}
 	}
 
-	private void PutDownItem(Slot slot)
+	private void PutDownItem(InventoryCraftingSlot slot)
 	{
 		slot.ItemInSlot = itemHeld;
 		itemHeld        = null;
@@ -120,11 +129,11 @@ public class ManageInventory : MonoBehaviour
 		itemHeldObject.transform.position = Input.mousePosition;
 	}
 
-	private Slot GetInventorySlot(List<RaycastResult> results) 
+	private InventoryCraftingSlot GetInventorySlot(List<RaycastResult> results) 
 	{
 		foreach(var result in results)
 		{
-			var inventorySlot = result.gameObject.GetComponent<Slot>();
+			var inventorySlot = result.gameObject.GetComponent<InventoryCraftingSlot>();
 			if (inventorySlot) return inventorySlot;
 		}
 
