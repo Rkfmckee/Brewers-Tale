@@ -30,7 +30,7 @@ public class CraftingResultSlot : Slot
 			craftingIngredients.Add(itemName);
 		}
 
-		if (!CraftingRecipes.RecipeList.ContainsKey(craftingIngredients)) 
+		if (!CraftingRecipes.RecipeList.ContainsKey(craftingIngredients))
 		{
 			ItemInSlot = null;	
 			return;

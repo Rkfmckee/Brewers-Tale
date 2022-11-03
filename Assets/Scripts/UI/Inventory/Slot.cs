@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +8,6 @@ public abstract class Slot : MonoBehaviour
 
 	[SerializeField]
 	private InventoryItem itemInSlot;
-
-	private Image itemInSlotIcon;
 
 	#endregion
 
@@ -20,6 +19,8 @@ public abstract class Slot : MonoBehaviour
 		set
 		{
 			itemInSlot = value;
+
+			InstantiateItemInSlot();
 			UpdateInventorySlot();
 		}
 	}
@@ -30,11 +31,11 @@ public abstract class Slot : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		itemInSlotIcon = transform.Find("ItemIcon").GetComponent<Image>();
 	}
 
 	private void Start()
 	{
+		InstantiateItemInSlot();
 		UpdateInventorySlot();
 	}
 
@@ -44,10 +45,25 @@ public abstract class Slot : MonoBehaviour
 
 	protected virtual void UpdateInventorySlot()
 	{
-		if (itemInSlot) itemInSlot.SlotInInventory = this;
+		if (!itemInSlot) return;
+		
+		itemInSlot.SlotInInventory = this;
+		itemInSlot.transform.localPosition = Vector3.zero;
+	}
 
-		itemInSlotIcon.sprite = itemInSlot ? itemInSlot.InventoryIcon : null;
-		itemInSlotIcon.color  = itemInSlot ? Color.white : Color.clear;
+	private void InstantiateItemInSlot()
+	{
+		if (!itemInSlot) return;
+
+		var itemScene = itemInSlot.gameObject.scene.name;
+		var isPrefab  = itemScene == null || itemScene == itemInSlot.gameObject.name;
+		var instanceOfItem = null as GameObject;
+
+		if (!isPrefab) return;
+
+		instanceOfItem      = Instantiate(itemInSlot.gameObject, transform);
+		instanceOfItem.name = itemInSlot.name;
+		itemInSlot          = instanceOfItem.GetComponent<InventoryItem>();
 	}
 
 	#endregion

@@ -9,7 +9,6 @@ public class ManageInventory : MonoBehaviour
 
 	private InventoryItem itemHeld;
 	private InventoryItem itemToSwap;
-	private GameObject itemHeldObject;
 
 	private GraphicRaycaster graphicRaycaster;
 	private Canvas canvas;
@@ -80,9 +79,8 @@ public class ManageInventory : MonoBehaviour
 	private void PickUpItem(InventoryItem itemClicked)
 	{
 		itemHeld = itemClicked;
-
-		itemHeldObject = Instantiate(itemHeldPrefab, Input.mousePosition, Quaternion.identity, canvas.transform);
-		itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
+		itemHeld.transform.SetParent(canvas.transform, false);
+		itemHeld.transform.position = Input.mousePosition;
 
 		itemClicked.SlotInInventory.ItemInSlot = null;
 
@@ -92,7 +90,9 @@ public class ManageInventory : MonoBehaviour
 		{
 			foreach (var craftingSlot in References.CraftingSlots)
 			{
-				craftingSlot.ItemInSlot = null;
+				if (!craftingSlot.ItemInSlot) continue;
+
+				Destroy(craftingSlot.ItemInSlot.gameObject);
 			}
 		}
 	}
@@ -112,7 +112,7 @@ public class ManageInventory : MonoBehaviour
 			slotClicked = GetInventorySlot(raycastResults);
 			if (!slotClicked) return;
 
-			// If the slot already has an item,
+			// If the slot already has an item
 			if (slotClicked.ItemInSlot) 
 			{
 				SwapItems(slotClicked);
@@ -129,22 +129,25 @@ public class ManageInventory : MonoBehaviour
 
 		slot.ItemInSlot = itemHeld;
 		itemHeld        = itemToPickUp;
-		
-		itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
+
+		slot.ItemInSlot.transform.SetParent(slot.transform, false);
+		itemHeld.transform.SetParent(canvas.transform, false);
+		itemHeld.transform.position = Input.mousePosition;
 	}
 
 	private void PutDownItem(InventoryCraftingSlot slot)
 	{
+		itemHeld.transform.SetParent(slot.transform, false);
+
 		slot.ItemInSlot = itemHeld;
 		itemHeld        = null;
-		Destroy(itemHeldObject);
 	}
 
 	private void ItemHeldFollowMouse()
 	{
-		if (!itemHeld || !itemHeldObject) return;
+		if (!itemHeld) return;
 
-		itemHeldObject.transform.position = Input.mousePosition;
+		itemHeld.transform.position = Input.mousePosition;
 	}
 
 	private Slot GetSlot(List<RaycastResult> results) 
