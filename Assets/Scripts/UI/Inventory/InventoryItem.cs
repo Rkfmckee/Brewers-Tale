@@ -6,6 +6,7 @@ public class InventoryItem : MonoBehaviour
 
 	[SerializeField]
 	private Sprite inventoryIcon;
+
 	private Slot slotInInventory;
 
 	#endregion

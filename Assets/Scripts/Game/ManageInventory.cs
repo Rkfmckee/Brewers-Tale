@@ -61,13 +61,13 @@ public class ManageInventory : MonoBehaviour
 		{
 			var pointerEventData = new PointerEventData(null);
 			var raycastResults   = new List<RaycastResult>();
-			var slotClicked      = null as InventoryCraftingSlot;
+			var slotClicked      = null as Slot;
 			var itemClicked      = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			slotClicked = GetInventorySlot(raycastResults);
+			slotClicked = GetSlot(raycastResults);
 			if (!slotClicked) return;
 
 			itemClicked = slotClicked.ItemInSlot;
@@ -79,13 +79,22 @@ public class ManageInventory : MonoBehaviour
 
 	private void PickUpItem(InventoryItem itemClicked)
 	{
-		// If we're already holding an item, put down the current one first
-		// Otherwise, we'll just be setting ItemInSlot to null
-		itemClicked.SlotInInventory.ItemInSlot = itemHeld;
 		itemHeld = itemClicked;
 
-		if (!itemHeldObject) itemHeldObject = Instantiate(itemHeldPrefab, Input.mousePosition, Quaternion.identity, canvas.transform);
+		itemHeldObject = Instantiate(itemHeldPrefab, Input.mousePosition, Quaternion.identity, canvas.transform);
 		itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
+
+		itemClicked.SlotInInventory.ItemInSlot = null;
+
+		// If the item we picked up is from the CraftingResultSlot
+		// Remove the crafting ingredients
+		if (itemClicked.SlotInInventory is CraftingResultSlot)
+		{
+			foreach (var craftingSlot in References.CraftingSlots)
+			{
+				craftingSlot.ItemInSlot = null;
+			}
+		}
 	}
 
 	private void PutDownItemIfClicked()
@@ -106,13 +115,22 @@ public class ManageInventory : MonoBehaviour
 			// If the slot already has an item,
 			if (slotClicked.ItemInSlot) 
 			{
-				// Put this one down and pick up that one instead
-				PickUpItem(slotClicked.ItemInSlot);
+				SwapItems(slotClicked);
 				return;
 			}
 			
 			PutDownItem(slotClicked);
 		}
+	}
+
+	private void SwapItems(InventoryCraftingSlot slot)
+	{
+		var itemToPickUp = slot.ItemInSlot;
+
+		slot.ItemInSlot = itemHeld;
+		itemHeld        = itemToPickUp;
+		
+		itemHeldObject.GetComponent<Image>().sprite = itemHeld.InventoryIcon;
 	}
 
 	private void PutDownItem(InventoryCraftingSlot slot)
@@ -127,6 +145,17 @@ public class ManageInventory : MonoBehaviour
 		if (!itemHeld || !itemHeldObject) return;
 
 		itemHeldObject.transform.position = Input.mousePosition;
+	}
+
+	private Slot GetSlot(List<RaycastResult> results) 
+	{
+		foreach(var result in results)
+		{
+			var inventorySlot = result.gameObject.GetComponent<Slot>();
+			if (inventorySlot) return inventorySlot;
+		}
+
+		return null;
 	}
 
 	private InventoryCraftingSlot GetInventorySlot(List<RaycastResult> results) 

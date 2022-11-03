@@ -28,10 +28,13 @@ public abstract class Slot : MonoBehaviour
 
 	#region Events
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		itemInSlotIcon = transform.Find("ItemIcon").GetComponent<Image>();
+	}
 
+	private void Start()
+	{
 		UpdateInventorySlot();
 	}
 
@@ -39,7 +42,7 @@ public abstract class Slot : MonoBehaviour
 
 	#region Methods
 
-	private void UpdateInventorySlot()
+	protected virtual void UpdateInventorySlot()
 	{
 		if (itemInSlot) itemInSlot.SlotInInventory = this;
 
