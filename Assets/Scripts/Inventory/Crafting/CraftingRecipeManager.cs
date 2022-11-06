@@ -15,7 +15,7 @@ public class CraftingRecipeManager : MonoBehaviour
 
 	private void Awake()
 	{
-		References.CraftingRecipeManager = this;
+		References.Crafting.RecipeManager = this;
 		
 		PopulateRecipes();
 	}

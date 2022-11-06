@@ -5,11 +5,14 @@ public static class References
 {
 	public static InventoryManager InventoryManager;
 
-	public static CraftingRecipeManager CraftingRecipeManager;
+	public static class Crafting
+	{
+		public static CraftingRecipeManager RecipeManager;
 
-	public static List<CraftingSlot> CraftingSlots = new List<CraftingSlot>();
+		public static List<CraftingSlot> Slots = new List<CraftingSlot>();
 
-	public static CraftingResultSlot CraftingResultSlot;
+		public static CraftingResultSlot ResultSlot;
+	}
 
     public static class UI 
 	{

@@ -88,7 +88,7 @@ public class InventoryManager : MonoBehaviour
 		// Remove the crafting ingredients
 		if (itemClicked.SlotInInventory is CraftingResultSlot)
 		{
-			foreach (var craftingSlot in References.CraftingSlots)
+			foreach (var craftingSlot in References.Crafting.Slots)
 			{
 				if (!craftingSlot.ItemInSlot) continue;
 

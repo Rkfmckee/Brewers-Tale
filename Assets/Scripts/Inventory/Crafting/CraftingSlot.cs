@@ -6,7 +6,7 @@ public class CraftingSlot : InventoryCraftingSlot
 	{
 		base.Awake();
 
-		References.CraftingSlots.Add(this);
+		References.Crafting.Slots.Add(this);
 	}
 
 	#endregion
@@ -17,7 +17,7 @@ public class CraftingSlot : InventoryCraftingSlot
 	{
 		base.UpdateInventoryItem();
 
-		References.CraftingResultSlot.SearchForCraftingRecipe();
+		References.Crafting.ResultSlot.SearchForCraftingRecipe();
 	}
 
 	#endregion

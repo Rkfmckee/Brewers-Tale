@@ -9,7 +9,7 @@ public class CraftingResultSlot : Slot
 	{
 		base.Awake();
 
-		References.CraftingResultSlot = this;
+		References.Crafting.ResultSlot = this;
 	}
 
 	#endregion
@@ -18,11 +18,11 @@ public class CraftingResultSlot : Slot
 
 	public void SearchForCraftingRecipe()
 	{
-		var craftingRecipeManager = References.CraftingRecipeManager;
+		var craftingRecipeManager = References.Crafting.RecipeManager;
 		var craftingIngredients   = new List<InventoryItem>();
 		var craftingRecipe        = null as CraftingRecipe;
 		
-		foreach (var craftingSlot in References.CraftingSlots)
+		foreach (var craftingSlot in References.Crafting.Slots)
 		{
 			if (!craftingSlot.ItemInSlot) continue;
 
