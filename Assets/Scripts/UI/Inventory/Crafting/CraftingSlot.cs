@@ -13,9 +13,9 @@ public class CraftingSlot : InventoryCraftingSlot
 
 	#region Methods
 
-	protected override void UpdateInventorySlot()
+	protected override void UpdateInventoryItem()
 	{
-		base.UpdateInventorySlot();
+		base.UpdateInventoryItem();
 
 		References.CraftingResultSlot.SearchForCraftingRecipe();
 	}

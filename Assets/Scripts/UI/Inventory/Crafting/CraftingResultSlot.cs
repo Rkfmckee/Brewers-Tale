@@ -35,8 +35,9 @@ public class CraftingResultSlot : Slot
 		craftingRecipe = craftingRecipeManager.FindRecipe(craftingIngredients);
 		if (!craftingRecipe)
 		{
-			print("no recipe");
+			Destroy(itemInstance);
 			ItemInSlot = null;
+
 			return;
 		}
 		

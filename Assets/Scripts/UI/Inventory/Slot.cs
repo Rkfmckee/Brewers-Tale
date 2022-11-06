@@ -6,6 +6,7 @@ public abstract class Slot : MonoBehaviour
 
 	[SerializeField]
 	private InventoryItem itemInSlot;
+	protected GameObject itemInstance;
 
 	#endregion
 
@@ -17,9 +18,7 @@ public abstract class Slot : MonoBehaviour
 		set
 		{
 			itemInSlot = value;
-
-			InstantiateItemInSlot();
-			UpdateInventorySlot();
+			UpdateInventoryItem();
 		}
 	}
 
@@ -33,35 +32,33 @@ public abstract class Slot : MonoBehaviour
 
 	private void Start()
 	{
-		InstantiateItemInSlot();
-		UpdateInventorySlot();
+		UpdateInventoryItem();
 	}
 
 	#endregion
 
 	#region Methods
 
-	protected virtual void UpdateInventorySlot()
+	protected virtual void UpdateInventoryItem()
 	{
-		if (!itemInSlot) return;
-		
-		itemInSlot.SlotInInventory = this;
-		itemInSlot.transform.localPosition = Vector3.zero;
-	}
-
-	private void InstantiateItemInSlot()
-	{
-		if (!itemInSlot) return;
+		if (!itemInSlot) 
+		{
+			itemInstance = null;
+			return;
+		}
 
 		var itemScene = itemInSlot.gameObject.scene.name;
 		var isPrefab  = itemScene == null || itemScene == itemInSlot.gameObject.name;
-		var instanceOfItem = null as GameObject;
 
-		if (!isPrefab) return;
-
-		instanceOfItem      = Instantiate(itemInSlot.gameObject, transform);
-		instanceOfItem.name = itemInSlot.name;
-		itemInSlot          = instanceOfItem.GetComponent<InventoryItem>();
+		if (isPrefab)
+		{
+			itemInstance      = Instantiate(itemInSlot.gameObject, transform);
+			itemInstance.name = itemInSlot.name;
+			itemInSlot        = itemInstance.GetComponent<InventoryItem>();
+		}
+		
+		itemInSlot.SlotInInventory = this;
+		itemInSlot.transform.localPosition = Vector3.zero;
 	}
 
 	#endregion
