@@ -18,28 +18,29 @@ public class CraftingResultSlot : Slot
 
 	public void SearchForCraftingRecipe()
 	{
-		var craftingIngredients = new HashSet<string>();
-		var craftingResultName  = null as string;
-		var craftingResult      = null as InventoryItem;
+		var craftingRecipeManager = References.CraftingRecipeManager;
+		var craftingIngredients   = new List<InventoryItem>();
+		var craftingRecipe        = null as CraftingRecipe;
 		
 		foreach (var craftingSlot in References.CraftingSlots)
 		{
 			if (!craftingSlot.ItemInSlot) continue;
 
-			var itemName = craftingSlot.ItemInSlot.name;
-			craftingIngredients.Add(itemName);
+			var ingredient = craftingSlot.ItemInSlot.GetComponent<InventoryItem>();
+			if (ingredient) craftingIngredients.Add(ingredient);
 		}
 
-		if (!CraftingRecipes.RecipeList.ContainsKey(craftingIngredients))
+		if (craftingIngredients.Count == 0) return;
+
+		craftingRecipe = craftingRecipeManager.FindRecipe(craftingIngredients);
+		if (!craftingRecipe)
 		{
-			ItemInSlot = null;	
+			print("no recipe");
+			ItemInSlot = null;
 			return;
 		}
 		
-		craftingResultName = CraftingRecipes.RecipeList[craftingIngredients];
-		craftingResult     = Resources.Load<GameObject>($"Prefabs/Items/{craftingResultName}").GetComponent<InventoryItem>();
-
-		ItemInSlot = craftingResult;
+		ItemInSlot = craftingRecipe.Result;
 	}
 
 	#endregion

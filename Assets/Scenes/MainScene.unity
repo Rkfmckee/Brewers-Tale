@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 157776392}
+  - component: {fileID: 157776394}
   - component: {fileID: 157776393}
   m_Layer: 0
   m_Name: GlobalGameController
@@ -169,7 +170,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 157776387}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e851ba41f90d32345a5f635084dcbffe, type: 3}
+  m_Script: {fileID: 11500000, guid: f6b79be3cdb1a124581af236df5c4ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &157776394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157776387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1477193a60d284448a12b1c97d68e896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &172329758

@@ -6,7 +6,7 @@ public class HoverCraftingResult : Hover
 
 	public override void OnPointerEnter(PointerEventData eventData)
 	{
-		var shouldHightlight = !References.ManageInventory.ItemHeld && References.CraftingResultSlot.ItemInSlot;
+		var shouldHightlight = !References.InventoryManager.ItemHeld && References.CraftingResultSlot.ItemInSlot;
 		if (shouldHightlight) base.OnPointerEnter(eventData);
 	}
 

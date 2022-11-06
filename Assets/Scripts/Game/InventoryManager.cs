@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ManageInventory : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
 	#region Fields
 
@@ -26,7 +26,7 @@ public class ManageInventory : MonoBehaviour
 
 	private void Awake()
 	{
-		References.ManageInventory = this;
+		References.InventoryManager = this;
 
 		itemHeldPrefab = Resources.Load<GameObject>("Prefabs/Inventory/ItemHeld");
 	}
