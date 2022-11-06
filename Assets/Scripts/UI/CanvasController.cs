@@ -6,7 +6,7 @@ public class CanvasController : MonoBehaviour
 
 	private void Awake()
 	{
-		References.UI.canvas = GetComponent<Canvas>();
+		References.UI.Canvas = GetComponent<Canvas>();
 	}
 
 	#endregion
