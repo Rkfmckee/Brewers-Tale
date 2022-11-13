@@ -8,7 +8,6 @@ public class InventoryManager : MonoBehaviour
 	#region Fields
 
 	private InventoryItem itemHeld;
-	private InventoryItem itemToSwap;
 
 	private GraphicRaycaster graphicRaycaster;
 	private Canvas canvas;
@@ -66,7 +65,7 @@ public class InventoryManager : MonoBehaviour
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			slotClicked = GetSlot(raycastResults);
+			slotClicked = GetSlot<Slot>(raycastResults);
 			if (!slotClicked) return;
 
 			itemClicked = slotClicked.ItemInSlot;
@@ -76,25 +75,15 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
-	private void PickUpItem(InventoryItem itemClicked)
+	private void PickUpItem(InventoryItem itemClicked, bool swap = false)
 	{
 		itemHeld = itemClicked;
 		itemHeld.transform.SetParent(canvas.transform, false);
 		itemHeld.transform.position = Input.mousePosition;
 
-		itemClicked.SlotInInventory.ItemInSlot = null;
+		if (!swap) itemClicked.SlotInInventory.ItemInSlot = null;
 
-		// If the item we picked up is from the CraftingResultSlot
-		// Remove the crafting ingredients
-		if (itemClicked.SlotInInventory is CraftingResultSlot)
-		{
-			foreach (var craftingSlot in References.Crafting.Slots)
-			{
-				if (!craftingSlot.ItemInSlot) continue;
-
-				Destroy(craftingSlot.ItemInSlot.gameObject);
-			}
-		}
+		itemClicked.SlotInInventory.ItemPickedUp();
 	}
 
 	private void PutDownItemIfClicked()
@@ -109,7 +98,7 @@ public class InventoryManager : MonoBehaviour
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			slotClicked = GetInventorySlot(raycastResults);
+			slotClicked = GetSlot<InventoryCraftingSlot>(raycastResults);
 			if (!slotClicked) return;
 
 			// If the slot already has an item
@@ -123,24 +112,18 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
+	private void PutDownItem(InventoryCraftingSlot slot, bool swap = false)
+	{
+		slot.ItemInSlot  	= itemHeld;
+		if (!swap) itemHeld = null;
+	}
+
 	private void SwapItems(InventoryCraftingSlot slot)
 	{
 		var itemToPickUp = slot.ItemInSlot;
 
-		slot.ItemInSlot = itemHeld;
-		itemHeld        = itemToPickUp;
-
-		slot.ItemInSlot.transform.SetParent(slot.transform, false);
-		itemHeld.transform.SetParent(canvas.transform, false);
-		itemHeld.transform.position = Input.mousePosition;
-	}
-
-	private void PutDownItem(InventoryCraftingSlot slot)
-	{
-		itemHeld.transform.SetParent(slot.transform, false);
-
-		slot.ItemInSlot = itemHeld;
-		itemHeld        = null;
+		PutDownItem(slot, true);
+		PickUpItem(itemToPickUp, true);
 	}
 
 	private void ItemHeldFollowMouse()
@@ -150,26 +133,15 @@ public class InventoryManager : MonoBehaviour
 		itemHeld.transform.position = Input.mousePosition;
 	}
 
-	private Slot GetSlot(List<RaycastResult> results) 
+	private T GetSlot<T>(List<RaycastResult> results) 
 	{
 		foreach(var result in results)
 		{
-			var inventorySlot = result.gameObject.GetComponent<Slot>();
-			if (inventorySlot) return inventorySlot;
+			var inventorySlot = result.gameObject.GetComponent<T>();
+			if (inventorySlot != null) return inventorySlot;
 		}
 
-		return null;
-	}
-
-	private InventoryCraftingSlot GetInventorySlot(List<RaycastResult> results) 
-	{
-		foreach(var result in results)
-		{
-			var inventorySlot = result.gameObject.GetComponent<InventoryCraftingSlot>();
-			if (inventorySlot) return inventorySlot;
-		}
-
-		return null;
+		return default;
 	}
 
 	#endregion

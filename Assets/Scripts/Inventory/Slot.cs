@@ -39,6 +39,12 @@ public abstract class Slot : MonoBehaviour
 
 	#region Methods
 
+	#region Abstract methods
+
+	public abstract void ItemPickedUp();
+
+	#endregion
+
 	protected virtual void UpdateInventoryItem()
 	{
 		if (!itemInSlot) 
@@ -58,6 +64,7 @@ public abstract class Slot : MonoBehaviour
 		}
 		
 		itemInSlot.SlotInInventory = this;
+		itemInSlot.transform.SetParent(transform, false);
 		itemInSlot.transform.localPosition = Vector3.zero;
 	}
 

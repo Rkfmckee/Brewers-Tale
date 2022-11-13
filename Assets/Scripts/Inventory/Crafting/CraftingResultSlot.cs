@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CraftingResultSlot : Slot
 {	
@@ -43,6 +42,19 @@ public class CraftingResultSlot : Slot
 		
 		ItemInSlot = craftingRecipe.Result;
 	}
+
+	public override void ItemPickedUp()
+	{
+        // Remove the crafting ingredients
+		foreach (var craftingSlot in References.Crafting.Slots)
+		{
+			if (!craftingSlot.ItemInSlot) continue;
+
+			Destroy(craftingSlot.ItemInSlot.gameObject);
+			craftingSlot.ItemInSlot = null;
+		}
+	}
+
 
 	#endregion
 }
