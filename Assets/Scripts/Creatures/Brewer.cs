@@ -54,10 +54,6 @@ public class Brewer : MonoBehaviour
 
 	private void Update()
 	{
-		if (currentAnimation == BrewerAnimation.Brew && Input.GetButtonDown("Fire1"))
-		{
-			StartCoroutine(TurnAndThrow());
-		}
 	}
 
 	#endregion
