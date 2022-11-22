@@ -32,7 +32,7 @@ public class InventoryManager : MonoBehaviour
 
 	private void Start()
 	{
-		canvas           = References.UI.Canvas;
+		canvas = References.UI.Canvas;
 		graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
 	}
 
@@ -55,12 +55,12 @@ public class InventoryManager : MonoBehaviour
 
 	private void PickUpItemIfClicked()
 	{
-		if (Input.GetButtonDown("Fire1")) 
+		if (Input.GetButtonDown("Fire1"))
 		{
 			var pointerEventData = new PointerEventData(null);
-			var raycastResults   = new List<RaycastResult>();
-			var slotClicked      = null as Slot;
-			var itemClicked      = null as InventoryItem;
+			var raycastResults = new List<RaycastResult>();
+			var slotClicked = null as Slot;
+			var itemClicked = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
@@ -88,12 +88,12 @@ public class InventoryManager : MonoBehaviour
 
 	private void PutDownItemIfClicked()
 	{
-		if (Input.GetButtonDown("Fire1")) 
+		if (Input.GetButtonDown("Fire1"))
 		{
 			var pointerEventData = new PointerEventData(null);
-			var raycastResults   = new List<RaycastResult>();
-			var slotClicked      = null as InventoryCraftingSlot;
-			var itemClicked      = null as InventoryItem;
+			var raycastResults = new List<RaycastResult>();
+			var slotClicked = null as InventoryCraftingSlot;
+			var itemClicked = null as InventoryItem;
 
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
@@ -102,19 +102,19 @@ public class InventoryManager : MonoBehaviour
 			if (!slotClicked) return;
 
 			// If the slot already has an item
-			if (slotClicked.ItemInSlot) 
+			if (slotClicked.ItemInSlot)
 			{
 				SwapItems(slotClicked);
 				return;
 			}
-			
+
 			PutDownItem(slotClicked);
 		}
 	}
 
 	private void PutDownItem(InventoryCraftingSlot slot, bool swap = false)
 	{
-		slot.ItemInSlot  	= itemHeld;
+		slot.ItemInSlot = itemHeld;
 		if (!swap) itemHeld = null;
 	}
 
@@ -133,9 +133,9 @@ public class InventoryManager : MonoBehaviour
 		itemHeld.transform.position = Input.mousePosition;
 	}
 
-	private T GetSlot<T>(List<RaycastResult> results) 
+	private T GetSlot<T>(List<RaycastResult> results)
 	{
-		foreach(var result in results)
+		foreach (var result in results)
 		{
 			var inventorySlot = result.gameObject.GetComponent<T>();
 			if (inventorySlot != null) return inventorySlot;
