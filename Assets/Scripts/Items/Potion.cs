@@ -11,6 +11,11 @@ public class Potion : MonoBehaviour
 
 	#region Field
 
+	[SerializeField]
+	private Color potionColour;
+	[SerializeField]
+	private GameObject splashPrefab;
+
 	private Vector3 startPosition;
 	private Vector3 targetPosition;
 	private float throwSpeed;
@@ -58,6 +63,11 @@ public class Potion : MonoBehaviour
 
 	private void Arrived()
 	{
+		var splash = Instantiate(splashPrefab, transform.position, Quaternion.identity);
+		var particleSystem = splash.transform.Find("Particles").GetComponent<ParticleSystem>().main;
+		particleSystem.startColor = potionColour;
+
+		Destroy(splash, particleSystem.duration);
 		Destroy(gameObject);
 	}
 
