@@ -3,6 +3,7 @@ using UnityEngine;
 
 public static class References
 {
+	public static Brewer Brewer;
 	public static InventoryManager InventoryManager;
 
 	public static class Crafting
@@ -14,7 +15,7 @@ public static class References
 		public static CraftingResultSlot ResultSlot;
 	}
 
-    public static class UI 
+	public static class UI
 	{
 		public static Canvas Canvas;
 	}

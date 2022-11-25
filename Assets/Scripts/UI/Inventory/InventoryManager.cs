@@ -41,6 +41,7 @@ public class InventoryManager : MonoBehaviour
 		if (!itemHeld)
 		{
 			PickUpItemIfClicked();
+			UseItemIfClicked();
 		}
 		else
 		{
@@ -84,6 +85,39 @@ public class InventoryManager : MonoBehaviour
 		if (!swap) itemClicked.SlotInInventory.ItemInSlot = null;
 
 		itemClicked.SlotInInventory.ItemPickedUp();
+	}
+
+	private void UseItemIfClicked()
+	{
+		if (Input.GetButtonDown("Fire2") && References.Brewer.CurrentAnimation == BrewerAnimation.Brew)
+		{
+			var pointerEventData = new PointerEventData(null);
+			var raycastResults = new List<RaycastResult>();
+			var slotClicked = null as Slot;
+			var itemClicked = null as InventoryItem;
+
+			pointerEventData.position = Input.mousePosition;
+			graphicRaycaster.Raycast(pointerEventData, raycastResults);
+
+			slotClicked = GetSlot<Slot>(raycastResults);
+			if (!slotClicked) return;
+
+			itemClicked = slotClicked.ItemInSlot;
+			if (!itemClicked) return;
+
+			UseItem(itemClicked);
+		}
+	}
+
+	private void UseItem(InventoryItem itemClicked)
+	{
+		if (itemClicked is not InventoryPotion) return;
+
+		var potionType = itemClicked.GetComponent<InventoryPotion>().PotionType;
+		References.Brewer.TurnAndThrow(potionType);
+
+		itemClicked.SlotInInventory.ItemInSlot = null;
+		Destroy(itemClicked.gameObject);
 	}
 
 	private void PutDownItemIfClicked()

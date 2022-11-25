@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PurplePotion
   m_EditorClassIdentifier: 
   ingredients:
-  - {fileID: 5467088667734329291, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
-  - {fileID: 5467088667734329291, guid: 87f64df37a1cf7e4ca236fd6cf05d86b, type: 3}
-  result: {fileID: 5467088667734329291, guid: d16f86c5ba3f6314a8e4b7bb454f49ec, type: 3}
+  - {fileID: 7161190641192275514, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
+  - {fileID: 7461193643119589457, guid: 87f64df37a1cf7e4ca236fd6cf05d86b, type: 3}
+  result: {fileID: 5652596852766472221, guid: d16f86c5ba3f6314a8e4b7bb454f49ec, type: 3}

@@ -22,7 +22,7 @@ public class Brewer : MonoBehaviour
 
 	#region Properties
 
-	private BrewerAnimation CurrentAnimation
+	public BrewerAnimation CurrentAnimation
 	{
 		get => currentAnimation;
 		set
@@ -40,6 +40,8 @@ public class Brewer : MonoBehaviour
 
 	private void Awake()
 	{
+		References.Brewer = this;
+
 		animator = GetComponentInChildren<Animator>();
 		model = transform.Find("Model");
 		potionPrefab = Resources.Load<GameObject>($"Prefabs/Items/Potions/Potion");
@@ -54,12 +56,6 @@ public class Brewer : MonoBehaviour
 		throwPosition = new Vector3(-2.5f, 1.25f, 0);
 
 		UpdateAnimationLengths();
-	}
-
-	private void Update()
-	{
-		if (currentAnimation != BrewerAnimation.Brew) return;
-		if (Input.GetButtonDown("Fire1")) TurnAndThrow(PotionType.Purple);
 	}
 
 	#endregion
