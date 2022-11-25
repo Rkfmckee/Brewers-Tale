@@ -12,14 +12,30 @@ public class Potion : MonoBehaviour
 	#region Field
 
 	[SerializeField]
-	private Color potionColour;
-	[SerializeField]
 	private GameObject splashPrefab;
 
+	private PotionType potionType;
+	private Color potionColour;
 	private Vector3 startPosition;
 	private Vector3 targetPosition;
 	private float throwSpeed;
 	private float arcHeight;
+
+	private GameObject potionLiquid;
+
+	#endregion
+
+	#region Properties
+
+	public PotionType PotionType
+	{
+		get => potionType;
+		set
+		{
+			potionType = value;
+			SetPotionColour();
+		}
+	}
 
 	#endregion
 
@@ -27,6 +43,8 @@ public class Potion : MonoBehaviour
 
 	private void Awake()
 	{
+		potionLiquid = transform.Find("Liquid").gameObject;
+
 		startPosition = transform.position;
 		targetPosition = new Vector3(2, 0, 0);
 		throwSpeed = 5;
@@ -44,6 +62,24 @@ public class Potion : MonoBehaviour
 	#endregion
 
 	#region Methods
+
+	private void SetPotionColour()
+	{
+		switch (potionType)
+		{
+			case PotionType.Red:
+				potionColour = Color.red;
+				break;
+			case PotionType.Blue:
+				potionColour = Color.blue;
+				break;
+			case PotionType.Purple:
+				potionColour = new Color(0.5f, 0.25f, 1);
+				break;
+		}
+
+		potionLiquid.GetComponent<MeshRenderer>().material.color = potionColour;
+	}
 
 	private Vector3 CalculatePosition()
 	{

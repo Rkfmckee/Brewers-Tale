@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3458243340176296260}
   - component: {fileID: 570851784947753427}
   m_Layer: 0
-  m_Name: RedPotion
+  m_Name: Potion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1bcef5ff0de2734b941f3c2f2a608d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potionColour: {r: 1, g: 0, b: 0, a: 1}
+  potionType: 0
   splashPrefab: {fileID: 7437674455843570176, guid: 6d3eca8357ec04a4ba95e0fa333c7ce7, type: 3}
 --- !u!1 &2660548200775816188
 GameObject:
