@@ -11,7 +11,6 @@ public class InventoryManager : MonoBehaviour
 
 	private GraphicRaycaster graphicRaycaster;
 	private Canvas canvas;
-	private GameObject itemHeldPrefab;
 
 	#endregion
 
@@ -26,8 +25,6 @@ public class InventoryManager : MonoBehaviour
 	private void Awake()
 	{
 		References.InventoryManager = this;
-
-		itemHeldPrefab = Resources.Load<GameObject>("Prefabs/Inventory/ItemHeld");
 	}
 
 	private void Start()
