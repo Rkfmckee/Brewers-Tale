@@ -7,6 +7,8 @@ public class Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	#region Fields
 
 	[SerializeField]
+	private InventoryState activeState;
+	[SerializeField]
 	private Sprite regularSprite;
 	[SerializeField]
 	private Sprite highlightSprite;
@@ -34,6 +36,8 @@ public class Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public virtual void OnPointerEnter(PointerEventData eventData)
 	{
+		if (References.InventoryManager.ActiveInventory != activeState) return;
+
 		image.sprite = highlightSprite;
 		image.color = highlightColour;
 	}

@@ -29,6 +29,7 @@ public class ItemOptions : MonoBehaviour
 	private void Start()
 	{
 		graphicRaycaster = References.UI.Canvas.GetComponent<GraphicRaycaster>();
+		References.InventoryManager.ActiveInventory = InventoryState.ItemDetails;
 	}
 
 	private void Update()
@@ -51,7 +52,7 @@ public class ItemOptions : MonoBehaviour
 			}
 
 			raycastResults.RemoveAll(i => resultsToRemove.Contains(i));
-			if (raycastResults.Count == 0) Destroy(gameObject);
+			if (raycastResults.Count == 0) DestroySelf();
 		}
 	}
 
@@ -68,6 +69,12 @@ public class ItemOptions : MonoBehaviour
 
 		InventoryItem.SlotInInventory.ItemInSlot = null;
 		Destroy(InventoryItem.gameObject);
+		DestroySelf();
+	}
+
+	private void DestroySelf()
+	{
+		References.InventoryManager.ActiveInventory = InventoryState.Inventory;
 		Destroy(gameObject);
 	}
 

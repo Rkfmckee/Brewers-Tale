@@ -22,6 +22,8 @@ public class InventoryManager : MonoBehaviour
 
 	#region Properties
 
+	public InventoryState ActiveInventory { get; set; }
+
 	public InventoryItem ItemHeld { get => itemHeld; set => itemHeld = value; }
 
 	#endregion
@@ -31,6 +33,7 @@ public class InventoryManager : MonoBehaviour
 	private void Awake()
 	{
 		References.InventoryManager = this;
+		ActiveInventory = InventoryState.Inventory;
 	}
 
 	private void Start()
@@ -41,6 +44,8 @@ public class InventoryManager : MonoBehaviour
 
 	private void Update()
 	{
+		if (ActiveInventory != InventoryState.Inventory) return;
+
 		if (!itemHeld)
 		{
 			PickUpItemIfClicked();
@@ -102,7 +107,7 @@ public class InventoryManager : MonoBehaviour
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			slotClicked = GetSlot<Slot>(raycastResults);
+			slotClicked = GetSlot<InventorySlot>(raycastResults);
 			if (!slotClicked) return;
 
 			itemClicked = slotClicked.ItemInSlot;

@@ -409,6 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f355bea590f6d4cbd4669a0ec93d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeState: 1
   regularSprite: {fileID: 0}
   highlightSprite: {fileID: 21300000, guid: 8cee1015f39cc2340add0ab9249ed7c2, type: 3}
 --- !u!1 &3199935211031656970
@@ -546,6 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f355bea590f6d4cbd4669a0ec93d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeState: 1
   regularSprite: {fileID: 0}
   highlightSprite: {fileID: 21300000, guid: 8cee1015f39cc2340add0ab9249ed7c2, type: 3}
 --- !u!1 &3199935211101746028
@@ -683,6 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f355bea590f6d4cbd4669a0ec93d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeState: 1
   regularSprite: {fileID: 0}
   highlightSprite: {fileID: 21300000, guid: 8cee1015f39cc2340add0ab9249ed7c2, type: 3}
 --- !u!1 &3199935211152221325
