@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InventoryItem : MonoBehaviour
 {
-    #region Fields
+	#region Fields
 
 	private Slot slotInInventory;
 
