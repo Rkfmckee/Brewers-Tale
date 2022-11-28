@@ -13,8 +13,6 @@ public class InventoryManager : MonoBehaviour
 
 	#region Fields
 
-	private InventoryItem itemHeld;
-
 	private GraphicRaycaster graphicRaycaster;
 	private Canvas canvas;
 
@@ -23,8 +21,7 @@ public class InventoryManager : MonoBehaviour
 	#region Properties
 
 	public InventoryState ActiveInventory { get; set; }
-
-	public InventoryItem ItemHeld { get => itemHeld; set => itemHeld = value; }
+	public InventoryItem ItemHeld { get; set; }
 
 	#endregion
 
@@ -46,7 +43,7 @@ public class InventoryManager : MonoBehaviour
 	{
 		if (ActiveInventory != InventoryState.Inventory) return;
 
-		if (!itemHeld)
+		if (!ItemHeld)
 		{
 			PickUpItemIfClicked();
 			OpenItemOptionsIfClicked();
@@ -86,9 +83,9 @@ public class InventoryManager : MonoBehaviour
 
 	private void PickUpItem(InventoryItem itemClicked, bool swap = false)
 	{
-		itemHeld = itemClicked;
-		itemHeld.transform.SetParent(canvas.transform, false);
-		itemHeld.transform.position = Input.mousePosition;
+		ItemHeld = itemClicked;
+		ItemHeld.transform.SetParent(canvas.transform, false);
+		ItemHeld.transform.position = Input.mousePosition;
 
 		if (!swap) itemClicked.SlotInInventory.ItemInSlot = null;
 
@@ -156,8 +153,8 @@ public class InventoryManager : MonoBehaviour
 
 	private void PutDownItem(InventoryCraftingSlot slot, bool swap = false)
 	{
-		slot.ItemInSlot = itemHeld;
-		if (!swap) itemHeld = null;
+		slot.ItemInSlot = ItemHeld;
+		if (!swap) ItemHeld = null;
 	}
 
 	private void SwapItems(InventoryCraftingSlot slot)
@@ -170,9 +167,9 @@ public class InventoryManager : MonoBehaviour
 
 	private void ItemHeldFollowMouse()
 	{
-		if (!itemHeld) return;
+		if (!ItemHeld) return;
 
-		itemHeld.transform.position = Input.mousePosition;
+		ItemHeld.transform.position = Input.mousePosition;
 	}
 
 	private T GetSlot<T>(List<RaycastResult> results)
