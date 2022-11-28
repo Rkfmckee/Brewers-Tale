@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
+	#region Constants
+
+	private const float ITEM_OPTIONS_OFFSET = 25;
+
+	#endregion
+
 	#region Fields
 
 	private InventoryItem itemHeld;
@@ -38,7 +44,7 @@ public class InventoryManager : MonoBehaviour
 		if (!itemHeld)
 		{
 			PickUpItemIfClicked();
-			UseItemIfClicked();
+			OpenItemOptionsIfClicked();
 		}
 		else
 		{
@@ -84,7 +90,7 @@ public class InventoryManager : MonoBehaviour
 		itemClicked.SlotInInventory.ItemPickedUp();
 	}
 
-	private void UseItemIfClicked()
+	private void OpenItemOptionsIfClicked()
 	{
 		if (Input.GetButtonDown("Fire2") && References.Brewer.CurrentAnimation == BrewerAnimation.Brew)
 		{
@@ -102,19 +108,19 @@ public class InventoryManager : MonoBehaviour
 			itemClicked = slotClicked.ItemInSlot;
 			if (!itemClicked) return;
 
-			UseItem(itemClicked);
+			OpenItemOptions(itemClicked);
 		}
 	}
 
-	private void UseItem(InventoryItem itemClicked)
+	private void OpenItemOptions(InventoryItem itemClicked)
 	{
-		if (itemClicked is not InventoryPotion) return;
+		var slot = itemClicked.SlotInInventory;
+		var itemOptionsPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/ItemOptions");
+		var positionOffset = new Vector3(ITEM_OPTIONS_OFFSET, 0, 0);
+		var spawnPosition = slot.transform.position + positionOffset;
 
-		var potionType = itemClicked.GetComponent<InventoryPotion>().PotionType;
-		References.Brewer.TurnAndThrow(potionType);
-
-		itemClicked.SlotInInventory.ItemInSlot = null;
-		Destroy(itemClicked.gameObject);
+		var itemOptions = Instantiate(itemOptionsPrefab, spawnPosition, Quaternion.identity, canvas.transform);
+		itemOptions.GetComponent<ItemOptions>().InventoryItem = itemClicked;
 	}
 
 	private void PutDownItemIfClicked()
