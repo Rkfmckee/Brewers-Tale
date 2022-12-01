@@ -52,7 +52,7 @@ public class ItemOptions : MonoBehaviour
 			}
 
 			raycastResults.RemoveAll(i => resultsToRemove.Contains(i));
-			if (raycastResults.Count == 0) DestroySelf();
+			if (raycastResults.Count == 0) DestroySelf(true);
 		}
 	}
 
@@ -69,12 +69,12 @@ public class ItemOptions : MonoBehaviour
 
 		InventoryItem.SlotInInventory.ItemInSlot = null;
 		Destroy(InventoryItem.gameObject);
-		DestroySelf();
+		DestroySelf(false);
 	}
 
-	private void DestroySelf()
+	private void DestroySelf(bool backToInventory)
 	{
-		References.InventoryManager.ActiveInventory = InventoryState.Inventory;
+		References.InventoryManager.ActiveInventory = backToInventory ? InventoryState.Inventory : InventoryState.None;
 		Destroy(gameObject);
 	}
 

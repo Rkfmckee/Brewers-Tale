@@ -1,5 +1,6 @@
 public enum InventoryState
 {
 	Inventory,
-	ItemDetails
+	ItemDetails,
+	None
 }

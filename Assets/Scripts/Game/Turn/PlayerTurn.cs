@@ -6,17 +6,17 @@ public class PlayerTurn : Turn
 
 	#endregion
 
+	#region Constructors
+
+	public PlayerTurn() : base()
+	{
+	}
+
+	#endregion
+
 	#region Events
 
-	protected override void Awake()
-	{
-	}
-
-	protected override void Start()
-	{
-	}
-
-	protected override void Update()
+	public override void Update()
 	{
 	}
 

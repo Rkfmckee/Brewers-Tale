@@ -9,8 +9,6 @@ public class TurnOrderManager : MonoBehaviour
 	private Turn currentTurn;
 	private List<EnemySpace> enemySpaces;
 
-	private CanvasController canvas;
-
 	#endregion
 
 	#region Properties
@@ -21,7 +19,8 @@ public class TurnOrderManager : MonoBehaviour
 		set
 		{
 			currentTurn = value;
-			canvas.CurrentTurn = currentTurn.TurnText;
+			References.UI.CanvasController.CurrentTurn = currentTurn.TurnText;
+			References.InventoryManager.ActiveInventory = value is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
 		}
 	}
 
@@ -32,14 +31,17 @@ public class TurnOrderManager : MonoBehaviour
 	private void Awake()
 	{
 		References.TurnOrderManager = this;
-
 	}
 
 	private void Start()
 	{
-		canvas = References.UI.CanvasController;
 		enemySpaces = References.EnemySpaces.OrderBy(e => e.SpaceNumber).ToList();
 		CurrentTurn = new PlayerTurn();
+	}
+
+	private void Update()
+	{
+		currentTurn.Update();
 	}
 
 	#endregion
