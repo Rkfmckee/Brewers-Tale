@@ -98,6 +98,7 @@ public class Brewer : MonoBehaviour
 		yield return TurnAround(turnRightTime, awayFromDeskRotation, towardsDeskRotation);
 
 		CurrentAnimation = BrewerAnimation.Brew;
+		References.TurnOrderManager.CurrentTurn = new EnemyTurn();
 	}
 
 	private IEnumerator TurnAround(float totalTime, Quaternion rotationFrom, Quaternion rotationTo)

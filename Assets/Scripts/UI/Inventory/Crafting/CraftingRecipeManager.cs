@@ -10,13 +10,13 @@ public class CraftingRecipeManager : MonoBehaviour
 	public List<CraftingRecipe> Recipes { get; set; }
 
 	#endregion
-	
+
 	#region Events
 
 	private void Awake()
 	{
 		References.Crafting.RecipeManager = this;
-		
+
 		PopulateRecipes();
 	}
 
@@ -26,25 +26,25 @@ public class CraftingRecipeManager : MonoBehaviour
 
 	public CraftingRecipe FindRecipe(List<InventoryItem> ingredients)
 	{
-		foreach(var recipe in Recipes)
+		foreach (var recipe in Recipes)
 		{
-			if(IngredientsAreTheSame(ingredients, recipe.Ingredients))
+			if (IngredientsAreTheSame(ingredients, recipe.Ingredients))
 			{
 				return recipe;
 			}
 		}
-		
+
 		return null;
 	}
 
 	private void PopulateRecipes()
 	{
-		Recipes 		= new List<CraftingRecipe>();
-		var recipeNames = AssetDatabase.FindAssets(null, new[] {"Assets/Resources/CraftingRecipes"});
+		Recipes = new List<CraftingRecipe>();
+		var recipeNames = AssetDatabase.FindAssets(null, new[] { "Assets/Resources/CraftingRecipes" });
 
-		foreach(var recipeName in recipeNames)
+		foreach (var recipeName in recipeNames)
 		{
-			var path   = AssetDatabase.GUIDToAssetPath(recipeName);
+			var path = AssetDatabase.GUIDToAssetPath(recipeName);
 			var recipe = AssetDatabase.LoadAssetAtPath<CraftingRecipe>(path);
 
 			Recipes.Add(recipe);
@@ -59,7 +59,7 @@ public class CraftingRecipeManager : MonoBehaviour
 
 		for (int i = 0; i < ingredientsA.Count; i++)
 		{
-			var count          = 0;
+			var count = 0;
 			var ingredientName = ingredientsA[i].name;
 
 			if (!lookUp.TryGetValue(ingredientName, out count))
@@ -72,7 +72,7 @@ public class CraftingRecipeManager : MonoBehaviour
 
 		for (int i = 0; i < ingredientsB.Count; i++)
 		{
-			var count          = 0;
+			var count = 0;
 			var ingredientName = ingredientsB[i].name;
 
 			if (!lookUp.TryGetValue(ingredientName, out count))

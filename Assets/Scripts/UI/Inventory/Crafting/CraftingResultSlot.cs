@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 public class CraftingResultSlot : Slot
-{	
+{
 	#region Events
 
 	protected override void Awake()
@@ -18,9 +18,9 @@ public class CraftingResultSlot : Slot
 	public void SearchForCraftingRecipe()
 	{
 		var craftingRecipeManager = References.Crafting.RecipeManager;
-		var craftingIngredients   = new List<InventoryItem>();
-		var craftingRecipe        = null as CraftingRecipe;
-		
+		var craftingIngredients = new List<InventoryItem>();
+		var craftingRecipe = null as CraftingRecipe;
+
 		foreach (var craftingSlot in References.Crafting.Slots)
 		{
 			if (!craftingSlot.ItemInSlot) continue;
@@ -39,13 +39,13 @@ public class CraftingResultSlot : Slot
 
 			return;
 		}
-		
+
 		ItemInSlot = craftingRecipe.Result;
 	}
 
 	public override void ItemPickedUp()
 	{
-        // Remove the crafting ingredients
+		// Remove the crafting ingredients
 		foreach (var craftingSlot in References.Crafting.Slots)
 		{
 			if (!craftingSlot.ItemInSlot) continue;
