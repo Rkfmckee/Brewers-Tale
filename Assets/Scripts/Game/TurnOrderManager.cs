@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class TurnOrderManager : MonoBehaviour
@@ -35,7 +34,7 @@ public class TurnOrderManager : MonoBehaviour
 
 	private void Start()
 	{
-		enemySpaces = References.EnemySpaces.OrderBy(e => e.SpaceNumber).ToList();
+		enemySpaces = References.EnemySpaces;
 		CurrentTurn = new PlayerTurn();
 	}
 
