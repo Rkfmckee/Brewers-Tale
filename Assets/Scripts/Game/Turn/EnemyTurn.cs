@@ -1,11 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyTurn : Turn
 {
 	#region Fields
 
-	private float timer;
-	private float turnTime;
+	private float startTime;
+	private float endTime;
+
+	private List<Enemy> enemies;
 
 	#endregion
 
@@ -19,8 +23,10 @@ public class EnemyTurn : Turn
 
 	public EnemyTurn() : base()
 	{
-		timer = 0;
-		turnTime = 5;
+		enemies = References.Enemies;
+
+		startTime = 1;
+		endTime = 0.5f;
 	}
 
 	#endregion
@@ -29,11 +35,57 @@ public class EnemyTurn : Turn
 
 	public override void Update()
 	{
-		timer += Time.deltaTime;
+	}
 
-		if (timer > turnTime)
+	#endregion
+
+	#region Methods
+
+	private void MoveEnemies()
+	{
+		foreach (var enemy in enemies)
 		{
-			turnOrderManager.CurrentTurn = new PlayerTurn();
+			enemy.MoveToNextSpace();
+		}
+	}
+
+	#endregion
+
+	#region Coroutine
+
+	public IEnumerator StartEnemyTurns()
+	{
+		if (enemies.Count == 0)
+		{
+			Debug.Log("No enemies to take turns");
+			yield break;
+		}
+
+		yield return new WaitForSeconds(startTime);
+
+		MoveEnemies();
+		yield return WaitUntilEnemiesHaveMoved();
+
+		yield return new WaitForSeconds(endTime);
+
+		References.TurnOrderManager.CurrentTurn = new PlayerTurn();
+	}
+
+	private IEnumerator WaitUntilEnemiesHaveMoved()
+	{
+		var finishedMoving = false;
+
+		while (!finishedMoving)
+		{
+			finishedMoving = true;
+
+			foreach (var enemy in enemies)
+			{
+				if (enemy.CurrentAction == EnemyAction.Moving)
+					finishedMoving = false;
+			}
+
+			if (!finishedMoving) yield return null;
 		}
 	}
 

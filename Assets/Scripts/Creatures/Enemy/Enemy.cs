@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 	#region Properties
 
 	public EnemySpace CurrentSpace { get; set; }
+	public EnemyAction CurrentAction { get; set; }
 
 	#endregion
 
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
 		References.Enemies.Add(this);
 
 		movementTime = 1;
+		CurrentAction = EnemyAction.None;
 	}
 
 	private void Start()
@@ -56,6 +58,8 @@ public class Enemy : MonoBehaviour
 
 	private IEnumerator MovingToSpace(EnemySpace space)
 	{
+		CurrentAction = EnemyAction.Moving;
+
 		var startingPosition = enemySpaces[CurrentSpace.SpaceNumber - 1].transform.position;
 		var timer = 0f;
 
@@ -65,6 +69,8 @@ public class Enemy : MonoBehaviour
 			timer += Time.deltaTime;
 			yield return null;
 		}
+
+		CurrentAction = EnemyAction.None;
 	}
 
 	#endregion
