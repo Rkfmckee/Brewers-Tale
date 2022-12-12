@@ -25,9 +25,13 @@ public class EnemyTurn : Turn
 
 	public EnemyTurn() : base()
 	{
-		var endTurnButton = References.UI.Canvas.transform.Find("EndTurn").GetComponent<Button>();
+		var canvas = References.UI.Canvas;
+
+		var endTurnButton = canvas.transform.Find("EndTurn").GetComponent<Button>();
 		endTurnButton.interactable = false;
 		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = TurnText;
+
+		canvas.transform.Find("Energy").gameObject.SetActive(false);
 
 		enemies = References.Enemies;
 
