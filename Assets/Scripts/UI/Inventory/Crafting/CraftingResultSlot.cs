@@ -53,8 +53,9 @@ public class CraftingResultSlot : Slot
 			Destroy(craftingSlot.ItemInSlot.gameObject);
 			craftingSlot.ItemInSlot = null;
 		}
-	}
 
+		References.TurnOrderManager.CurrentEnergy -= 1;
+	}
 
 	#endregion
 }

@@ -156,6 +156,8 @@ public class InventoryManager : MonoBehaviour
 
 	private void PutDownItem(InventoryCraftingSlot slot, bool swap = false)
 	{
+		if (!slot.CanPlaceItem(ItemHeld)) return;
+
 		slot.ItemInSlot = ItemHeld;
 		if (!swap) ItemHeld = null;
 	}

@@ -16,6 +16,8 @@ public class PlayerTurn : Turn
 		var endTurnButton = References.UI.Canvas.transform.Find("EndTurn").GetComponent<Button>();
 		endTurnButton.interactable = true;
 		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "End turn";
+
+		References.TurnOrderManager.CurrentEnergy = 3;
 	}
 
 	#endregion
