@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Brewer : MonoBehaviour
@@ -76,6 +77,16 @@ public class Brewer : MonoBehaviour
 		}
 	}
 
+	private Vector3? GetPotionTargetPosition()
+	{
+		foreach (var space in References.EnemySpaces.OrderByDescending(e => e.SpaceNumber))
+		{
+			if (space.EnemyInSpace != null) return space.transform.position;
+		}
+
+		return null;
+	}
+
 	#endregion
 
 	#region Coroutines
@@ -98,7 +109,6 @@ public class Brewer : MonoBehaviour
 		yield return TurnAround(turnRightTime, awayFromDeskRotation, towardsDeskRotation);
 
 		CurrentAnimation = BrewerAnimation.Brew;
-		References.TurnOrderManager.CurrentTurn = new EnemyTurn();
 	}
 
 	private IEnumerator TurnAround(float totalTime, Quaternion rotationFrom, Quaternion rotationTo)
@@ -118,6 +128,13 @@ public class Brewer : MonoBehaviour
 
 	private IEnumerator Throw(PotionType potionType)
 	{
+		var potionTargetPosition = GetPotionTargetPosition();
+		if (!potionTargetPosition.HasValue)
+		{
+			print("No enemies to throw at");
+			yield break;
+		}
+
 		var timer = 0f;
 		var throwTime = animationLengths[BrewerAnimation.Throw.GetDescription()];
 		var shouldThrowPotion = true;
@@ -126,8 +143,10 @@ public class Brewer : MonoBehaviour
 		{
 			if (shouldThrowPotion && timer > throwTime / 3)
 			{
-				var potion = Instantiate(potionPrefab, throwPosition, Quaternion.identity);
-				potion.GetComponent<Potion>().PotionType = potionType;
+				var potionObject = Instantiate(potionPrefab, throwPosition, Quaternion.identity);
+				var potion = potionObject.GetComponent<Potion>();
+				potion.PotionType = potionType;
+				potion.TargetPosition = potionTargetPosition;
 
 				shouldThrowPotion = false;
 			}

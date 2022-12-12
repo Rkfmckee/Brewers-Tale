@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 	#region Fields
 
 	private float movementTime;
+	private EnemySpace currentSpace;
 
 	private List<EnemySpace> enemySpaces;
 
@@ -14,8 +15,19 @@ public class Enemy : MonoBehaviour
 
 	#region Properties
 
-	public EnemySpace CurrentSpace { get; set; }
 	public EnemyAction CurrentAction { get; set; }
+	public EnemySpace CurrentSpace
+	{
+		get => currentSpace;
+		set
+		{
+			RemoveEnemyFromPreviousSpace();
+
+			currentSpace = value;
+			currentSpace.EnemyInSpace = this;
+		}
+	}
+
 
 	#endregion
 
@@ -43,13 +55,21 @@ public class Enemy : MonoBehaviour
 	{
 		if (CurrentSpace.SpaceNumber == 6) return;
 
-		CurrentSpace = enemySpaces[CurrentSpace.SpaceNumber + 1];
-		MoveToSpace(CurrentSpace);
+		var nextSpace = enemySpaces[CurrentSpace.SpaceNumber + 1];
+		MoveToSpace(nextSpace);
 	}
 
 	public void MoveToSpace(EnemySpace space)
 	{
+		CurrentSpace = space;
 		StartCoroutine(MovingToSpace(CurrentSpace));
+	}
+
+	private void RemoveEnemyFromPreviousSpace()
+	{
+		if (currentSpace != null)
+			if (GameObject.ReferenceEquals(currentSpace.EnemyInSpace, this))
+				currentSpace.EnemyInSpace = null;
 	}
 
 	#endregion

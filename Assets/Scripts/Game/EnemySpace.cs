@@ -10,6 +10,12 @@ public class EnemySpace : MonoBehaviour
 
 	#endregion
 
+	#region Properties
+
+	public Enemy EnemyInSpace { get; set; }
+
+	#endregion
+
 	#region Events
 
 	private void Awake()
