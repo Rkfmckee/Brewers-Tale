@@ -18,9 +18,7 @@ public class TurnOrderManager : MonoBehaviour
 		set
 		{
 			currentTurn = value;
-
-			References.UI.CanvasController.CurrentTurn = currentTurn.TurnText;
-			References.InventoryManager.ActiveInventory = value is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
+			References.InventoryManager.ActiveInventory = currentTurn is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
 
 			InitializeTurn();
 		}

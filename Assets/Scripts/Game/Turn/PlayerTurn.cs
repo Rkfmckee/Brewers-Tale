@@ -1,3 +1,6 @@
+using TMPro;
+using UnityEngine.UI;
+
 public class PlayerTurn : Turn
 {
 	#region Properties
@@ -10,6 +13,9 @@ public class PlayerTurn : Turn
 
 	public PlayerTurn() : base()
 	{
+		var endTurnButton = References.UI.Canvas.transform.Find("EndTurn").GetComponent<Button>();
+		endTurnButton.interactable = true;
+		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = "End turn";
 	}
 
 	#endregion

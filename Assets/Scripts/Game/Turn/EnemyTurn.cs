@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyTurn : Turn
 {
@@ -23,6 +25,10 @@ public class EnemyTurn : Turn
 
 	public EnemyTurn() : base()
 	{
+		var endTurnButton = References.UI.Canvas.transform.Find("EndTurn").GetComponent<Button>();
+		endTurnButton.interactable = false;
+		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = TurnText;
+
 		enemies = References.Enemies;
 
 		startTime = 1;
