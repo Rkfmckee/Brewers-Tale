@@ -15,6 +15,7 @@ public class InventoryManager : MonoBehaviour
 
 	private GraphicRaycaster graphicRaycaster;
 	private Canvas canvas;
+	private TurnOrderManager turnOrderManager;
 
 	#endregion
 
@@ -36,6 +37,8 @@ public class InventoryManager : MonoBehaviour
 	private void Start()
 	{
 		canvas = References.UI.Canvas;
+		turnOrderManager = References.TurnOrderManager;
+
 		graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
 	}
 
@@ -153,6 +156,8 @@ public class InventoryManager : MonoBehaviour
 
 	private void PutDownItem(InventoryCraftingSlot slot, bool swap = false)
 	{
+		if (!slot.CanPlaceItem(ItemHeld)) return;
+
 		slot.ItemInSlot = ItemHeld;
 		if (!swap) ItemHeld = null;
 	}

@@ -17,7 +17,6 @@ public class Potion : MonoBehaviour
 	private PotionType potionType;
 	private Color potionColour;
 	private Vector3 startPosition;
-	private Vector3 targetPosition;
 	private float throwSpeed;
 	private float arcHeight;
 
@@ -26,6 +25,8 @@ public class Potion : MonoBehaviour
 	#endregion
 
 	#region Properties
+
+	public Vector3? TargetPosition { get; set; }
 
 	public PotionType PotionType
 	{
@@ -46,17 +47,18 @@ public class Potion : MonoBehaviour
 		potionLiquid = transform.Find("Liquid").gameObject;
 
 		startPosition = transform.position;
-		targetPosition = new Vector3(2, 0, 0);
 		throwSpeed = 5;
 		arcHeight = 1;
 	}
 
 	private void Update()
 	{
+		if (!TargetPosition.HasValue) return;
+
 		transform.position = CalculatePosition();
 		transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -ROTATION_DEGREES);
 
-		if (transform.position == targetPosition) Arrived();
+		if (transform.position == TargetPosition) Arrived();
 	}
 
 	#endregion
@@ -86,11 +88,11 @@ public class Potion : MonoBehaviour
 		// Parabola algorithm from https://luminaryapps.com/blog/arcing-projectiles-in-unity/
 
 		var startX = startPosition.x;
-		var targetX = targetPosition.x;
+		var targetX = TargetPosition.Value.x;
 		var distance = targetX - startX;
 
 		var nextXPosition = Mathf.MoveTowards(transform.position.x, targetX, throwSpeed * Time.deltaTime);
-		var baseYPosition = Mathf.Lerp(startPosition.y, targetPosition.y, (nextXPosition - startX) / distance);
+		var baseYPosition = Mathf.Lerp(startPosition.y, TargetPosition.Value.y, (nextXPosition - startX) / distance);
 		var arc = arcHeight * (nextXPosition - startX) * (nextXPosition - targetX) / (HEIGHT_SCALING * distance * distance);
 		var nextYPosition = baseYPosition + arc;
 

@@ -64,8 +64,16 @@ public class ItemOptions : MonoBehaviour
 	{
 		if (InventoryItem is not InventoryPotion) return;
 
+		var energyCost = (InventoryItem as InventoryPotion).EnergyCost;
+		if (References.TurnOrderManager.CurrentEnergy < energyCost)
+		{
+			print($"Not enough energy to use {InventoryItem.name}");
+			return;
+		}
+
 		var potionType = InventoryItem.GetComponent<InventoryPotion>().PotionType;
 		References.Brewer.TurnAndThrow(potionType);
+		References.TurnOrderManager.CurrentEnergy -= energyCost;
 
 		InventoryItem.SlotInInventory.ItemInSlot = null;
 		Destroy(InventoryItem.gameObject);
