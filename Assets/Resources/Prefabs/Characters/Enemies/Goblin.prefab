@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 540799364241617200}
-  - component: {fileID: -7069818550112749706}
+  - component: {fileID: 958853709621549859}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &-7069818550112749706
+--- !u!114 &958853709621549859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 540799364241617201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fd736249c7310f44985dbb616ea5d20, type: 3}
+  m_Script: {fileID: 11500000, guid: b75c58b67a41c144abce09e4bcc021db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5494075352573203200

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static HelperExtensions;
 
 public class Brewer : MonoBehaviour
 {
@@ -48,15 +49,13 @@ public class Brewer : MonoBehaviour
 		potionPrefab = Resources.Load<GameObject>($"Prefabs/Items/Potions/Potion");
 
 		currentState = BrewerState.Brewing;
-		animationLengths = new Dictionary<string, float>();
+		animationLengths = GetAnimatorClipLengths(animator);
 		towardsDeskRotation = transform.rotation;
 		awayFromDeskRotation = towardsDeskRotation * Quaternion.Euler(new Vector3(0, 180, 0));
 
 		modelPosition = model.localPosition;
 		modelRotation = model.localRotation;
 		throwPosition = new Vector3(-2.5f, 1.25f, 0);
-
-		UpdateAnimationLengths();
 	}
 
 	#endregion
@@ -66,15 +65,6 @@ public class Brewer : MonoBehaviour
 	public void TurnAndThrow(PotionType potionType)
 	{
 		StartCoroutine(TurningAndThrowing(potionType));
-	}
-
-	private void UpdateAnimationLengths()
-	{
-		AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-		foreach (AnimationClip clip in clips)
-		{
-			animationLengths[clip.name] = clip.length;
-		}
 	}
 
 	private Vector3? GetPotionTargetPosition()
