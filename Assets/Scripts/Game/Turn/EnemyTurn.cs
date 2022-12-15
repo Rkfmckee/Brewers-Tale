@@ -91,7 +91,7 @@ public class EnemyTurn : Turn
 
 			foreach (var enemy in enemies)
 			{
-				if (enemy.CurrentAction == EnemyAction.Moving)
+				if (enemy.CurrentState == EnemyState.Moving)
 					finishedMoving = false;
 			}
 
