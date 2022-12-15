@@ -1,13 +1,13 @@
 using System.ComponentModel;
 
-public enum BrewerAnimation
+public enum BrewerState
 {
 	[Description("Left Turn")]
-	LeftTurn,
+	TurningLeft,
 	[Description("Right Turn")]
-	RightTurn,
+	TurningRight,
 	[Description("Throw")]
-	Throw,
+	Throwing,
 	[Description("Bartending")]
-	Brew
+	Brewing
 }

@@ -97,7 +97,7 @@ public class InventoryManager : MonoBehaviour
 
 	private void OpenItemOptionsIfClicked()
 	{
-		if (Input.GetButtonDown("Fire2") && References.Brewer.CurrentAnimation == BrewerAnimation.Brew)
+		if (Input.GetButtonDown("Fire2") && References.Brewer.CurrentState == BrewerState.Brewing)
 		{
 			var pointerEventData = new PointerEventData(null);
 			var raycastResults = new List<RaycastResult>();

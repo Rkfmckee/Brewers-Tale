@@ -7,7 +7,7 @@ public class Brewer : MonoBehaviour
 {
 	#region Fields
 
-	private BrewerAnimation currentAnimation;
+	private BrewerState currentState;
 	private Dictionary<string, float> animationLengths;
 	private Quaternion towardsDeskRotation;
 	private Quaternion awayFromDeskRotation;
@@ -23,15 +23,15 @@ public class Brewer : MonoBehaviour
 
 	#region Properties
 
-	public BrewerAnimation CurrentAnimation
+	public BrewerState CurrentState
 	{
-		get => currentAnimation;
+		get => currentState;
 		set
 		{
 			animator.SetTrigger(value.GetDescription());
-			animator.applyRootMotion = value == BrewerAnimation.Brew;
+			animator.applyRootMotion = value == BrewerState.Brewing;
 
-			currentAnimation = value;
+			currentState = value;
 		}
 	}
 
@@ -47,7 +47,7 @@ public class Brewer : MonoBehaviour
 		model = transform.Find("Model");
 		potionPrefab = Resources.Load<GameObject>($"Prefabs/Items/Potions/Potion");
 
-		currentAnimation = BrewerAnimation.Brew;
+		currentState = BrewerState.Brewing;
 		animationLengths = new Dictionary<string, float>();
 		towardsDeskRotation = transform.rotation;
 		awayFromDeskRotation = towardsDeskRotation * Quaternion.Euler(new Vector3(0, 180, 0));
@@ -93,22 +93,22 @@ public class Brewer : MonoBehaviour
 
 	private IEnumerator TurningAndThrowing(PotionType potionType)
 	{
-		var turnLeftTime = animationLengths[BrewerAnimation.LeftTurn.GetDescription()];
-		var turnRightTime = animationLengths[BrewerAnimation.RightTurn.GetDescription()];
+		var turnLeftTime = animationLengths[BrewerState.TurningLeft.GetDescription()];
+		var turnRightTime = animationLengths[BrewerState.TurningRight.GetDescription()];
 
 		model.localPosition = modelPosition;
 		model.localRotation = modelRotation;
 
-		CurrentAnimation = BrewerAnimation.LeftTurn;
+		CurrentState = BrewerState.TurningLeft;
 		yield return TurnAround(turnLeftTime, towardsDeskRotation, awayFromDeskRotation);
 
-		CurrentAnimation = BrewerAnimation.Throw;
+		CurrentState = BrewerState.Throwing;
 		yield return Throw(potionType);
 
-		CurrentAnimation = BrewerAnimation.RightTurn;
+		CurrentState = BrewerState.TurningRight;
 		yield return TurnAround(turnRightTime, awayFromDeskRotation, towardsDeskRotation);
 
-		CurrentAnimation = BrewerAnimation.Brew;
+		CurrentState = BrewerState.Brewing;
 	}
 
 	private IEnumerator TurnAround(float totalTime, Quaternion rotationFrom, Quaternion rotationTo)
@@ -136,7 +136,7 @@ public class Brewer : MonoBehaviour
 		}
 
 		var timer = 0f;
-		var throwTime = animationLengths[BrewerAnimation.Throw.GetDescription()];
+		var throwTime = animationLengths[BrewerState.Throwing.GetDescription()];
 		var shouldThrowPotion = true;
 
 		while (timer < throwTime)
