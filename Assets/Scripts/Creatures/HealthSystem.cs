@@ -25,7 +25,7 @@ public class HealthSystem : MonoBehaviour
 		set
 		{
 			currentHealth = value;
-			healthBar.UpdateHealthBar(currentHealth / maxHealth);
+			healthBar.UpdateHealth(currentHealth / maxHealth);
 		}
 	}
 
@@ -43,11 +43,16 @@ public class HealthSystem : MonoBehaviour
 		CurrentHealth = maxHealth;
 	}
 
+	private void OnDestroy()
+	{
+		Destroy(healthBar.gameObject);
+	}
+
 	#endregion
 
 	#region Methods
 
-	public void TakeDamage(float damage)
+	public void Damage(float damage)
 	{
 		var newHealth = CurrentHealth - damage;
 		if (newHealth <= 0)

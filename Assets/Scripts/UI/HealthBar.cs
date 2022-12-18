@@ -40,7 +40,7 @@ public class HealthBar : MonoBehaviour
 
 	#region Methods
 
-	public void UpdateHealthBar(float healthFraction)
+	public void UpdateHealth(float healthFraction)
 	{
 		health.localScale = new Vector3(healthFraction, 1, 1);
 	}

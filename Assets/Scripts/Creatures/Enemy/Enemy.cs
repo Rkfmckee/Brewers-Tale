@@ -16,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
 
 	private Animator animator;
 	private Dictionary<string, float> animationLengths;
+	private HealthSystem brewerHealth;
 
 	#endregion
 
@@ -65,6 +66,8 @@ public abstract class Enemy : MonoBehaviour
 
 	private void Start()
 	{
+		brewerHealth = References.Brewer.GetComponent<HealthSystem>();
+
 		enemySpaces = References.EnemySpaces;
 		CurrentSpace = enemySpaces[0];
 	}
@@ -126,7 +129,7 @@ public abstract class Enemy : MonoBehaviour
 			if (shouldCauseDamage && timer > attackTime / 2)
 			{
 				// Damage brewer
-				print("Damage");
+				brewerHealth.Damage(2);
 				shouldCauseDamage = false;
 			}
 
