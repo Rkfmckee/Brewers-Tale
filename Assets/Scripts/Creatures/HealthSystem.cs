@@ -45,6 +45,8 @@ public class HealthSystem : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		if (healthBar == null) return;
+
 		Destroy(healthBar.gameObject);
 	}
 
