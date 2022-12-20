@@ -67,11 +67,12 @@ public class Brewer : MonoBehaviour
 		StartCoroutine(TurningAndThrowing(potionType));
 	}
 
-	private Vector3? GetPotionTargetPosition()
+	private GameObject GetPotionTarget()
 	{
 		foreach (var space in References.EnemySpaces.OrderByDescending(e => e.SpaceNumber))
 		{
-			if (space.EnemyInSpace != null) return space.transform.position;
+			var enemy = space.EnemyInSpace;
+			if (enemy != null) return enemy.gameObject;
 		}
 
 		return null;
@@ -118,8 +119,8 @@ public class Brewer : MonoBehaviour
 
 	private IEnumerator Throw(PotionType potionType)
 	{
-		var potionTargetPosition = GetPotionTargetPosition();
-		if (!potionTargetPosition.HasValue)
+		var potionTarget = GetPotionTarget();
+		if (!potionTarget)
 		{
 			print("No enemies to throw at");
 			yield break;
@@ -136,7 +137,7 @@ public class Brewer : MonoBehaviour
 				var potionObject = Instantiate(potionPrefab, throwPosition, Quaternion.identity);
 				var potion = potionObject.GetComponent<Potion>();
 				potion.PotionType = potionType;
-				potion.TargetPosition = potionTargetPosition;
+				potion.Target = potionTarget;
 
 				shouldThrowPotion = false;
 			}
