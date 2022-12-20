@@ -12,6 +12,10 @@ public class Potion : MonoBehaviour
 	#region Field
 
 	[SerializeField]
+	private int damageAmount;
+	[SerializeField]
+	private DamageType damageType;
+	[SerializeField]
 	private GameObject splashPrefab;
 
 	private PotionType potionType;
@@ -19,6 +23,7 @@ public class Potion : MonoBehaviour
 	private Vector3 startPosition;
 	private float throwSpeed;
 	private float arcHeight;
+	private GameObject target;
 
 	private GameObject potionLiquid;
 
@@ -26,7 +31,14 @@ public class Potion : MonoBehaviour
 
 	#region Properties
 
-	public Vector3? TargetPosition { get; set; }
+	public GameObject Target
+	{
+		get => target;
+		set
+		{
+			target = value;
+		}
+	}
 
 	public PotionType PotionType
 	{
@@ -53,12 +65,12 @@ public class Potion : MonoBehaviour
 
 	private void Update()
 	{
-		if (!TargetPosition.HasValue) return;
+		if (!target) return;
 
 		transform.position = CalculatePosition();
 		transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -ROTATION_DEGREES);
 
-		if (transform.position == TargetPosition) Arrived();
+		if (transform.position == target.transform.position) Arrived();
 	}
 
 	#endregion
@@ -87,12 +99,13 @@ public class Potion : MonoBehaviour
 	{
 		// Parabola algorithm from https://luminaryapps.com/blog/arcing-projectiles-in-unity/
 
+		var targetPosition = target.transform.position;
 		var startX = startPosition.x;
-		var targetX = TargetPosition.Value.x;
+		var targetX = targetPosition.x;
 		var distance = targetX - startX;
 
 		var nextXPosition = Mathf.MoveTowards(transform.position.x, targetX, throwSpeed * Time.deltaTime);
-		var baseYPosition = Mathf.Lerp(startPosition.y, TargetPosition.Value.y, (nextXPosition - startX) / distance);
+		var baseYPosition = Mathf.Lerp(startPosition.y, targetPosition.y, (nextXPosition - startX) / distance);
 		var arc = arcHeight * (nextXPosition - startX) * (nextXPosition - targetX) / (HEIGHT_SCALING * distance * distance);
 		var nextYPosition = baseYPosition + arc;
 
@@ -104,6 +117,9 @@ public class Potion : MonoBehaviour
 		var splash = Instantiate(splashPrefab, transform.position, Quaternion.identity);
 		var particleSystem = splash.transform.Find("Particles").GetComponent<ParticleSystem>().main;
 		particleSystem.startColor = potionColour;
+
+		var targetHealth = target.GetComponent<HealthSystem>();
+		targetHealth.Damage(damageAmount, damageType);
 
 		Destroy(splash, particleSystem.duration);
 		Destroy(gameObject);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static HelperExtensions;
 
 public class Brewer : MonoBehaviour
 {
@@ -48,15 +49,13 @@ public class Brewer : MonoBehaviour
 		potionPrefab = Resources.Load<GameObject>($"Prefabs/Items/Potions/Potion");
 
 		currentState = BrewerState.Brewing;
-		animationLengths = new Dictionary<string, float>();
+		animationLengths = GetAnimatorClipLengths(animator);
 		towardsDeskRotation = transform.rotation;
 		awayFromDeskRotation = towardsDeskRotation * Quaternion.Euler(new Vector3(0, 180, 0));
 
 		modelPosition = model.localPosition;
 		modelRotation = model.localRotation;
 		throwPosition = new Vector3(-2.5f, 1.25f, 0);
-
-		UpdateAnimationLengths();
 	}
 
 	#endregion
@@ -68,20 +67,12 @@ public class Brewer : MonoBehaviour
 		StartCoroutine(TurningAndThrowing(potionType));
 	}
 
-	private void UpdateAnimationLengths()
-	{
-		AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
-		foreach (AnimationClip clip in clips)
-		{
-			animationLengths[clip.name] = clip.length;
-		}
-	}
-
-	private Vector3? GetPotionTargetPosition()
+	private GameObject GetPotionTarget()
 	{
 		foreach (var space in References.EnemySpaces.OrderByDescending(e => e.SpaceNumber))
 		{
-			if (space.EnemyInSpace != null) return space.transform.position;
+			var enemy = space.EnemyInSpace;
+			if (enemy != null) return enemy.gameObject;
 		}
 
 		return null;
@@ -128,8 +119,8 @@ public class Brewer : MonoBehaviour
 
 	private IEnumerator Throw(PotionType potionType)
 	{
-		var potionTargetPosition = GetPotionTargetPosition();
-		if (!potionTargetPosition.HasValue)
+		var potionTarget = GetPotionTarget();
+		if (!potionTarget)
 		{
 			print("No enemies to throw at");
 			yield break;
@@ -146,7 +137,7 @@ public class Brewer : MonoBehaviour
 				var potionObject = Instantiate(potionPrefab, throwPosition, Quaternion.identity);
 				var potion = potionObject.GetComponent<Potion>();
 				potion.PotionType = potionType;
-				potion.TargetPosition = potionTargetPosition;
+				potion.Target = potionTarget;
 
 				shouldThrowPotion = false;
 			}

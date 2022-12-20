@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,18 +50,6 @@ public class EnemyTurn : Turn
 
 	#endregion
 
-	#region Methods
-
-	private void MoveEnemies()
-	{
-		foreach (var enemy in enemies)
-		{
-			enemy.MoveToNextSpace();
-		}
-	}
-
-	#endregion
-
 	#region Coroutine
 
 	public IEnumerator StartEnemyTurns()
@@ -68,17 +57,30 @@ public class EnemyTurn : Turn
 		if (enemies.Count == 0)
 		{
 			Debug.Log("No enemies to take turns");
+			References.TurnOrderManager.CurrentTurn = new PlayerTurn();
 			yield break;
 		}
 
 		yield return new WaitForSeconds(startTime);
 
-		MoveEnemies();
-		yield return WaitUntilEnemiesHaveMoved();
+		yield return EnemiesTakeTurns();
 
 		yield return new WaitForSeconds(endTime);
 
 		References.TurnOrderManager.CurrentTurn = new PlayerTurn();
+	}
+
+	private IEnumerator EnemiesTakeTurns()
+	{
+		foreach (var enemy in enemies.OrderByDescending(e => e.CurrentSpace.SpaceNumber))
+		{
+			enemy.TakeTurn();
+
+			while (enemy.CurrentState != EnemyState.Idle)
+			{
+				yield return null;
+			}
+		}
 	}
 
 	private IEnumerator WaitUntilEnemiesHaveMoved()
@@ -91,7 +93,7 @@ public class EnemyTurn : Turn
 
 			foreach (var enemy in enemies)
 			{
-				if (enemy.CurrentAction == EnemyAction.Moving)
+				if (enemy.CurrentState == EnemyState.Moving)
 					finishedMoving = false;
 			}
 
