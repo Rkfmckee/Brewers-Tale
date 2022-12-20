@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour
 	private void LateUpdate()
 	{
 		// Set position above character's head
-		transform.position = camera.WorldToScreenPoint(Character.transform.position + new Vector3(0, Character.HeightOffset, 0));
+		transform.position = camera.WorldToScreenPoint(Character.transform.position + new Vector3(0, Character.HealthBarHeight, 0));
 	}
 
 	#endregion

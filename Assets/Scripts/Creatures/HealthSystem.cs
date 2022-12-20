@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using static HelperExtensions;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -7,7 +10,13 @@ public class HealthSystem : MonoBehaviour
 	[SerializeField]
 	private float maxHealth;
 	[SerializeField]
-	private float heightOffset;
+	private float healthBarHeight;
+	[SerializeField]
+	private List<DamageType> damageImmunities;
+	[SerializeField]
+	private List<DamageType> damageResistances;
+	[SerializeField]
+	private List<DamageType> damageVulnerabilities;
 
 	private float currentHealth;
 	private HealthBar healthBar;
@@ -17,7 +26,7 @@ public class HealthSystem : MonoBehaviour
 	#region Properties
 
 	public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-	public float HeightOffset { get => heightOffset; }
+	public float HealthBarHeight { get => healthBarHeight; }
 
 	public float CurrentHealth
 	{
@@ -54,9 +63,11 @@ public class HealthSystem : MonoBehaviour
 
 	#region Methods
 
-	public void Damage(float damage)
+	public void Damage(float damage, DamageType type)
 	{
-		var newHealth = CurrentHealth - damage;
+		var actualDamage = CalculateModifiers(damage, type);
+		var newHealth = CurrentHealth - actualDamage;
+
 		if (newHealth <= 0)
 		{
 			Destroy(gameObject);
@@ -76,6 +87,26 @@ public class HealthSystem : MonoBehaviour
 		}
 
 		CurrentHealth = newHealth;
+	}
+
+	private float CalculateModifiers(float damage, DamageType type)
+	{
+		if (damageImmunities.Contains(type))
+		{
+			return 0;
+		}
+
+		if (damageResistances.Contains(type))
+		{
+			return Mathf.Floor(damage / 2);
+		}
+
+		if (damageVulnerabilities.Contains(type))
+		{
+			return damage * 2;
+		}
+
+		return damage;
 	}
 
 	#endregion

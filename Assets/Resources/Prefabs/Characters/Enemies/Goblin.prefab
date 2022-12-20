@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75c58b67a41c144abce09e4bcc021db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDamageAmount: 0
+  attackDamageType: 0
 --- !u!114 &3399312564791565947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +61,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
-  heightOffset: 1
+  healthBarHeight: 1
+  damageImmunities: 
+  damageResistances: 
+  damageVulnerabilities: 
 --- !u!1 &5494075352573203200
 GameObject:
   m_ObjectHideFlags: 0

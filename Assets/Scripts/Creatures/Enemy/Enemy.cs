@@ -7,8 +7,12 @@ public abstract class Enemy : MonoBehaviour
 {
 	#region Fields
 
-	protected float? animationSpeed;
+	[SerializeField]
+	protected int attackDamageAmount;
+	[SerializeField]
+	protected DamageType attackDamageType;
 
+	protected float? animationSpeed;
 	private EnemyState currentState;
 	private EnemySpace currentSpace;
 	private float movementTime;
@@ -129,7 +133,7 @@ public abstract class Enemy : MonoBehaviour
 			if (shouldCauseDamage && timer > attackTime / 2)
 			{
 				// Damage brewer
-				brewerHealth.Damage(2);
+				brewerHealth.Damage(attackDamageAmount, attackDamageType);
 				shouldCauseDamage = false;
 			}
 

@@ -112,7 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  heightOffset: 1.5
+  healthBarHeight: 1.5
+  damageImmunities: 
+  damageResistances: 
+  damageVulnerabilities: 
 --- !u!1 &6132620507996948640
 GameObject:
   m_ObjectHideFlags: 0
