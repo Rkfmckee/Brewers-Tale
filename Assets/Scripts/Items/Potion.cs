@@ -12,9 +12,7 @@ public class Potion : MonoBehaviour
 	#region Field
 
 	[SerializeField]
-	private int damageAmount;
-	[SerializeField]
-	private DamageType damageType;
+	private Damage[] damage;
 	[SerializeField]
 	private GameObject splashPrefab;
 
@@ -119,7 +117,7 @@ public class Potion : MonoBehaviour
 		particleSystem.startColor = potionColour;
 
 		var targetHealth = target.GetComponent<HealthSystem>();
-		targetHealth.Damage(damageAmount, damageType);
+		targetHealth.Damage(damage);
 
 		Destroy(splash, particleSystem.duration);
 		Destroy(gameObject);

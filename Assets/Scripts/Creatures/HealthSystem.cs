@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static HelperExtensions;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -63,10 +61,19 @@ public class HealthSystem : MonoBehaviour
 
 	#region Methods
 
+	public void Damage(Damage[] damageList)
+	{
+		foreach (var damage in damageList)
+		{
+			Damage(damage.Amount, damage.Type);
+		}
+	}
+
 	public void Damage(float damage, DamageType type)
 	{
 		var actualDamage = CalculateModifiers(damage, type);
 		var newHealth = CurrentHealth - actualDamage;
+		print($"({type}) Damage: {damage}, Actual: {actualDamage}");
 
 		if (newHealth <= 0)
 		{
@@ -98,7 +105,7 @@ public class HealthSystem : MonoBehaviour
 
 		if (damageResistances.Contains(type))
 		{
-			return Mathf.Floor(damage / 2);
+			return Mathf.Ceil(damage / 2);
 		}
 
 		if (damageVulnerabilities.Contains(type))
