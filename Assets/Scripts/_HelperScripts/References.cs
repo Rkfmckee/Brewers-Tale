@@ -8,6 +8,7 @@ public static class References
 	public static TurnOrderManager TurnOrderManager;
 	public static List<Enemy> Enemies = new List<Enemy>();
 	public static List<EnemySpace> EnemySpaces = new List<EnemySpace>();
+	public static EnemySpawner EnemySpawner;
 
 
 	public static class Crafting

@@ -1,7 +1,12 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
 public abstract class Turn
 {
 	#region Fields
 
+	protected Canvas canvas;
 	protected TurnOrderManager turnOrderManager;
 
 	#endregion
@@ -16,7 +21,16 @@ public abstract class Turn
 
 	public Turn()
 	{
+		canvas = References.UI.Canvas;
 		turnOrderManager = References.TurnOrderManager;
+
+		var isPlayerTurn = this is PlayerTurn;
+		var endTurnButton = canvas.transform.Find("EndTurn").GetComponent<Button>();
+		var endTurnText = isPlayerTurn ? "End turn" : TurnText;
+		endTurnButton.interactable = isPlayerTurn;
+		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = endTurnText;
+
+		canvas.transform.Find("Energy").gameObject.SetActive(isPlayerTurn);
 	}
 
 	#endregion

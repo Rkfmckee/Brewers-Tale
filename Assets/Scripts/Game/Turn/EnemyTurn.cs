@@ -13,6 +13,7 @@ public class EnemyTurn : Turn
 	private float endTime;
 
 	private List<Enemy> enemies;
+	private EnemySpawner enemySpawner;
 
 	#endregion
 
@@ -26,18 +27,13 @@ public class EnemyTurn : Turn
 
 	public EnemyTurn() : base()
 	{
-		var canvas = References.UI.Canvas;
-
-		var endTurnButton = canvas.transform.Find("EndTurn").GetComponent<Button>();
-		endTurnButton.interactable = false;
-		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = TurnText;
-
-		canvas.transform.Find("Energy").gameObject.SetActive(false);
-
 		enemies = References.Enemies;
+		enemySpawner = References.EnemySpawner;
 
 		startTime = 1;
 		endTime = 0.5f;
+
+		enemySpawner.Spawn();
 	}
 
 	#endregion
@@ -80,24 +76,6 @@ public class EnemyTurn : Turn
 			{
 				yield return null;
 			}
-		}
-	}
-
-	private IEnumerator WaitUntilEnemiesHaveMoved()
-	{
-		var finishedMoving = false;
-
-		while (!finishedMoving)
-		{
-			finishedMoving = true;
-
-			foreach (var enemy in enemies)
-			{
-				if (enemy.CurrentState == EnemyState.Moving)
-					finishedMoving = false;
-			}
-
-			if (!finishedMoving) yield return null;
 		}
 	}
 
