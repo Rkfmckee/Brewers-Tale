@@ -1,6 +1,3 @@
-using TMPro;
-using UnityEngine.UI;
-
 public class PlayerTurn : Turn
 {
 	#region Properties
