@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3460360136237427236}
   - component: {fileID: 7161190641192275514}
   m_Layer: 5
-  m_Name: RedPotion
+  m_Name: FirePotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,5 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7a45f0c5e45cb4daccaa0f6cdda53a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Fire potion
+  itemDescription: Deals fire damage, with a chance to burn next turn
   potionType: 0
   energyCost: 1

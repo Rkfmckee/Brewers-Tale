@@ -120,12 +120,14 @@ public class InventoryManager : MonoBehaviour
 	private void OpenItemOptions(InventoryItem itemClicked)
 	{
 		var slot = itemClicked.SlotInInventory;
-		var itemOptionsPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/ItemOptions");
+		var itemDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/ItemDetails");
 		var positionOffset = new Vector3(ITEM_OPTIONS_OFFSET, 0, 0);
 		var spawnPosition = slot.transform.position + positionOffset;
 
-		var itemOptions = Instantiate(itemOptionsPrefab, spawnPosition, Quaternion.identity, canvas.transform);
-		itemOptions.GetComponent<ItemOptions>().InventoryItem = itemClicked;
+		var itemDetails = Instantiate(itemDetailsPrefab, spawnPosition, Quaternion.identity, canvas.transform).GetComponent<ItemDetails>();
+		itemDetails.InventoryItem = itemClicked;
+		itemDetails.ItemName = itemClicked.ItemName;
+		itemDetails.ItemDescription = itemClicked.ItemDescription;
 	}
 
 	private void PutDownItemIfClicked()
