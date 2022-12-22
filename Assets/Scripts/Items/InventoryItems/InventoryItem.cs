@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InventoryItem : MonoBehaviour
+public abstract class InventoryItem : MonoBehaviour
 {
 	#region Fields
 

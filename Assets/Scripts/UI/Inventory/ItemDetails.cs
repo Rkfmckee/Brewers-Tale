@@ -12,7 +12,7 @@ public class ItemDetails : MonoBehaviour
 	private InventoryItem inventoryItem;
 
 	private Transform itemDetails;
-	private Transform itemOptions;
+	private Transform ingredientOptions;
 	private Transform potionOptions;
 	private TextMeshProUGUI itemName;
 	private TextMeshProUGUI itemDescription;
@@ -32,9 +32,8 @@ public class ItemDetails : MonoBehaviour
 			itemName.text = inventoryItem.ItemName;
 			itemDescription.text = inventoryItem.ItemDescription;
 
-			var isPotion = inventoryItem is InventoryPotion;
-			itemOptions.gameObject.SetActive(!isPotion);
-			potionOptions.gameObject.SetActive(isPotion);
+			ingredientOptions.gameObject.SetActive(inventoryItem is InventoryIngredient);
+			potionOptions.gameObject.SetActive(inventoryItem is InventoryPotion);
 		}
 	}
 
@@ -45,14 +44,16 @@ public class ItemDetails : MonoBehaviour
 	private void Awake()
 	{
 		itemDetails = transform.Find("Details");
-		itemOptions = transform.Find("Options");
+		ingredientOptions = transform.Find("IngredientOptions");
 		potionOptions = transform.Find("PotionOptions");
 
 		itemName = itemDetails.Find("ItemName").GetComponent<TextMeshProUGUI>();
 		itemDescription = itemDetails.Find("ItemDescription").GetComponent<TextMeshProUGUI>();
 
+		var enemyExists = References.Enemies.Count > 0;
 		useButton = potionOptions.Find("UseButton").GetComponent<Button>();
 		useButton.onClick.AddListener(() => UseItem());
+		useButton.interactable = enemyExists;
 	}
 
 	private void Start()
@@ -71,7 +72,7 @@ public class ItemDetails : MonoBehaviour
 			var itemDetailsParts = new List<GameObject>
 			{
 				itemDetails.gameObject,
-				itemOptions.gameObject,
+				ingredientOptions.gameObject,
 				potionOptions.gameObject
 			};
 
