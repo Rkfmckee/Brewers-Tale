@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,11 @@ public class ItemDetails : MonoBehaviour
 {
 	#region Fields
 
+	private InventoryItem inventoryItem;
+
+	private Transform itemDetails;
+	private Transform itemOptions;
+	private Transform potionOptions;
 	private TextMeshProUGUI itemName;
 	private TextMeshProUGUI itemDescription;
 	private Button useButton;
@@ -17,10 +23,20 @@ public class ItemDetails : MonoBehaviour
 
 	#region Properties
 
-	public InventoryItem InventoryItem { get; set; }
-	public string ItemName { set => itemName.text = value; }
-	public string ItemDescription { set => itemDescription.text = value; }
+	public InventoryItem InventoryItem
+	{
+		get => inventoryItem;
+		set
+		{
+			inventoryItem = value;
+			itemName.text = inventoryItem.ItemName;
+			itemDescription.text = inventoryItem.ItemDescription;
 
+			var isPotion = inventoryItem is InventoryPotion;
+			itemOptions.gameObject.SetActive(!isPotion);
+			potionOptions.gameObject.SetActive(isPotion);
+		}
+	}
 
 	#endregion
 
@@ -28,10 +44,14 @@ public class ItemDetails : MonoBehaviour
 
 	private void Awake()
 	{
-		itemName = transform.Find("Details").Find("ItemName").GetComponent<TextMeshProUGUI>();
-		itemDescription = transform.Find("Details").Find("ItemDescription").GetComponent<TextMeshProUGUI>();
+		itemDetails = transform.Find("Details");
+		itemOptions = transform.Find("Options");
+		potionOptions = transform.Find("PotionOptions");
 
-		useButton = transform.Find("Options").Find("UseButton").GetComponent<Button>();
+		itemName = itemDetails.Find("ItemName").GetComponent<TextMeshProUGUI>();
+		itemDescription = itemDetails.Find("ItemDescription").GetComponent<TextMeshProUGUI>();
+
+		useButton = potionOptions.Find("UseButton").GetComponent<Button>();
 		useButton.onClick.AddListener(() => UseItem());
 	}
 
@@ -48,20 +68,18 @@ public class ItemDetails : MonoBehaviour
 			var pointerEventData = new PointerEventData(null);
 			var raycastResults = new List<RaycastResult>();
 			var resultsToRemove = new List<RaycastResult>();
+			var itemDetailsParts = new List<GameObject>
+			{
+				itemDetails.gameObject,
+				itemOptions.gameObject,
+				potionOptions.gameObject
+			};
 
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			foreach (var result in raycastResults)
-			{
-				if (!GameObject.ReferenceEquals(result.gameObject, gameObject))
-				{
-					resultsToRemove.Add(result);
-				}
-			}
-
-			raycastResults.RemoveAll(i => resultsToRemove.Contains(i));
-			if (raycastResults.Count == 0) DestroySelf();
+			var hasClickedThis = raycastResults.Any(r => itemDetailsParts.Contains(r.gameObject));
+			if (!hasClickedThis) DestroySelf();
 		}
 	}
 

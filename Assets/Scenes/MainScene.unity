@@ -5608,7 +5608,7 @@ GameObject:
   - component: {fileID: 1894159174}
   - component: {fileID: 1894159173}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5719,6 +5719,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1932164202}
     m_Modifications:
+    - target: {fileID: 580860780877724344, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
+      propertyPath: itemInSlot
+      value: 
+      objectReference: {fileID: 1928663953026214884, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
     - target: {fileID: 3194841236901466258, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: m_Name
       value: InventorySlot
@@ -5883,7 +5887,7 @@ GameObject:
   - component: {fileID: 1932164202}
   - component: {fileID: 1932164203}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: InventorySlots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
