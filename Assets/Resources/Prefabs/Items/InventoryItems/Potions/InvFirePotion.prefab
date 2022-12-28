@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3460360136237427236}
   - component: {fileID: 7161190641192275514}
   m_Layer: 5
-  m_Name: FirePotion
+  m_Name: InvFirePotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,5 +91,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Fire potion
   itemDescription: Deals fire damage, with a chance to burn next turn
-  potionType: 0
   energyCost: 1
+  worldPrefab: {fileID: 2645290090106049534, guid: 61dbdbed2745d354894e6f6e45593056, type: 3}

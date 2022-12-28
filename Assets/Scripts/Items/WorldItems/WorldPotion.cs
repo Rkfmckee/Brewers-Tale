@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Potion : MonoBehaviour
+public abstract class WorldPotion : MonoBehaviour
 {
 	#region Constants
 
@@ -12,16 +12,13 @@ public class Potion : MonoBehaviour
 	#region Field
 
 	[SerializeField]
-	private Damage[] damage;
-	[SerializeField]
-	private GameObject splashPrefab;
-
-	private PotionType potionType;
 	private Color potionColour;
+
+	private GameObject splashPrefab;
+	private PotionType potionType;
 	private Vector3 startPosition;
 	private float throwSpeed;
 	private float arcHeight;
-	private GameObject target;
 
 	private GameObject potionLiquid;
 
@@ -29,32 +26,18 @@ public class Potion : MonoBehaviour
 
 	#region Properties
 
-	public GameObject Target
-	{
-		get => target;
-		set
-		{
-			target = value;
-		}
-	}
-
-	public PotionType PotionType
-	{
-		get => potionType;
-		set
-		{
-			potionType = value;
-			SetPotionColour();
-		}
-	}
+	public GameObject Target { get; set; }
 
 	#endregion
 
 	#region Events
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		potionLiquid = transform.Find("Liquid").gameObject;
+		potionLiquid.GetComponent<MeshRenderer>().material.color = potionColour;
+
+		splashPrefab = Resources.Load<GameObject>("Prefabs/Items/WorldItems/PotionSplash");
 
 		startPosition = transform.position;
 		throwSpeed = 5;
@@ -63,41 +46,25 @@ public class Potion : MonoBehaviour
 
 	private void Update()
 	{
-		if (!target) return;
+		if (!Target) return;
 
 		transform.position = CalculatePosition();
 		transform.rotation = transform.rotation * Quaternion.Euler(0, 0, -ROTATION_DEGREES);
 
-		if (transform.position == target.transform.position) Arrived();
+		if (transform.position == Target.transform.position) Arrived();
 	}
 
 	#endregion
 
 	#region Methods
 
-	private void SetPotionColour()
-	{
-		switch (potionType)
-		{
-			case PotionType.Red:
-				potionColour = Color.red;
-				break;
-			case PotionType.Blue:
-				potionColour = Color.blue;
-				break;
-			case PotionType.Purple:
-				potionColour = new Color(0.5f, 0.25f, 1);
-				break;
-		}
-
-		potionLiquid.GetComponent<MeshRenderer>().material.color = potionColour;
-	}
+	protected abstract void AffectTarget();
 
 	private Vector3 CalculatePosition()
 	{
 		// Parabola algorithm from https://luminaryapps.com/blog/arcing-projectiles-in-unity/
 
-		var targetPosition = target.transform.position;
+		var targetPosition = Target.transform.position;
 		var startX = startPosition.x;
 		var targetX = targetPosition.x;
 		var distance = targetX - startX;
@@ -116,8 +83,7 @@ public class Potion : MonoBehaviour
 		var particleSystem = splash.transform.Find("Particles").GetComponent<ParticleSystem>().main;
 		particleSystem.startColor = potionColour;
 
-		var targetHealth = target.GetComponent<HealthSystem>();
-		targetHealth.Damage(damage);
+		AffectTarget();
 
 		Destroy(splash, particleSystem.duration);
 		Destroy(gameObject);

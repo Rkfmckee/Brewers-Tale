@@ -61,6 +61,11 @@ public class HealthSystem : MonoBehaviour
 
 	#region Methods
 
+	public void Damage(Damage damage)
+	{
+		Damage(damage.Amount, damage.Type);
+	}
+
 	public void Damage(Damage[] damageList)
 	{
 		foreach (var damage in damageList)

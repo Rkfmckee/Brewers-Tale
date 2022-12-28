@@ -18,7 +18,6 @@ public class Brewer : MonoBehaviour
 
 	private Animator animator;
 	private Transform model;
-	private GameObject potionPrefab;
 
 	#endregion
 
@@ -46,7 +45,6 @@ public class Brewer : MonoBehaviour
 
 		animator = GetComponentInChildren<Animator>();
 		model = transform.Find("Model");
-		potionPrefab = Resources.Load<GameObject>($"Prefabs/Items/Potions/Potion");
 
 		currentState = BrewerState.Brewing;
 		animationLengths = GetAnimatorClipLengths(animator);
@@ -62,9 +60,9 @@ public class Brewer : MonoBehaviour
 
 	#region Methods
 
-	public void TurnAndThrow(PotionType potionType)
+	public void TurnAndThrow(GameObject potionToThrow)
 	{
-		StartCoroutine(TurningAndThrowing(potionType));
+		StartCoroutine(TurningAndThrowing(potionToThrow));
 	}
 
 	private GameObject GetPotionTarget()
@@ -82,7 +80,7 @@ public class Brewer : MonoBehaviour
 
 	#region Coroutines
 
-	private IEnumerator TurningAndThrowing(PotionType potionType)
+	private IEnumerator TurningAndThrowing(GameObject potionToThrow)
 	{
 		var turnLeftTime = animationLengths[BrewerState.TurningLeft.GetDescription()];
 		var turnRightTime = animationLengths[BrewerState.TurningRight.GetDescription()];
@@ -94,7 +92,7 @@ public class Brewer : MonoBehaviour
 		yield return TurnAround(turnLeftTime, towardsDeskRotation, awayFromDeskRotation);
 
 		CurrentState = BrewerState.Throwing;
-		yield return Throw(potionType);
+		yield return Throw(potionToThrow);
 
 		CurrentState = BrewerState.TurningRight;
 		yield return TurnAround(turnRightTime, awayFromDeskRotation, towardsDeskRotation);
@@ -117,7 +115,7 @@ public class Brewer : MonoBehaviour
 		transform.rotation = rotationTo;
 	}
 
-	private IEnumerator Throw(PotionType potionType)
+	private IEnumerator Throw(GameObject potionToThrow)
 	{
 		var potionTarget = GetPotionTarget();
 		if (!potionTarget)
@@ -134,9 +132,8 @@ public class Brewer : MonoBehaviour
 		{
 			if (shouldThrowPotion && timer > throwTime / 3)
 			{
-				var potionObject = Instantiate(potionPrefab, throwPosition, Quaternion.identity);
-				var potion = potionObject.GetComponent<Potion>();
-				potion.PotionType = potionType;
+				var potionObject = Instantiate(potionToThrow, throwPosition, Quaternion.identity);
+				var potion = potionObject.GetComponent<WorldPotion>();
 				potion.Target = potionTarget;
 
 				shouldThrowPotion = false;

@@ -92,15 +92,17 @@ public class ItemDetails : MonoBehaviour
 	{
 		if (InventoryItem is not InventoryPotion) return;
 
-		var energyCost = (InventoryItem as InventoryPotion).EnergyCost;
+		var inventoryPotion = InventoryItem as InventoryPotion;
+		var energyCost = inventoryPotion.EnergyCost;
+
 		if (References.TurnOrderManager.CurrentEnergy < energyCost)
 		{
 			print($"Not enough energy to use {InventoryItem.name}");
 			return;
 		}
 
-		var potionType = InventoryItem.GetComponent<InventoryPotion>().PotionType;
-		References.Brewer.TurnAndThrow(potionType);
+		var potionToThrow = inventoryPotion.WorldPrefab;
+		References.Brewer.TurnAndThrow(potionToThrow);
 		References.TurnOrderManager.CurrentEnergy -= energyCost;
 
 		InventoryItem.SlotInInventory.ItemInSlot = null;

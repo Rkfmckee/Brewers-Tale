@@ -92,9 +92,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3458243340176296260}
-  - component: {fileID: 570851784947753427}
+  - component: {fileID: 8648760277499219595}
   m_Layer: 0
-  m_Name: Potion
+  m_Name: WorldFrostPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &570851784947753427
+--- !u!114 &8648760277499219595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,13 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2645290090106049534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1bcef5ff0de2734b941f3c2f2a608d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 93a477dc710dc9f41a4cd0dc3a4ac87c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
-  - Amount: 1
-    Type: 2
-  splashPrefab: {fileID: 7437674455843570176, guid: 6d3eca8357ec04a4ba95e0fa333c7ce7, type: 3}
+  potionColour: {r: 0, g: 0.4986515, b: 1, a: 1}
 --- !u!1 &2660548200775816188
 GameObject:
   m_ObjectHideFlags: 0

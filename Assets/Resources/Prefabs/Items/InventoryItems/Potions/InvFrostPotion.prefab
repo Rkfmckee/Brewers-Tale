@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3460360136237427236}
   - component: {fileID: 7461193643119589457}
   m_Layer: 5
-  m_Name: FrostPotion
+  m_Name: InvFrostPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,5 +91,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Ice potion
   itemDescription: Deals cold damage, with a chance to stop movement next turn
-  potionType: 1
   energyCost: 1
+  worldPrefab: {fileID: 2645290090106049534, guid: 1f77e081d0cd58842b024fb620cae5e8, type: 3}
