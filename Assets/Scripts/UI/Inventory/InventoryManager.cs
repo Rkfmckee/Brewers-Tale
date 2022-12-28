@@ -5,12 +5,6 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-	#region Constants
-
-	private const float ITEM_OPTIONS_OFFSET = 25;
-
-	#endregion
-
 	#region Fields
 
 	private GraphicRaycaster graphicRaycaster;
@@ -120,12 +114,11 @@ public class InventoryManager : MonoBehaviour
 	private void OpenItemOptions(InventoryItem itemClicked)
 	{
 		var slot = itemClicked.SlotInInventory;
-		var itemOptionsPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/ItemOptions");
-		var positionOffset = new Vector3(ITEM_OPTIONS_OFFSET, 0, 0);
-		var spawnPosition = slot.transform.position + positionOffset;
+		var itemDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/ItemDetails");
+		var spawnPosition = slot.transform.position + itemDetailsPrefab.transform.position;
 
-		var itemOptions = Instantiate(itemOptionsPrefab, spawnPosition, Quaternion.identity, canvas.transform);
-		itemOptions.GetComponent<ItemOptions>().InventoryItem = itemClicked;
+		var itemDetails = Instantiate(itemDetailsPrefab, spawnPosition, Quaternion.identity, canvas.transform).GetComponent<ItemDetails>();
+		itemDetails.InventoryItem = itemClicked;
 	}
 
 	private void PutDownItemIfClicked()
