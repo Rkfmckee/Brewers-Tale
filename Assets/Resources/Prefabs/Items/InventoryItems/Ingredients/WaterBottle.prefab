@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3460360136237427236}
   - component: {fileID: 3652999399898245699}
   m_Layer: 5
-  m_Name: FireSalt
+  m_Name: WaterBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 22eb78d5542725b45be4bf89bb25888a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6ada40dd3ea1e5240b20c71ebdb83aa8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,5 +89,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e335fca1804ebd4bad51c1e8c764290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Fire salts
-  itemDescription: Burning remnants of magical flames
+  itemName: Water bottle
+  itemDescription: All potions must start here
