@@ -14,6 +14,8 @@ public class ItemDetails : MonoBehaviour
 	private Transform itemDetails;
 	private Transform ingredientOptions;
 	private Transform potionOptions;
+	private Transform ingredientLabel;
+	private Transform potionLabel;
 	private RectTransform rectTransform;
 	private RectTransform ingredientRectTransform;
 	private RectTransform potionRectTransform;
@@ -45,6 +47,8 @@ public class ItemDetails : MonoBehaviour
 		itemDetails = transform.Find("Details");
 		ingredientOptions = transform.Find("IngredientOptions");
 		potionOptions = transform.Find("PotionOptions");
+		ingredientLabel = itemDetails.Find("Ingredient");
+		potionLabel = itemDetails.Find("Potion");
 
 		rectTransform = GetComponent<RectTransform>();
 		ingredientRectTransform = ingredientOptions.GetComponent<RectTransform>();
@@ -96,17 +100,21 @@ public class ItemDetails : MonoBehaviour
 		itemName.text = inventoryItem.ItemName;
 		itemDescription.text = inventoryItem.ItemDescription;
 
-		UpdatePosition();
+		var isIngredient = inventoryItem is InventoryIngredient;
+		ingredientLabel.gameObject.SetActive(isIngredient);
+		ingredientOptions.gameObject.SetActive(isIngredient);
+
+		var isPotion = inventoryItem is InventoryPotion;
+		potionLabel.gameObject.SetActive(isPotion);
+		potionOptions.gameObject.SetActive(isPotion);
 
 		if (inventoryItem.SlotInInventory is not InventorySlot)
 		{
 			ingredientOptions.gameObject.SetActive(false);
 			potionOptions.gameObject.SetActive(false);
-			return;
 		}
 
-		ingredientOptions.gameObject.SetActive(inventoryItem is InventoryIngredient);
-		potionOptions.gameObject.SetActive(inventoryItem is InventoryPotion);
+		UpdatePosition();
 	}
 
 	private void UpdatePosition()
