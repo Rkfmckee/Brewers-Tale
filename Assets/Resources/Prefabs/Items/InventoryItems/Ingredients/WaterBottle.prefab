@@ -90,4 +90,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Water bottle
-  itemDescription: All potions must start here
+  itemDescription: All potions start here. You have infinite of these.
