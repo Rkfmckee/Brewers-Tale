@@ -78,7 +78,6 @@ public class HealthSystem : MonoBehaviour
 	{
 		var actualDamage = CalculateModifiers(damage, type);
 		var newHealth = CurrentHealth - actualDamage;
-		print($"({type}) Damage: {damage}, Actual: {actualDamage}");
 
 		if (newHealth <= 0)
 		{
