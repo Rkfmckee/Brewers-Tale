@@ -14,6 +14,9 @@ public class ItemDetails : MonoBehaviour
 	private Transform itemDetails;
 	private Transform ingredientOptions;
 	private Transform potionOptions;
+	private RectTransform rectTransform;
+	private RectTransform ingredientRectTransform;
+	private RectTransform potionRectTransform;
 	private TextMeshProUGUI itemName;
 	private TextMeshProUGUI itemDescription;
 	private Button useButton;
@@ -29,11 +32,7 @@ public class ItemDetails : MonoBehaviour
 		set
 		{
 			inventoryItem = value;
-			itemName.text = inventoryItem.ItemName;
-			itemDescription.text = inventoryItem.ItemDescription;
-
-			ingredientOptions.gameObject.SetActive(inventoryItem is InventoryIngredient);
-			potionOptions.gameObject.SetActive(inventoryItem is InventoryPotion);
+			UpdateItemDetails();
 		}
 	}
 
@@ -46,6 +45,10 @@ public class ItemDetails : MonoBehaviour
 		itemDetails = transform.Find("Details");
 		ingredientOptions = transform.Find("IngredientOptions");
 		potionOptions = transform.Find("PotionOptions");
+
+		rectTransform = GetComponent<RectTransform>();
+		ingredientRectTransform = ingredientOptions.GetComponent<RectTransform>();
+		potionRectTransform = potionOptions.GetComponent<RectTransform>();
 
 		itemName = itemDetails.Find("ItemName").GetComponent<TextMeshProUGUI>();
 		itemDescription = itemDetails.Find("ItemDescription").GetComponent<TextMeshProUGUI>();
@@ -87,6 +90,45 @@ public class ItemDetails : MonoBehaviour
 	#endregion
 
 	#region Methods
+
+	private void UpdateItemDetails()
+	{
+		itemName.text = inventoryItem.ItemName;
+		itemDescription.text = inventoryItem.ItemDescription;
+
+		UpdatePosition();
+
+		if (inventoryItem.SlotInInventory is not InventorySlot)
+		{
+			ingredientOptions.gameObject.SetActive(false);
+			potionOptions.gameObject.SetActive(false);
+			return;
+		}
+
+		ingredientOptions.gameObject.SetActive(inventoryItem is InventoryIngredient);
+		potionOptions.gameObject.SetActive(inventoryItem is InventoryPotion);
+	}
+
+	private void UpdatePosition()
+	{
+		var slotPosition = InventoryItem.SlotInInventory.transform.position;
+
+		if (slotPosition.x > (Screen.width / 2))
+		{
+			var offsetPosition = rectTransform.position - slotPosition;
+			offsetPosition.x *= -1;
+			rectTransform.position = slotPosition + offsetPosition;
+			rectTransform.pivot = new Vector2(1, rectTransform.pivot.y);
+
+			ingredientRectTransform.anchorMin = new Vector2(1, ingredientRectTransform.anchorMin.y);
+			ingredientRectTransform.anchorMax = new Vector2(1, ingredientRectTransform.anchorMax.y);
+			ingredientRectTransform.pivot = new Vector2(1, ingredientRectTransform.pivot.y);
+
+			potionRectTransform.anchorMin = new Vector2(1, potionRectTransform.anchorMin.y);
+			potionRectTransform.anchorMax = new Vector2(1, potionRectTransform.anchorMax.y);
+			potionRectTransform.pivot = new Vector2(1, potionRectTransform.pivot.y);
+		}
+	}
 
 	private void UseItem()
 	{

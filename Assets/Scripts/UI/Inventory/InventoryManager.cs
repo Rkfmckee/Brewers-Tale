@@ -101,7 +101,7 @@ public class InventoryManager : MonoBehaviour
 			pointerEventData.position = Input.mousePosition;
 			graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-			slotClicked = GetSlot<InventorySlot>(raycastResults);
+			slotClicked = GetSlot<Slot>(raycastResults);
 			if (!slotClicked) return;
 
 			itemClicked = slotClicked.ItemInSlot;
