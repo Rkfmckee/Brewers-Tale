@@ -81,6 +81,7 @@ public class HealthSystem : MonoBehaviour
 
 		if (newHealth <= 0)
 		{
+			HealthPopup.Create(healthBar, "Dead", true);
 			Destroy(gameObject);
 			return;
 		}
@@ -94,11 +95,13 @@ public class HealthSystem : MonoBehaviour
 		var newHealth = CurrentHealth + health;
 		if (newHealth >= MaxHealth)
 		{
+			HealthPopup.Create(healthBar, "Full health", false);
 			CurrentHealth = MaxHealth;
 			return;
 		}
 
 		CurrentHealth = newHealth;
+		HealthPopup.Create(healthBar, health, false);
 	}
 
 	private float CalculateModifiers(float damage, DamageType type)
