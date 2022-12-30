@@ -86,7 +86,7 @@ public class HealthSystem : MonoBehaviour
 		}
 
 		CurrentHealth = newHealth;
-		HealthPopup.Create(healthBar.transform.position, actualDamage, true);
+		HealthPopup.Create(healthBar, actualDamage, true);
 	}
 
 	public void Heal(float health)
