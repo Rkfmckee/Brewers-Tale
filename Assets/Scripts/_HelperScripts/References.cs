@@ -10,7 +10,6 @@ public static class References
 	public static List<EnemySpace> EnemySpaces = new List<EnemySpace>();
 	public static EnemySpawner EnemySpawner;
 
-
 	public static class Crafting
 	{
 		public static CraftingRecipeManager RecipeManager;
@@ -20,7 +19,9 @@ public static class References
 
 	public static class UI
 	{
-		public static Canvas Canvas;
-		public static CanvasController CanvasController;
+		public static Canvas OverlayCanvas;
+		public static Canvas WorldCanvas;
+		public static OverlayCanvasController OverlayCanvasController;
+		public static WorldCanvasController WorldCanvasController;
 	}
 }

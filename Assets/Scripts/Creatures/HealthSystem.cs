@@ -42,8 +42,8 @@ public class HealthSystem : MonoBehaviour
 
 	private void Start()
 	{
-		var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HealthBar");
-		var healthBarGroup = References.UI.Canvas.transform.Find("HealthBars");
+		var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Health/HealthBar");
+		var healthBarGroup = References.UI.WorldCanvas.transform;
 		healthBar = Instantiate(healthBarPrefab, healthBarGroup).GetComponent<HealthBar>();
 		healthBar.Character = this;
 
@@ -86,6 +86,7 @@ public class HealthSystem : MonoBehaviour
 		}
 
 		CurrentHealth = newHealth;
+		HealthPopup.Create(healthBar.transform.position, actualDamage, true);
 	}
 
 	public void Heal(float health)

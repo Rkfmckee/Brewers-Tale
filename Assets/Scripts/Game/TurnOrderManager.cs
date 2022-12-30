@@ -31,7 +31,7 @@ public class TurnOrderManager : MonoBehaviour
 		set
 		{
 			currentEnergy = value;
-			References.UI.CanvasController.SetCurrentEnergyText(currentEnergy);
+			References.UI.OverlayCanvasController.SetCurrentEnergyText(currentEnergy);
 		}
 	}
 

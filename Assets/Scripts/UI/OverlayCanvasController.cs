@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class CanvasController : MonoBehaviour
+public class OverlayCanvasController : MonoBehaviour
 {
 	#region Fields
 
@@ -13,8 +13,8 @@ public class CanvasController : MonoBehaviour
 
 	private void Awake()
 	{
-		References.UI.Canvas = GetComponent<Canvas>();
-		References.UI.CanvasController = this;
+		References.UI.OverlayCanvas = GetComponent<Canvas>();
+		References.UI.OverlayCanvasController = this;
 
 		currentEnergyText = transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
 	}
@@ -25,7 +25,7 @@ public class CanvasController : MonoBehaviour
 
 	public void SetCurrentEnergyText(int energy)
 	{
-		currentEnergyText.text = energy.ToString();
+		currentEnergyText.SetText(energy.ToString());
 	}
 
 	#endregion

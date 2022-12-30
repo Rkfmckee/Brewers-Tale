@@ -21,14 +21,14 @@ public abstract class Turn
 
 	public Turn()
 	{
-		canvas = References.UI.Canvas;
+		canvas = References.UI.OverlayCanvas;
 		turnOrderManager = References.TurnOrderManager;
 
 		var isPlayerTurn = this is PlayerTurn;
 		var endTurnButton = canvas.transform.Find("EndTurn").GetComponent<Button>();
 		var endTurnText = isPlayerTurn ? "End turn" : TurnText;
 		endTurnButton.interactable = isPlayerTurn;
-		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = endTurnText;
+		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().SetText(endTurnText);
 
 		canvas.transform.Find("Energy").gameObject.SetActive(isPlayerTurn);
 	}
