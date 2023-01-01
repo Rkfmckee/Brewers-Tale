@@ -147,7 +147,7 @@ public class ItemDetails : MonoBehaviour
 
 		if (References.TurnOrderManager.CurrentEnergy < energyCost)
 		{
-			print($"Not enough energy to use {InventoryItem.ItemName}");
+			NotificationManager.Add($"Not enough energy to use {InventoryItem.ItemName}", NotificationType.Error);
 			return;
 		}
 

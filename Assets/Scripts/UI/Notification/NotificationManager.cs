@@ -9,7 +9,7 @@ public class NotificationManager : MonoBehaviour
 	public GameObject notificationPrefab;
 
 	private static NotificationManager instance;
-	private Queue<(string, NotificationType)> notifications;
+	private List<(string, NotificationType)> notifications;
 	private bool showingNotifications;
 
 	#endregion
@@ -34,7 +34,7 @@ public class NotificationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		notifications = new Queue<(string, NotificationType)>();
+		notifications = new List<(string, NotificationType)>();
 		showingNotifications = false;
 	}
 
@@ -54,8 +54,9 @@ public class NotificationManager : MonoBehaviour
 
 	public void AddNotification(string text, NotificationType type)
 	{
-		notifications.Enqueue((text, type));
+		if (notifications.Contains((text, type))) return;
 
+		notifications.Add((text, type));
 		if (!showingNotifications) StartCoroutine(ShowingNotifications());
 	}
 
@@ -69,14 +70,16 @@ public class NotificationManager : MonoBehaviour
 
 		while (notifications.Count > 0)
 		{
-			var notificationInfo = notifications.Dequeue();
 			var notification = Instantiate(notificationPrefab, References.UI.OverlayCanvas.transform.Find("Notifications")).GetComponent<Notification>();
+			var notificationInfo = notifications[0];
 			notification.Initialize(notificationInfo);
 
 			while (notification != null)
 			{
 				yield return null;
 			}
+
+			notifications.Remove(notificationInfo);
 		}
 
 		showingNotifications = false;
