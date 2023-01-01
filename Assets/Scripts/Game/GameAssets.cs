@@ -12,7 +12,10 @@ public class GameAssets : MonoBehaviour
 	{
 		get
 		{
-			if (instance == null) instance = Instantiate(Resources.Load<GameAssets>("Prefabs/Game/GameAssets"));
+			if (instance == null)
+				instance = Instantiate(Resources.Load<GameAssets>("Prefabs/Game/GameAssets"),
+				GameObject.Find("GameControllers").transform);
+
 			return instance;
 		}
 	}

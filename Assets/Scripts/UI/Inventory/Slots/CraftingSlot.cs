@@ -17,7 +17,7 @@ public class CraftingSlot : InventoryCraftingSlot
 	{
 		if (References.TurnOrderManager.CurrentEnergy < 1)
 		{
-			print("Not enough energy to craft");
+			NotificationManager.Add($"Not enough energy to craft", NotificationType.Error);
 			return false;
 		}
 
