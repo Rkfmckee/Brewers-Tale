@@ -66,7 +66,6 @@ public class NotificationManager : MonoBehaviour
 	private IEnumerator ShowingNotifications()
 	{
 		showingNotifications = true;
-		print("Showing notifications");
 
 		while (notifications.Count > 0)
 		{
@@ -74,16 +73,13 @@ public class NotificationManager : MonoBehaviour
 			var notification = Instantiate(notificationPrefab, References.UI.OverlayCanvas.transform.Find("Notifications")).GetComponent<Notification>();
 			notification.Initialize(notificationInfo);
 
-			while (notification.CurrentlyActive)
+			while (notification != null)
 			{
 				yield return null;
 			}
-
-			Destroy(notification.gameObject);
 		}
 
 		showingNotifications = false;
-		print("Finished notifications");
 	}
 
 	#endregion

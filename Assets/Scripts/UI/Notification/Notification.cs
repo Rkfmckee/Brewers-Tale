@@ -8,14 +8,9 @@ public class Notification : MonoBehaviour
 
 	private float fadeInSeconds;
 	private float fadeOutSeconds;
+	private float secondsToShow;
 
 	private TextMeshProUGUI notificationText;
-
-	#endregion
-
-	#region Properties
-
-	public bool CurrentlyActive { get; set; }
 
 	#endregion
 
@@ -27,6 +22,7 @@ public class Notification : MonoBehaviour
 
 		fadeInSeconds = 0.5f;
 		fadeOutSeconds = 1;
+		secondsToShow = 3;
 	}
 
 	#endregion
@@ -66,8 +62,6 @@ public class Notification : MonoBehaviour
 
 	private IEnumerator FadeInAndOut()
 	{
-		CurrentlyActive = true;
-
 		var colour = notificationText.color;
 
 		while (colour.a < 1)
@@ -78,7 +72,7 @@ public class Notification : MonoBehaviour
 			yield return null;
 		}
 
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(secondsToShow);
 
 		while (colour.a > 0)
 		{
@@ -88,7 +82,7 @@ public class Notification : MonoBehaviour
 			yield return null;
 		}
 
-		CurrentlyActive = false;
+		Destroy(gameObject);
 	}
 
 	#endregion
