@@ -65,7 +65,7 @@ public class ItemDetails : MonoBehaviour
 
 	private void Start()
 	{
-		graphicRaycaster = References.UI.Canvas.GetComponent<GraphicRaycaster>();
+		graphicRaycaster = References.UI.OverlayCanvas.GetComponent<GraphicRaycaster>();
 		References.InventoryManager.ActiveInventory = InventoryState.ItemDetails;
 	}
 
@@ -97,8 +97,8 @@ public class ItemDetails : MonoBehaviour
 
 	private void UpdateItemDetails()
 	{
-		itemName.text = inventoryItem.ItemName;
-		itemDescription.text = inventoryItem.ItemDescription;
+		itemName.SetText(inventoryItem.ItemName);
+		itemDescription.SetText(inventoryItem.ItemDescription);
 
 		var isIngredient = inventoryItem is InventoryIngredient;
 		ingredientLabel.gameObject.SetActive(isIngredient);

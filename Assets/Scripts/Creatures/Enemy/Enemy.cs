@@ -76,6 +76,12 @@ public abstract class Enemy : MonoBehaviour
 		CurrentSpace = enemySpaces[0];
 	}
 
+	private void OnDestroy()
+	{
+		if (References.Enemies.Contains(this))
+			References.Enemies.Remove(this);
+	}
+
 	#endregion
 
 	#region Methods

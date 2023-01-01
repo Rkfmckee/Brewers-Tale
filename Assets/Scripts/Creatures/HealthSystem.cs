@@ -42,8 +42,8 @@ public class HealthSystem : MonoBehaviour
 
 	private void Start()
 	{
-		var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/HealthBar");
-		var healthBarGroup = References.UI.Canvas.transform.Find("HealthBars");
+		var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Health/HealthBar");
+		var healthBarGroup = References.UI.WorldCanvas.transform;
 		healthBar = Instantiate(healthBarPrefab, healthBarGroup).GetComponent<HealthBar>();
 		healthBar.Character = this;
 
@@ -81,11 +81,13 @@ public class HealthSystem : MonoBehaviour
 
 		if (newHealth <= 0)
 		{
+			HealthPopup.Create(healthBar, "Dead", true);
 			Destroy(gameObject);
 			return;
 		}
 
 		CurrentHealth = newHealth;
+		HealthPopup.Create(healthBar, actualDamage, true);
 	}
 
 	public void Heal(float health)
@@ -93,11 +95,13 @@ public class HealthSystem : MonoBehaviour
 		var newHealth = CurrentHealth + health;
 		if (newHealth >= MaxHealth)
 		{
+			HealthPopup.Create(healthBar, "Full health", false);
 			CurrentHealth = MaxHealth;
 			return;
 		}
 
 		CurrentHealth = newHealth;
+		HealthPopup.Create(healthBar, health, false);
 	}
 
 	private float CalculateModifiers(float damage, DamageType type)
