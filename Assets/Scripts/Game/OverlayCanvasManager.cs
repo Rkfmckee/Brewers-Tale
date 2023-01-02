@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class OverlayCanvasManager : MonoBehaviour
@@ -7,7 +6,7 @@ public class OverlayCanvasManager : MonoBehaviour
 
 	private static OverlayCanvasManager instance;
 
-	public Canvas canvas;
+	private Canvas canvas;
 
 	#endregion
 
@@ -18,8 +17,12 @@ public class OverlayCanvasManager : MonoBehaviour
 		get
 		{
 			if (instance == null)
+			{
 				instance = Instantiate(Resources.Load<OverlayCanvasManager>("Prefabs/Game/OverlayCanvasManager"),
 				GameObject.Find("GameControllers").transform);
+
+				instance.canvas = GameObject.Find("OverlayCanvas").GetComponent<Canvas>();
+			}
 
 			return instance;
 		}

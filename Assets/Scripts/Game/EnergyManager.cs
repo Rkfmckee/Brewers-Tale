@@ -34,7 +34,7 @@ public class EnergyManager : MonoBehaviour
 
 	#region Events
 
-	private void Start()
+	private void Awake()
 	{
 		currentEnergyText = OverlayCanvasManager.Canvas.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
 		MaxEnergy = 3;
