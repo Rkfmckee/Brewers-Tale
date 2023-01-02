@@ -1873,7 +1873,7 @@ PrefabInstance:
     - target: {fileID: 580860780877724344, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: itemInSlot
       value: 
-      objectReference: {fileID: 3652999399898245699, guid: a422e162704f3db43bfcd37fcc350163, type: 3}
+      objectReference: {fileID: 3652999399898245699, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
     - target: {fileID: 3194841236901466258, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: m_Name
       value: InventorySlot
@@ -5308,6 +5308,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1932164202}
     m_Modifications:
+    - target: {fileID: 580860780877724344, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
+      propertyPath: itemInSlot
+      value: 
+      objectReference: {fileID: 3652999399898245699, guid: ba98b7f685b34e844a00ad0d58b73834, type: 3}
     - target: {fileID: 3194841236901466258, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: m_Name
       value: InventorySlot
@@ -5515,7 +5519,7 @@ PrefabInstance:
     - target: {fileID: 580860780877724344, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: itemInSlot
       value: 
-      objectReference: {fileID: 7161190641192275514, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
+      objectReference: {fileID: 3652999399898245699, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
     - target: {fileID: 3194841236901466258, guid: bba30a26e59b06842bfe89da716d1df6, type: 3}
       propertyPath: m_Name
       value: InventorySlot
