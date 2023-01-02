@@ -65,7 +65,7 @@ public class ItemDetails : MonoBehaviour
 
 	private void Start()
 	{
-		graphicRaycaster = References.UI.OverlayCanvas.GetComponent<GraphicRaycaster>();
+		graphicRaycaster = OverlayCanvasManager.Canvas.GetComponent<GraphicRaycaster>();
 		References.InventoryManager.ActiveInventory = InventoryState.ItemDetails;
 	}
 
@@ -145,15 +145,10 @@ public class ItemDetails : MonoBehaviour
 		var inventoryPotion = InventoryItem as InventoryPotion;
 		var energyCost = inventoryPotion.EnergyCost;
 
-		if (References.TurnOrderManager.CurrentEnergy < energyCost)
-		{
-			NotificationManager.Add($"Not enough energy to use {InventoryItem.ItemName}", NotificationType.Error);
-			return;
-		}
+		if (!EnergyManager.HaveEnoughEnergy(energyCost, $"use {InventoryItem.ItemName}")) return;
 
 		var potionToThrow = inventoryPotion.WorldPrefab;
 		References.Brewer.TurnAndThrow(potionToThrow);
-		References.TurnOrderManager.CurrentEnergy -= energyCost;
 
 		InventoryItem.SlotInInventory.ItemInSlot = null;
 		Destroy(InventoryItem.gameObject);

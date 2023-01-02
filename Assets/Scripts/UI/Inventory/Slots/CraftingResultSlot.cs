@@ -54,7 +54,7 @@ public class CraftingResultSlot : Slot
 			craftingSlot.ItemInSlot = null;
 		}
 
-		References.TurnOrderManager.CurrentEnergy -= 1;
+		EnergyManager.UseEnergy(1);
 	}
 
 	#endregion
