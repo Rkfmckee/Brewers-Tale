@@ -16,10 +16,4 @@ public static class References
 		public static List<CraftingSlot> Slots = new List<CraftingSlot>();
 		public static CraftingResultSlot ResultSlot;
 	}
-
-	public static class UI
-	{
-		public static Canvas WorldCanvas;
-		public static WorldCanvasController WorldCanvasController;
-	}
 }

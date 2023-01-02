@@ -42,7 +42,7 @@ public class HealthPopup : MonoBehaviour
 
 	private void Start()
 	{
-		canvas = References.UI.WorldCanvas;
+		canvas = WorldCanvasManager.Canvas;
 		transform.SetParent(canvas.transform);
 		transform.localScale = Vector3.one;
 	}

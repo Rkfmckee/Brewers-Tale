@@ -43,7 +43,7 @@ public class HealthSystem : MonoBehaviour
 	private void Start()
 	{
 		var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Health/HealthBar");
-		var healthBarGroup = References.UI.WorldCanvas.transform;
+		var healthBarGroup = WorldCanvasManager.Canvas.transform;
 		healthBar = Instantiate(healthBarPrefab, healthBarGroup).GetComponent<HealthBar>();
 		healthBar.Character = this;
 
