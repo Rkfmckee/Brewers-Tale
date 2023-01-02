@@ -6,7 +6,6 @@ public class TurnOrderManager : MonoBehaviour
 	#region Fields
 
 	private Turn currentTurn;
-	private int currentEnergy;
 	private List<EnemySpace> enemySpaces;
 
 	#endregion
@@ -22,16 +21,6 @@ public class TurnOrderManager : MonoBehaviour
 			References.InventoryManager.ActiveInventory = currentTurn is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
 
 			InitializeTurn();
-		}
-	}
-
-	public int CurrentEnergy
-	{
-		get => currentEnergy;
-		set
-		{
-			currentEnergy = value;
-			References.UI.OverlayCanvasController.SetCurrentEnergyText(currentEnergy);
 		}
 	}
 

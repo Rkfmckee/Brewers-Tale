@@ -15,13 +15,7 @@ public class CraftingSlot : InventoryCraftingSlot
 
 	public override bool CanPlaceItem(InventoryItem item)
 	{
-		if (References.TurnOrderManager.CurrentEnergy < 1)
-		{
-			NotificationManager.Add($"Not enough energy to craft", NotificationType.Error);
-			return false;
-		}
-
-		return true;
+		return EnergyManager.HaveEnoughEnergy(1, "craft", false);
 	}
 
 	protected override void UpdateInventoryItem()

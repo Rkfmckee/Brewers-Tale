@@ -10,7 +10,7 @@ public class PlayerTurn : Turn
 
 	public PlayerTurn() : base()
 	{
-		References.TurnOrderManager.CurrentEnergy = 3;
+		EnergyManager.ResetEnergy();
 	}
 
 	#endregion
