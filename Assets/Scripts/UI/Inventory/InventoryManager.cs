@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour
 
 	private void Start()
 	{
-		canvas = References.UI.OverlayCanvas;
+		canvas = OverlayCanvasManager.Canvas;
 		turnOrderManager = References.TurnOrderManager;
 
 		graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();

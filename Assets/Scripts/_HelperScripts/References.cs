@@ -19,9 +19,7 @@ public static class References
 
 	public static class UI
 	{
-		public static Canvas OverlayCanvas;
 		public static Canvas WorldCanvas;
-		public static OverlayCanvasController OverlayCanvasController;
 		public static WorldCanvasController WorldCanvasController;
 	}
 }

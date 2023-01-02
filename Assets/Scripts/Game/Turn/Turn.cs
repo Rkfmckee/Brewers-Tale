@@ -21,7 +21,7 @@ public abstract class Turn
 
 	public Turn()
 	{
-		canvas = References.UI.OverlayCanvas;
+		canvas = OverlayCanvasManager.Canvas;
 		turnOrderManager = References.TurnOrderManager;
 
 		var isPlayerTurn = this is PlayerTurn;

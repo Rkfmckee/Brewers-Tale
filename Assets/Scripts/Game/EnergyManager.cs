@@ -36,7 +36,7 @@ public class EnergyManager : MonoBehaviour
 
 	private void Start()
 	{
-		//currentEnergyText = OverlayCanvasController.Canvas.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
+		currentEnergyText = OverlayCanvasManager.Canvas.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
 		MaxEnergy = 3;
 	}
 
@@ -101,8 +101,7 @@ public class EnergyManager : MonoBehaviour
 	private void Set(int energy)
 	{
 		currentEnergy = energy;
-		print($"currentEnergy: {currentEnergy}");
-		//currentEnergyText.SetText(energy.ToString());
+		currentEnergyText.SetText(energy.ToString());
 	}
 
 	#endregion

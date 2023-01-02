@@ -65,7 +65,7 @@ public class ItemDetails : MonoBehaviour
 
 	private void Start()
 	{
-		graphicRaycaster = References.UI.OverlayCanvas.GetComponent<GraphicRaycaster>();
+		graphicRaycaster = OverlayCanvasManager.Canvas.GetComponent<GraphicRaycaster>();
 		References.InventoryManager.ActiveInventory = InventoryState.ItemDetails;
 	}
 

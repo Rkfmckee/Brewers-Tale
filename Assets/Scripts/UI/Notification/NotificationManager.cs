@@ -70,7 +70,7 @@ public class NotificationManager : MonoBehaviour
 
 		while (notifications.Count > 0)
 		{
-			var notification = Instantiate(notificationPrefab, References.UI.OverlayCanvas.transform.Find("Notifications")).GetComponent<Notification>();
+			var notification = Instantiate(notificationPrefab, OverlayCanvasManager.Canvas.transform.Find("Notifications")).GetComponent<Notification>();
 			var notificationInfo = notifications[0];
 			notification.Initialize(notificationInfo);
 
