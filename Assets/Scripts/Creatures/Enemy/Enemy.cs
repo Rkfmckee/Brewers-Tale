@@ -8,6 +8,8 @@ public abstract class Enemy : MonoBehaviour
 	#region Fields
 
 	[SerializeField]
+	private string enemyName;
+	[SerializeField]
 	protected int attackDamageAmount;
 	[SerializeField]
 	protected DamageType attackDamageType;
@@ -27,6 +29,8 @@ public abstract class Enemy : MonoBehaviour
 	#endregion
 
 	#region Properties
+
+	public string EnemyName => enemyName;
 
 	public EnemyState CurrentState
 	{
@@ -80,6 +84,8 @@ public abstract class Enemy : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		DropLoot();
+
 		if (References.Enemies.Contains(this))
 			References.Enemies.Remove(this);
 	}
@@ -129,10 +135,22 @@ public abstract class Enemy : MonoBehaviour
 			var percentage = Random.Range(0f, 100f);
 			if (percentage > loot.DropPercentage) continue;
 
-			// Find open inventory slot
-			// Add item to the slot
-			// Add notification of new item being picked up
+			var emptySlot = FindEmptyInventorySlot();
+			if (!emptySlot) return;
+
+			emptySlot.ItemInSlot = loot.Item;
+			NotificationManager.Add($"Picked up {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
 		}
+	}
+
+	private InventorySlot FindEmptyInventorySlot()
+	{
+		foreach (var slot in References.Inventory.Slots)
+		{
+			if (!slot.ItemInSlot) return slot;
+		}
+
+		return null;
 	}
 
 	#endregion
