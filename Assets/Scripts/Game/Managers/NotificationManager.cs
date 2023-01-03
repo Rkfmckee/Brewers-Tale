@@ -21,7 +21,7 @@ public class NotificationManager : MonoBehaviour
 		get
 		{
 			if (instance == null)
-				instance = Instantiate(Resources.Load<NotificationManager>("Prefabs/Game/NotificationManager"),
+				instance = Instantiate(Resources.Load<NotificationManager>($"Prefabs/Game/Managers/{nameof(NotificationManager)}"),
 				GameObject.Find("GameControllers").transform);
 
 			return instance;

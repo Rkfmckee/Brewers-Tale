@@ -18,7 +18,7 @@ public class WorldCanvasManager : MonoBehaviour
 		{
 			if (instance == null)
 			{
-				instance = Instantiate(Resources.Load<WorldCanvasManager>("Prefabs/Game/WorldCanvasManager"),
+				instance = Instantiate(Resources.Load<WorldCanvasManager>("Prefabs/Game/Managers/WorldCanvasManager"),
 				GameObject.Find("GameControllers").transform);
 
 				instance.canvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();

@@ -66,7 +66,7 @@ public class HealthPopup : MonoBehaviour
 
 	public static void Create(HealthBar healthBar, string text, bool isDamage)
 	{
-		var healthPopup = Instantiate(GameAssets.Instance.HealthPopupPrefab, healthBar.transform.position, Quaternion.identity).GetComponent<HealthPopup>();
+		var healthPopup = Instantiate(GameAssetManager.Instance.HealthPopupPrefab, healthBar.transform.position, Quaternion.identity).GetComponent<HealthPopup>();
 		healthPopup.HealthBarPosition = healthBar.transform.localPosition;
 		healthPopup.Initialize(text, isDamage);
 	}

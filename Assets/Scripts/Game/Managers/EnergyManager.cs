@@ -19,7 +19,7 @@ public class EnergyManager : MonoBehaviour
 		get
 		{
 			if (instance == null)
-				instance = Instantiate(Resources.Load<EnergyManager>("Prefabs/Game/EnergyManager"),
+				instance = Instantiate(Resources.Load<EnergyManager>("Prefabs/Game/Managers/EnergyManager"),
 				GameObject.Find("GameControllers").transform);
 
 			return instance;
