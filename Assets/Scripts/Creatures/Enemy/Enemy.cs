@@ -135,11 +135,28 @@ public abstract class Enemy : MonoBehaviour
 			var percentage = Random.Range(0f, 100f);
 			if (percentage > loot.DropPercentage) continue;
 
-			var emptySlot = FindEmptyInventorySlot();
-			if (!emptySlot) return;
+			var numberToDrop = Random.Range(1, loot.MaxQuantity + 1);
+			var numberDropped = 0;
+			for (int i = 0; i < numberToDrop; i++)
+			{
+				var emptySlot = FindEmptyInventorySlot();
+				if (!emptySlot) break;
 
-			emptySlot.ItemInSlot = loot.Item;
-			NotificationManager.Add($"Picked up {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+				emptySlot.ItemInSlot = loot.Item;
+				numberDropped++;
+			}
+
+			switch (numberDropped)
+			{
+				case 0:
+					return;
+				case 1:
+					NotificationManager.Add($"Picked up {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+					break;
+				default:
+					NotificationManager.Add($"Picked up {numberDropped}x {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+					break;
+			}
 		}
 	}
 

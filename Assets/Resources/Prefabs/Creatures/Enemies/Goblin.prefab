@@ -52,6 +52,10 @@ MonoBehaviour:
   lootTable:
   - Item: {fileID: 3652999399898245699, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
     DropPercentage: 80
+    MaxQuantity: 3
+  - Item: {fileID: 3652999399898245699, guid: ba98b7f685b34e844a00ad0d58b73834, type: 3}
+    DropPercentage: 80
+    MaxQuantity: 2
 --- !u!114 &3399312564791565947
 MonoBehaviour:
   m_ObjectHideFlags: 0
