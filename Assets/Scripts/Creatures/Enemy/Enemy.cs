@@ -11,6 +11,8 @@ public abstract class Enemy : MonoBehaviour
 	protected int attackDamageAmount;
 	[SerializeField]
 	protected DamageType attackDamageType;
+	[SerializeField]
+	private Loot[] lootTable;
 
 	protected float? animationSpeed;
 	private EnemyState currentState;
@@ -101,12 +103,12 @@ public abstract class Enemy : MonoBehaviour
 		}
 	}
 
-	public void Attack()
+	private void Attack()
 	{
 		StartCoroutine(Attacking());
 	}
 
-	public void MoveToNextSpace()
+	private void MoveToNextSpace()
 	{
 		if (CurrentSpace.SpaceNumber == 6) return;
 
@@ -114,10 +116,23 @@ public abstract class Enemy : MonoBehaviour
 		MoveToSpace(nextSpace);
 	}
 
-	public void MoveToSpace(EnemySpace space)
+	private void MoveToSpace(EnemySpace space)
 	{
 		CurrentSpace = space;
 		StartCoroutine(MovingToSpace(CurrentSpace));
+	}
+
+	private void DropLoot()
+	{
+		foreach (var loot in lootTable)
+		{
+			var percentage = Random.Range(0f, 100f);
+			if (percentage > loot.DropPercentage) continue;
+
+			// Find open inventory slot
+			// Add item to the slot
+			// Add notification of new item being picked up
+		}
 	}
 
 	#endregion
