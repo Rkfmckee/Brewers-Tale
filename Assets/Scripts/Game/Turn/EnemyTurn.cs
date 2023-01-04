@@ -51,7 +51,7 @@ public class EnemyTurn : Turn
 		if (enemies.Count == 0)
 		{
 			Debug.Log("No enemies to take turns");
-			References.TurnOrderManager.CurrentTurn = new PlayerTurn();
+			TurnOrderManager.Instance.CurrentTurn = new PlayerTurn();
 			yield break;
 		}
 
@@ -61,7 +61,7 @@ public class EnemyTurn : Turn
 
 		yield return new WaitForSeconds(endTime);
 
-		References.TurnOrderManager.CurrentTurn = new PlayerTurn();
+		TurnOrderManager.Instance.CurrentTurn = new PlayerTurn();
 	}
 
 	private IEnumerator EnemiesTakeTurns()

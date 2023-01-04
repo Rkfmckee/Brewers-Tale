@@ -2,23 +2,31 @@ using UnityEngine;
 
 public class GameAssetManager : MonoBehaviour
 {
-	// Singleton class for holding references to assets which can be accessed anywhere
-	// For instance, the HealthPopupPrefab needs to be instantiated through a static method
-	// which isn't usually possible
+	#region Fields
 
 	private static GameAssetManager instance;
+
+	public GameObject HealthPopupPrefab;
+
+	#endregion
 
 	public static GameAssetManager Instance
 	{
 		get
 		{
 			if (instance == null)
-				instance = Instantiate(Resources.Load<GameAssetManager>($"Prefabs/Game/Managers/{nameof(GameAssetManager)}"),
-				GameObject.Find("GameControllers").transform);
+				instance = Instantiate(Resources.Load<GameAssetManager>($"Prefabs/Game/Managers/{nameof(GameAssetManager)}"));
 
 			return instance;
 		}
 	}
 
-	public GameObject HealthPopupPrefab;
+	#region Events
+
+	private void Awake()
+	{
+		DontDestroyOnLoad(gameObject);
+	}
+
+	#endregion
 }

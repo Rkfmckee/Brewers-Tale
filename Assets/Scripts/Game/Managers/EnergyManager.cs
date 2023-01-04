@@ -6,6 +6,7 @@ public class EnergyManager : MonoBehaviour
 	#region Fields
 
 	private static EnergyManager instance;
+
 	private int currentEnergy;
 
 	private TextMeshProUGUI currentEnergyText;
@@ -19,8 +20,7 @@ public class EnergyManager : MonoBehaviour
 		get
 		{
 			if (instance == null)
-				instance = Instantiate(Resources.Load<EnergyManager>("Prefabs/Game/Managers/EnergyManager"),
-				GameObject.Find("GameControllers").transform);
+				instance = Instantiate(Resources.Load<EnergyManager>($"Prefabs/Game/Managers/{nameof(EnergyManager)}"));
 
 			return instance;
 		}
@@ -36,6 +36,8 @@ public class EnergyManager : MonoBehaviour
 
 	private void Awake()
 	{
+		DontDestroyOnLoad(gameObject);
+
 		currentEnergyText = OverlayCanvasManager.Canvas.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
 		MaxEnergy = 3;
 	}

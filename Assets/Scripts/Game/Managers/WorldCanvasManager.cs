@@ -18,9 +18,7 @@ public class WorldCanvasManager : MonoBehaviour
 		{
 			if (instance == null)
 			{
-				instance = Instantiate(Resources.Load<WorldCanvasManager>("Prefabs/Game/Managers/WorldCanvasManager"),
-				GameObject.Find("GameControllers").transform);
-
+				instance = Instantiate(Resources.Load<WorldCanvasManager>($"Prefabs/Game/Managers/{nameof(WorldCanvasManager)}"));
 				instance.canvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
 			}
 
@@ -29,6 +27,15 @@ public class WorldCanvasManager : MonoBehaviour
 	}
 
 	public static Canvas Canvas { get => Instance.canvas; }
+
+	#endregion
+
+	#region Events
+
+	private void Awake()
+	{
+		DontDestroyOnLoad(gameObject);
+	}
 
 	#endregion
 }

@@ -6,9 +6,10 @@ public class NotificationManager : MonoBehaviour
 {
 	#region Fields
 
+	private static NotificationManager instance;
+
 	public GameObject notificationPrefab;
 
-	private static NotificationManager instance;
 	private List<(string, NotificationType)> notifications;
 	private bool showingNotifications;
 
@@ -21,8 +22,7 @@ public class NotificationManager : MonoBehaviour
 		get
 		{
 			if (instance == null)
-				instance = Instantiate(Resources.Load<NotificationManager>($"Prefabs/Game/Managers/{nameof(NotificationManager)}"),
-				GameObject.Find("GameControllers").transform);
+				instance = Instantiate(Resources.Load<NotificationManager>($"Prefabs/Game/Managers/{nameof(NotificationManager)}"));
 
 			return instance;
 		}
@@ -34,6 +34,8 @@ public class NotificationManager : MonoBehaviour
 
 	private void Awake()
 	{
+		DontDestroyOnLoad(gameObject);
+
 		notifications = new List<(string, NotificationType)>();
 		showingNotifications = false;
 	}

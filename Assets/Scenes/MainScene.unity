@@ -234,7 +234,6 @@ GameObject:
   - component: {fileID: 157776394}
   - component: {fileID: 157776397}
   - component: {fileID: 157776393}
-  - component: {fileID: 157776395}
   - component: {fileID: 157776396}
   m_Layer: 0
   m_Name: GlobalController
@@ -285,18 +284,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66b9ce4d969a2464c9ffb2087bf7dad0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &157776395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157776387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ab2e36cb223cc14c86d948ac2204161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &157776396
