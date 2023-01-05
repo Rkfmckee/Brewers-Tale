@@ -9,8 +9,15 @@ public class InventoryManager : MonoBehaviour
 
 	private static InventoryManager instance;
 
-	private GraphicRaycaster graphicRaycaster;
+	private InventoryItem itemHeld;
+	private RectTransform itemHeldTransform;
+	private Vector2 itemHeldPosition;
+	private ScreenSide mouseSide;
+
 	private Canvas canvas;
+	private RectTransform canvasTransform;
+	private GraphicRaycaster graphicRaycaster;
+	private new Camera camera;
 
 	#endregion
 
@@ -28,7 +35,15 @@ public class InventoryManager : MonoBehaviour
 	}
 
 	public InventoryState ActiveInventory { get; set; }
-	public InventoryItem ItemHeld { get; set; }
+	public InventoryItem ItemHeld
+	{
+		get => itemHeld;
+		set
+		{
+			itemHeld = value;
+			if (itemHeld != null) itemHeldTransform = itemHeld.GetComponent<RectTransform>();
+		}
+	}
 
 	#endregion
 
@@ -37,18 +52,21 @@ public class InventoryManager : MonoBehaviour
 	private void Awake()
 	{
 		ActiveInventory = InventoryState.Inventory;
+		camera = Camera.main;
 	}
 
 	private void Start()
 	{
-		canvas = OverlayCanvasManager.Canvas;
-
+		canvas = WorldCanvasManager.BookCanvasLeft;
+		canvasTransform = canvas.GetComponent<RectTransform>();
 		graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
 	}
 
 	private void Update()
 	{
 		if (ActiveInventory != InventoryState.Inventory) return;
+
+		GetMouseScreenSide();
 
 		if (!ItemHeld)
 		{
@@ -57,7 +75,7 @@ public class InventoryManager : MonoBehaviour
 		}
 		else
 		{
-			ItemHeldFollowMouse();
+			SetPositionOfItem();
 			PutDownItemIfClicked();
 		}
 	}
@@ -65,6 +83,34 @@ public class InventoryManager : MonoBehaviour
 	#endregion
 
 	#region Methods
+
+	private void GetMouseScreenSide()
+	{
+		var mousePositionX = Input.mousePosition.x;
+		var mouseOnLeftSide = mousePositionX < Screen.width / 2;
+
+		if ((mouseSide == ScreenSide.Left) && !mouseOnLeftSide)
+		{
+			mouseSide = ScreenSide.Right;
+
+			canvas = WorldCanvasManager.BookCanvasRight;
+			canvasTransform = canvas.GetComponent<RectTransform>();
+			graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
+
+			return;
+		}
+
+		if (mouseSide == ScreenSide.Right && mouseOnLeftSide)
+		{
+			mouseSide = ScreenSide.Left;
+
+			canvas = WorldCanvasManager.BookCanvasLeft;
+			canvasTransform = canvas.GetComponent<RectTransform>();
+			graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
+
+			return;
+		}
+	}
 
 	private void PickUpItemIfClicked()
 	{
@@ -91,8 +137,7 @@ public class InventoryManager : MonoBehaviour
 	private void PickUpItem(InventoryItem itemClicked, bool swap = false)
 	{
 		ItemHeld = itemClicked;
-		ItemHeld.transform.SetParent(canvas.transform, false);
-		ItemHeld.transform.position = Input.mousePosition;
+		SetPositionOfItem();
 
 		if (!swap) itemClicked.SlotInInventory.ItemInSlot = null;
 
@@ -173,11 +218,14 @@ public class InventoryManager : MonoBehaviour
 		PickUpItem(itemToPickUp, true);
 	}
 
-	private void ItemHeldFollowMouse()
+	private void SetPositionOfItem()
 	{
-		if (!ItemHeld) return;
+		if (itemHeldPosition == null) return;
 
-		ItemHeld.transform.position = Input.mousePosition;
+		if (itemHeldTransform.parent != canvasTransform) itemHeldTransform.SetParent(canvasTransform);
+
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasTransform, Input.mousePosition, camera, out itemHeldPosition);
+		itemHeldTransform.localPosition = new Vector3(itemHeldPosition.x, itemHeldPosition.y, 0);
 	}
 
 	private T GetSlot<T>(List<RaycastResult> results)
