@@ -38,7 +38,7 @@ public class EnergyManager : MonoBehaviour
 	{
 		DontDestroyOnLoad(gameObject);
 
-		currentEnergyText = OverlayCanvasManager.Canvas.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
+		currentEnergyText = WorldCanvasManager.BookCanvas.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
 		MaxEnergy = 3;
 	}
 

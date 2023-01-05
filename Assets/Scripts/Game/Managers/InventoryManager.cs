@@ -7,12 +7,25 @@ public class InventoryManager : MonoBehaviour
 {
 	#region Fields
 
+	private static InventoryManager instance;
+
 	private GraphicRaycaster graphicRaycaster;
 	private Canvas canvas;
 
 	#endregion
 
 	#region Properties
+
+	public static InventoryManager Instance
+	{
+		get
+		{
+			if (instance == null)
+				instance = Instantiate(Resources.Load<InventoryManager>($"Prefabs/Game/Managers/{nameof(InventoryManager)}"));
+
+			return instance;
+		}
+	}
 
 	public InventoryState ActiveInventory { get; set; }
 	public InventoryItem ItemHeld { get; set; }
@@ -23,7 +36,6 @@ public class InventoryManager : MonoBehaviour
 
 	private void Awake()
 	{
-		References.InventoryManager = this;
 		ActiveInventory = InventoryState.Inventory;
 	}
 

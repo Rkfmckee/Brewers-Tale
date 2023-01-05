@@ -36,7 +36,7 @@ public class Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public virtual void OnPointerEnter(PointerEventData eventData)
 	{
-		if (References.InventoryManager.ActiveInventory != activeState) return;
+		if (InventoryManager.Instance.ActiveInventory != activeState) return;
 
 		image.sprite = highlightSprite;
 		image.color = highlightColour;

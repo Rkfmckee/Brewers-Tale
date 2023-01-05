@@ -20,7 +20,7 @@ public abstract class Turn
 
 	public Turn()
 	{
-		canvas = OverlayCanvasManager.Canvas;
+		canvas = WorldCanvasManager.BookCanvas;
 
 		var isPlayerTurn = this is PlayerTurn;
 		var endTurnButton = canvas.transform.Find("EndTurn").GetComponent<Button>();

@@ -31,7 +31,7 @@ public class TurnOrderManager : MonoBehaviour
 		set
 		{
 			currentTurn = value;
-			References.InventoryManager.ActiveInventory = currentTurn is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
+			InventoryManager.Instance.ActiveInventory = currentTurn is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
 
 			InitializeTurn();
 		}
@@ -49,7 +49,6 @@ public class TurnOrderManager : MonoBehaviour
 	private void Start()
 	{
 		enemySpaces = References.EnemySpaces;
-		CurrentTurn = new PlayerTurn();
 	}
 
 	private void Update()

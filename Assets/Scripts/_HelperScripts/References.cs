@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 public static class References
 {
+	public static LevelManager LevelManager;
 	public static Brewer Brewer;
-	public static InventoryManager InventoryManager;
 	public static List<Enemy> Enemies = new List<Enemy>();
 	public static List<EnemySpace> EnemySpaces = new List<EnemySpace>();
 	public static EnemySpawner EnemySpawner;

@@ -66,7 +66,7 @@ public class ItemDetails : MonoBehaviour
 	private void Start()
 	{
 		graphicRaycaster = OverlayCanvasManager.Canvas.GetComponent<GraphicRaycaster>();
-		References.InventoryManager.ActiveInventory = InventoryState.ItemDetails;
+		InventoryManager.Instance.ActiveInventory = InventoryState.ItemDetails;
 	}
 
 	private void Update()
@@ -157,7 +157,7 @@ public class ItemDetails : MonoBehaviour
 
 	private void DestroySelf()
 	{
-		References.InventoryManager.ActiveInventory = InventoryState.Inventory;
+		InventoryManager.Instance.ActiveInventory = InventoryState.Inventory;
 		Destroy(gameObject);
 	}
 

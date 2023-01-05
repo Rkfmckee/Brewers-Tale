@@ -7,6 +7,7 @@ public class WorldCanvasManager : MonoBehaviour
 	private static WorldCanvasManager instance;
 
 	private Canvas canvas;
+	private Canvas bookCanvas;
 
 	#endregion
 
@@ -20,6 +21,7 @@ public class WorldCanvasManager : MonoBehaviour
 			{
 				instance = Instantiate(Resources.Load<WorldCanvasManager>($"Prefabs/Game/Managers/{nameof(WorldCanvasManager)}"));
 				instance.canvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
+				instance.bookCanvas = GameObject.Find("Book").transform.Find("Canvas").GetComponent<Canvas>();
 			}
 
 			return instance;
@@ -27,6 +29,7 @@ public class WorldCanvasManager : MonoBehaviour
 	}
 
 	public static Canvas Canvas { get => Instance.canvas; }
+	public static Canvas BookCanvas { get => Instance.bookCanvas; }
 
 	#endregion
 
