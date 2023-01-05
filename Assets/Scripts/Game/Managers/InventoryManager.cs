@@ -222,7 +222,11 @@ public class InventoryManager : MonoBehaviour
 	{
 		if (itemHeldPosition == null) return;
 
-		if (itemHeldTransform.parent != canvasTransform) itemHeldTransform.SetParent(canvasTransform);
+		if (itemHeldTransform.parent != canvasTransform)
+		{
+			itemHeldTransform.SetParent(canvasTransform);
+			itemHeldTransform.localRotation = Quaternion.Euler(Vector3.zero);
+		}
 
 		RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasTransform, Input.mousePosition, camera, out itemHeldPosition);
 		itemHeldTransform.localPosition = new Vector3(itemHeldPosition.x, itemHeldPosition.y, 0);
