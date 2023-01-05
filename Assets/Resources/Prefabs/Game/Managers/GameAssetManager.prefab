@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3639780429701677481}
-  - component: {fileID: 2333163822368091721}
+  - component: {fileID: 7677661408869127057}
   m_Layer: 0
-  m_Name: GameAssets
+  m_Name: GameAssetManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2333163822368091721
+--- !u!114 &7677661408869127057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4987107708175862301}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ae266405baa5184baf059c25d7b78dc, type: 3}
+  m_Script: {fileID: 11500000, guid: ddd1eaeac148ba543bea5687d97f4e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HealthPopupPrefab: {fileID: 8322743572190146775, guid: 72b8fb01db9ffba4991795b870f3f6d2, type: 3}

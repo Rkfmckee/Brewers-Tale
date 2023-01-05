@@ -8,9 +8,13 @@ public abstract class Enemy : MonoBehaviour
 	#region Fields
 
 	[SerializeField]
+	private string enemyName;
+	[SerializeField]
 	protected int attackDamageAmount;
 	[SerializeField]
 	protected DamageType attackDamageType;
+	[SerializeField]
+	private Loot[] lootTable;
 
 	protected float? animationSpeed;
 	private EnemyState currentState;
@@ -25,6 +29,8 @@ public abstract class Enemy : MonoBehaviour
 	#endregion
 
 	#region Properties
+
+	public string EnemyName => enemyName;
 
 	public EnemyState CurrentState
 	{
@@ -78,6 +84,8 @@ public abstract class Enemy : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		DropLoot();
+
 		if (References.Enemies.Contains(this))
 			References.Enemies.Remove(this);
 	}
@@ -101,12 +109,12 @@ public abstract class Enemy : MonoBehaviour
 		}
 	}
 
-	public void Attack()
+	private void Attack()
 	{
 		StartCoroutine(Attacking());
 	}
 
-	public void MoveToNextSpace()
+	private void MoveToNextSpace()
 	{
 		if (CurrentSpace.SpaceNumber == 6) return;
 
@@ -114,10 +122,52 @@ public abstract class Enemy : MonoBehaviour
 		MoveToSpace(nextSpace);
 	}
 
-	public void MoveToSpace(EnemySpace space)
+	private void MoveToSpace(EnemySpace space)
 	{
 		CurrentSpace = space;
 		StartCoroutine(MovingToSpace(CurrentSpace));
+	}
+
+	private void DropLoot()
+	{
+		foreach (var loot in lootTable)
+		{
+			var percentage = Random.Range(0f, 100f);
+			if (percentage > loot.DropPercentage) continue;
+
+			var numberToDrop = Random.Range(1, loot.MaxQuantity + 1);
+			var numberDropped = 0;
+			for (int i = 0; i < numberToDrop; i++)
+			{
+				var emptySlot = FindEmptyInventorySlot();
+				if (!emptySlot) break;
+
+				emptySlot.ItemInSlot = loot.Item;
+				numberDropped++;
+			}
+
+			switch (numberDropped)
+			{
+				case 0:
+					return;
+				case 1:
+					NotificationManager.Add($"Picked up {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+					break;
+				default:
+					NotificationManager.Add($"Picked up {numberDropped}x {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+					break;
+			}
+		}
+	}
+
+	private InventorySlot FindEmptyInventorySlot()
+	{
+		foreach (var slot in References.Inventory.Slots)
+		{
+			if (!slot.ItemInSlot) return slot;
+		}
+
+		return null;
 	}
 
 	#endregion

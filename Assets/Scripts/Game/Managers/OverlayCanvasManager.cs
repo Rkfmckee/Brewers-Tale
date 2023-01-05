@@ -18,9 +18,7 @@ public class OverlayCanvasManager : MonoBehaviour
 		{
 			if (instance == null)
 			{
-				instance = Instantiate(Resources.Load<OverlayCanvasManager>("Prefabs/Game/OverlayCanvasManager"),
-				GameObject.Find("GameControllers").transform);
-
+				instance = Instantiate(Resources.Load<OverlayCanvasManager>($"Prefabs/Game/Managers/{nameof(OverlayCanvasManager)}"));
 				instance.canvas = GameObject.Find("OverlayCanvas").GetComponent<Canvas>();
 			}
 
@@ -29,6 +27,15 @@ public class OverlayCanvasManager : MonoBehaviour
 	}
 
 	public static Canvas Canvas { get => Instance.canvas; }
+
+	#endregion
+
+	#region Events
+
+	private void Awake()
+	{
+		DontDestroyOnLoad(gameObject);
+	}
 
 	#endregion
 }

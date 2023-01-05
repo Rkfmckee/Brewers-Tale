@@ -5,12 +5,25 @@ public class TurnOrderManager : MonoBehaviour
 {
 	#region Fields
 
+	private static TurnOrderManager instance;
+
 	private Turn currentTurn;
 	private List<EnemySpace> enemySpaces;
 
 	#endregion
 
 	#region Properties
+
+	public static TurnOrderManager Instance
+	{
+		get
+		{
+			if (instance == null)
+				instance = Instantiate(Resources.Load<TurnOrderManager>($"Prefabs/Game/Managers/{nameof(TurnOrderManager)}"));
+
+			return instance;
+		}
+	}
 
 	public Turn CurrentTurn
 	{
@@ -30,7 +43,7 @@ public class TurnOrderManager : MonoBehaviour
 
 	private void Awake()
 	{
-		References.TurnOrderManager = this;
+		DontDestroyOnLoad(gameObject);
 	}
 
 	private void Start()

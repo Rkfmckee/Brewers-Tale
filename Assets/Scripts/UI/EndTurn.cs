@@ -25,7 +25,7 @@ public class EndTurn : MonoBehaviour
 	{
 		if (References.Brewer.CurrentState != BrewerState.Brewing) return;
 
-		References.TurnOrderManager.CurrentTurn = new EnemyTurn();
+		TurnOrderManager.Instance.CurrentTurn = new EnemyTurn();
 	}
 
 	#endregion

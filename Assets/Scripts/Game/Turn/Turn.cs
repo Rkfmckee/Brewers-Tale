@@ -7,7 +7,6 @@ public abstract class Turn
 	#region Fields
 
 	protected Canvas canvas;
-	protected TurnOrderManager turnOrderManager;
 
 	#endregion
 
@@ -22,7 +21,6 @@ public abstract class Turn
 	public Turn()
 	{
 		canvas = OverlayCanvasManager.Canvas;
-		turnOrderManager = References.TurnOrderManager;
 
 		var isPlayerTurn = this is PlayerTurn;
 		var endTurnButton = canvas.transform.Find("EndTurn").GetComponent<Button>();
