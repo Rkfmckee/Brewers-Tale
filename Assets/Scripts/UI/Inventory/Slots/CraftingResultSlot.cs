@@ -21,6 +21,13 @@ public class CraftingResultSlot : Slot
 		var craftingIngredients = new List<InventoryItem>();
 		var craftingRecipe = null as CraftingRecipe;
 
+		if (ItemInSlot)
+		{
+			// Get rid of the previous crafting result
+			Destroy(itemInstance);
+			ItemInSlot = null;
+		}
+
 		foreach (var craftingSlot in References.Crafting.Slots)
 		{
 			if (!craftingSlot.ItemInSlot) continue;
@@ -32,13 +39,7 @@ public class CraftingResultSlot : Slot
 		if (craftingIngredients.Count == 0) return;
 
 		craftingRecipe = craftingRecipeManager.FindRecipe(craftingIngredients);
-		if (!craftingRecipe)
-		{
-			Destroy(itemInstance);
-			ItemInSlot = null;
-
-			return;
-		}
+		if (!craftingRecipe) return;
 
 		ItemInSlot = craftingRecipe.Result;
 	}
