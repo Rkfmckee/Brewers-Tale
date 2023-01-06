@@ -7,6 +7,12 @@ using UnityEngine.UI;
 
 public class ItemDetails : MonoBehaviour
 {
+	#region Constants
+
+	public const float X_POSITION_OFFSET = 30;
+
+	#endregion
+
 	#region Fields
 
 	private InventoryItem inventoryItem;
@@ -23,6 +29,7 @@ public class ItemDetails : MonoBehaviour
 	private TextMeshProUGUI itemDescription;
 	private Button useButton;
 	private GraphicRaycaster graphicRaycaster;
+	private new Camera camera;
 
 	#endregion
 
@@ -61,11 +68,13 @@ public class ItemDetails : MonoBehaviour
 		useButton = potionOptions.Find("UseButton").GetComponent<Button>();
 		useButton.onClick.AddListener(() => UseItem());
 		useButton.interactable = enemyExists;
+
+		camera = Camera.main;
 	}
 
 	private void Start()
 	{
-		graphicRaycaster = OverlayCanvasManager.Canvas.GetComponent<GraphicRaycaster>();
+		graphicRaycaster = WorldCanvasManager.BookCanvasLeft.GetComponent<GraphicRaycaster>();
 		InventoryManager.Instance.ActiveInventory = InventoryState.ItemDetails;
 	}
 
@@ -119,13 +128,18 @@ public class ItemDetails : MonoBehaviour
 
 	private void UpdatePosition()
 	{
-		var slotPosition = InventoryItem.SlotInInventory.transform.position;
+		// If the slot is on the right side of a page,
+		// Move the ItemDetails to the left side of the slot.
+		// The right side of the page, is the 2nd or 4th quarter
+		// of the screen.
 
-		if (slotPosition.x > (Screen.width / 2))
+		var slotPosition = InventoryItem.SlotInInventory.transform.position;
+		var quarterScreenWidth = Screen.width / 4;
+		var quarterOfSlot = Mathf.Ceil(camera.WorldToScreenPoint(slotPosition).x / quarterScreenWidth);
+
+		if (quarterOfSlot == 2 || quarterOfSlot == 4)
 		{
-			var offsetPosition = rectTransform.position - slotPosition;
-			offsetPosition.x *= -1;
-			rectTransform.position = slotPosition + offsetPosition;
+			rectTransform.localPosition *= -1;
 			rectTransform.pivot = new Vector2(1, rectTransform.pivot.y);
 
 			ingredientRectTransform.anchorMin = new Vector2(1, ingredientRectTransform.anchorMin.y);

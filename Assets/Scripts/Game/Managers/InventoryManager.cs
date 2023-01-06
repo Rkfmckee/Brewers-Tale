@@ -170,9 +170,10 @@ public class InventoryManager : MonoBehaviour
 	{
 		var slot = itemClicked.SlotInInventory;
 		var itemDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/ItemDetails");
-		var spawnPosition = slot.transform.position + itemDetailsPrefab.transform.position;
 
-		var itemDetails = Instantiate(itemDetailsPrefab, spawnPosition, Quaternion.identity, canvas.transform).GetComponent<ItemDetails>();
+		var itemDetails = Instantiate(itemDetailsPrefab, slot.transform).GetComponent<ItemDetails>();
+		var spawnPosition = new Vector3(ItemDetails.X_POSITION_OFFSET, 0, 0);
+		itemDetails.transform.localPosition = spawnPosition;
 		itemDetails.InventoryItem = itemClicked;
 	}
 
