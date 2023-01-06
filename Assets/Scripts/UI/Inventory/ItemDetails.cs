@@ -69,13 +69,14 @@ public class ItemDetails : MonoBehaviour
 		useButton.onClick.AddListener(() => UseItem());
 		useButton.interactable = enemyExists;
 
+		graphicRaycaster = GetComponent<GraphicRaycaster>();
 		camera = Camera.main;
+
+		InventoryManager.Instance.ActiveInventory = InventoryState.ItemDetails;
 	}
 
 	private void Start()
 	{
-		graphicRaycaster = WorldCanvasManager.BookCanvasLeft.GetComponent<GraphicRaycaster>();
-		InventoryManager.Instance.ActiveInventory = InventoryState.ItemDetails;
 	}
 
 	private void Update()
