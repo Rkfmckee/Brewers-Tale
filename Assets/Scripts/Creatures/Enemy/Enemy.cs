@@ -72,6 +72,8 @@ public abstract class Enemy : Creature
 
 		movementTime = 1;
 		CurrentState = EnemyState.Idle;
+
+		SetupInherentProperties();
 	}
 
 	private void Start()
@@ -93,6 +95,14 @@ public abstract class Enemy : Creature
 	#endregion
 
 	#region Methods
+
+	protected virtual void SetupInherentProperties()
+	{
+		foreach (var condition in Conditions)
+		{
+			condition.IsInherent = true;
+		}
+	}
 
 	public void TakeTurn()
 	{

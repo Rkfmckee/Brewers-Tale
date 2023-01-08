@@ -1,6 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Creature : MonoBehaviour
+public abstract class Creature : MonoBehaviour
 {
+	private readonly List<Condition> conditions = new List<Condition>();
 
+	#region Properties
+
+	public List<Condition> Conditions => conditions;
+
+	#endregion
 }
