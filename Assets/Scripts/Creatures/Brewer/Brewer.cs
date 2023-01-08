@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using static HelperExtensions;
 
-public class Brewer : MonoBehaviour
+public class Brewer : Creature
 {
 	#region Fields
 

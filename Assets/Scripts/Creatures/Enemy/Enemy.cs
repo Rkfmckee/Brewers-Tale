@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static HelperExtensions;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Creature
 {
 	#region Fields
 
