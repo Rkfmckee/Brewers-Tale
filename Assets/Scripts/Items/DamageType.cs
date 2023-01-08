@@ -1,8 +1,9 @@
 public enum DamageType
 {
-	Physical,
+	Acid,
+	Cold,
 	Explosive,
 	Fire,
-	Cold,
-	Lightning
+	Lightning,
+	Physical
 }
