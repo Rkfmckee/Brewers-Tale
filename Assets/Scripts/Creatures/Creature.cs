@@ -30,12 +30,10 @@ public abstract class Creature : MonoBehaviour
 
 	#region Methods
 
-	public void AddCondition<T>()
-		where T : Condition, new()
+	public void AddCondition(Condition condition)
 	{
-		if (conditions.OfType<T>().Any()) return;
+		if (conditions.Where(c => c.GetType() == condition.GetType()).Any()) return;
 
-		var condition = new T();
 		conditions.Add(condition);
 		HealthPopup.Create(healthSystem.HealthBar, $"+ {condition.Name}", false);
 	}

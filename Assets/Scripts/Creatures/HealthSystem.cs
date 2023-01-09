@@ -108,6 +108,17 @@ public class HealthSystem : MonoBehaviour
 		HealthPopup.Create(healthBar, health, false);
 	}
 
+	public void CheckForDamagingConditions()
+	{
+		var damagingConditions = creature.Conditions.OfType<DamagingCondition>();
+		if (damagingConditions == null) return;
+
+		foreach (var condition in damagingConditions)
+		{
+			Damage(condition.Damage);
+		}
+	}
+
 	private float CalculateModifiers(float damage, DamageType type)
 	{
 		damage = CalculateImmunities(damage, type);

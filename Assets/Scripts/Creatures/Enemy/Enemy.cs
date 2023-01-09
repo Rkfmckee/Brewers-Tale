@@ -108,6 +108,8 @@ public abstract class Enemy : Creature
 
 	public void TakeTurn()
 	{
+		healthSystem.CheckForDamagingConditions();
+
 		if (CurrentSpace.SpaceNumber == 6)
 		{
 			Attack();
