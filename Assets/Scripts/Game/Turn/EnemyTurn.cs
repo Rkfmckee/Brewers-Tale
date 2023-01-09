@@ -9,6 +9,7 @@ public class EnemyTurn : Turn
 
 	private float startTime;
 	private float endTime;
+	private List<EnemyState> turnEndStates;
 
 	private List<Enemy> enemies;
 	private EnemySpawner enemySpawner;
@@ -30,6 +31,7 @@ public class EnemyTurn : Turn
 
 		startTime = 1;
 		endTime = 0.5f;
+		turnEndStates = new List<EnemyState> { EnemyState.Idle, EnemyState.Dead };
 
 		enemySpawner.Spawn();
 	}
@@ -70,8 +72,9 @@ public class EnemyTurn : Turn
 		{
 			enemy.TakeTurn();
 
-			while (enemy.CurrentState != EnemyState.Idle)
+			while (!turnEndStates.Contains(enemy.CurrentState))
 			{
+				Debug.Log(enemy.CurrentState);
 				yield return null;
 			}
 		}

@@ -89,6 +89,7 @@ public abstract class Enemy : Creature
 	private void OnDestroy()
 	{
 		DropLoot();
+		CurrentState = EnemyState.Dead;
 
 		if (References.Enemies.Contains(this))
 			References.Enemies.Remove(this);
