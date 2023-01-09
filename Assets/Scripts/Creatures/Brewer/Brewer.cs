@@ -39,8 +39,10 @@ public class Brewer : Creature
 
 	#region Events
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		References.Brewer = this;
 
 		animator = GetComponentInChildren<Animator>();

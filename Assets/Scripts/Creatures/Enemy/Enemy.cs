@@ -62,8 +62,10 @@ public abstract class Enemy : Creature
 
 	#region Events
 
-	protected virtual void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		References.Enemies.Add(this);
 
 		animator = GetComponentInChildren<Animator>();

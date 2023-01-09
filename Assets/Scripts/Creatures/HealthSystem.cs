@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,7 +20,8 @@ public class HealthSystem : MonoBehaviour
 	#region Properties
 
 	public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-	public float HealthBarHeight { get => healthBarHeight; }
+	public float HealthBarHeight => healthBarHeight;
+	public HealthBar HealthBar => healthBar;
 
 	public float CurrentHealth
 	{

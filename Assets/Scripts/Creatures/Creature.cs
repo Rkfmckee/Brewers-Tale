@@ -1,13 +1,54 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Creature : MonoBehaviour
 {
+	#region Fields
+
 	private readonly List<Condition> conditions = new List<Condition>();
+
+	private HealthSystem healthSystem;
+
+	#endregion
 
 	#region Properties
 
-	public List<Condition> Conditions => conditions;
+	public ReadOnlyCollection<Condition> Conditions => conditions.AsReadOnly();
+
+	#endregion
+
+	#region Events
+
+	protected virtual void Awake()
+	{
+		healthSystem = GetComponent<HealthSystem>();
+	}
+
+	#endregion
+
+	#region Methods
+
+	public void AddCondition<T>()
+		where T : Condition, new()
+	{
+		if (conditions.OfType<T>().Any()) return;
+
+		var condition = new T();
+		conditions.Add(condition);
+		HealthPopup.Create(healthSystem.HealthBar, $"+ {condition.Name}", false);
+	}
+
+	public void RemoveCondition<T>()
+		where T : Condition
+	{
+		var condition = conditions.OfType<T>().SingleOrDefault();
+		if (condition == null) return;
+
+		conditions.Remove(condition);
+		HealthPopup.Create(healthSystem.HealthBar, $"- {condition.Name}", true);
+	}
 
 	#endregion
 }
