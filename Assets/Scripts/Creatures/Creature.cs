@@ -9,7 +9,7 @@ public abstract class Creature : MonoBehaviour
 
 	private readonly List<Condition> conditions = new List<Condition>();
 
-	private HealthSystem healthSystem;
+	protected HealthSystem healthSystem;
 
 	#endregion
 

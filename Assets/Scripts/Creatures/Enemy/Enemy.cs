@@ -144,9 +144,11 @@ public abstract class Enemy : Creature
 	{
 		foreach (var loot in lootTable)
 		{
+			// Check if we should spawn this loot
 			var percentage = Random.Range(0f, 100f);
 			if (percentage > loot.DropPercentage) continue;
 
+			// If so, how many to spawn, between 1 and MaxQuantity
 			var numberToDrop = Random.Range(1, loot.MaxQuantity + 1);
 			var numberDropped = 0;
 			for (int i = 0; i < numberToDrop; i++)
@@ -158,6 +160,7 @@ public abstract class Enemy : Creature
 				numberDropped++;
 			}
 
+			// Add appropriate notification
 			switch (numberDropped)
 			{
 				case 0:
