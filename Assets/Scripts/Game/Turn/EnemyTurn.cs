@@ -48,6 +48,14 @@ public class EnemyTurn : Turn
 
 	#region Coroutine
 
+	public override void EndTurn()
+	{
+		foreach (var enemy in enemies)
+		{
+			EndTemporaryConditions(enemy);
+		}
+	}
+
 	public IEnumerator StartEnemyTurns()
 	{
 		if (enemies.Count == 0)
@@ -74,7 +82,6 @@ public class EnemyTurn : Turn
 
 			while (!turnEndStates.Contains(enemy.CurrentState))
 			{
-				Debug.Log(enemy.CurrentState);
 				yield return null;
 			}
 		}

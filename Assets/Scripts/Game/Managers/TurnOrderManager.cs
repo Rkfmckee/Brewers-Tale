@@ -30,6 +30,9 @@ public class TurnOrderManager : MonoBehaviour
 		get => currentTurn;
 		set
 		{
+			// If transitioning from another turn, end that one first
+			if (currentTurn != null) currentTurn.EndTurn();
+
 			currentTurn = value;
 			InventoryManager.Instance.ActiveInventory = currentTurn is PlayerTurn ? InventoryState.Inventory : InventoryState.None;
 

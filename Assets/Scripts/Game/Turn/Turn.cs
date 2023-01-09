@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine.UI;
 
@@ -27,6 +29,32 @@ public abstract class Turn
 	#region Events
 
 	public abstract void Update();
+
+	#endregion
+
+	#region Methods
+
+	public abstract void EndTurn();
+
+	protected void EndTemporaryConditions(Creature creature)
+	{
+		var temporaryConditions = creature.Conditions.OfType<ITemporaryCondition>();
+		if (temporaryConditions == null) return;
+
+		var finishedConditions = new List<ITemporaryCondition>();
+
+		foreach (var condition in temporaryConditions)
+		{
+			condition.NumberOfTurns--;
+
+			if (condition.NumberOfTurns == 0)
+			{
+				finishedConditions.Add(condition);
+			}
+		}
+
+		creature.RemoveConditions(finishedConditions);
+	}
 
 	#endregion
 }
