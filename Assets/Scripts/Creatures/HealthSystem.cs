@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
@@ -9,22 +9,19 @@ public class HealthSystem : MonoBehaviour
 	private float maxHealth;
 	[SerializeField]
 	private float healthBarHeight;
-	[SerializeField]
-	private List<DamageType> damageImmunities;
-	[SerializeField]
-	private List<DamageType> damageResistances;
-	[SerializeField]
-	private List<DamageType> damageVulnerabilities;
 
 	private float currentHealth;
 	private HealthBar healthBar;
+
+	private Creature creature;
 
 	#endregion
 
 	#region Properties
 
 	public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-	public float HealthBarHeight { get => healthBarHeight; }
+	public float HealthBarHeight => healthBarHeight;
+	public HealthBar HealthBar => healthBar;
 
 	public float CurrentHealth
 	{
@@ -40,10 +37,12 @@ public class HealthSystem : MonoBehaviour
 
 	#region Events
 
-	private void Start()
+	private void Awake()
 	{
+		creature = GetComponent<Creature>();
+
 		var healthBarPrefab = Resources.Load<GameObject>("Prefabs/UI/Health/HealthBar");
-		var healthBarGroup = WorldCanvasManager.Canvas.transform;
+		var healthBarGroup = WorldCanvasManager.Canvas.transform.Find("HealthBars");
 		healthBar = Instantiate(healthBarPrefab, healthBarGroup).GetComponent<HealthBar>();
 		healthBar.Character = this;
 
@@ -77,8 +76,13 @@ public class HealthSystem : MonoBehaviour
 	public void Damage(float damage, DamageType type)
 	{
 		var actualDamage = CalculateModifiers(damage, type);
-		var newHealth = CurrentHealth - actualDamage;
+		if (actualDamage == 0)
+		{
+			HealthPopup.Create(healthBar, "No damage", true);
+			return;
+		}
 
+		var newHealth = CurrentHealth - actualDamage;
 		if (newHealth <= 0)
 		{
 			HealthPopup.Create(healthBar, "Dead", true);
@@ -104,22 +108,52 @@ public class HealthSystem : MonoBehaviour
 		HealthPopup.Create(healthBar, health, false);
 	}
 
+	public void CheckForDamagingConditions()
+	{
+		var damagingConditions = creature.Conditions.OfType<DamagingCondition>();
+		if (damagingConditions == null) return;
+
+		foreach (var condition in damagingConditions)
+		{
+			Damage(condition.Damage);
+		}
+	}
+
 	private float CalculateModifiers(float damage, DamageType type)
 	{
-		if (damageImmunities.Contains(type))
-		{
-			return 0;
-		}
+		damage = CalculateImmunities(damage, type);
+		damage = CalculateResistances(damage, type);
+		damage = CalculateVulnerabilities(damage, type);
 
-		if (damageResistances.Contains(type))
-		{
-			return Mathf.Ceil(damage / 2);
-		}
+		return damage;
+	}
 
-		if (damageVulnerabilities.Contains(type))
-		{
-			return damage * 2;
-		}
+	private float CalculateImmunities(float damage, DamageType type)
+	{
+		var damageImmunities = creature.Conditions.Where(c => c is DamageImmunity);
+		if (damageImmunities == null) return damage;
+
+		if (damageImmunities.Any(di => (di as DamageImmunity).ImmuneType == type)) return 0;
+
+		return damage;
+	}
+
+	private float CalculateResistances(float damage, DamageType type)
+	{
+		var damageResistances = creature.Conditions.Where(c => c is DamageResistance);
+		if (damageResistances == null) return damage;
+
+		if (damageResistances.Any(dr => (dr as DamageResistance).ResistedType == type)) return Mathf.Floor(damage / 2);
+
+		return damage;
+	}
+
+	private float CalculateVulnerabilities(float damage, DamageType type)
+	{
+		var damageVulnerabilities = creature.Conditions.Where(c => c is DamageVulnerability);
+		if (damageVulnerabilities == null) return damage;
+
+		if (damageVulnerabilities.Any(dv => (dv as DamageVulnerability).VulnerableType == type)) return damage * 2;
 
 		return damage;
 	}

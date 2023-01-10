@@ -1,8 +1,11 @@
+using UnityEngine;
+
 public class WorldFirePotion : WorldPotion
 {
 	#region Fields
 
 	private Damage damage;
+	private int chanceOfBurning;
 
 	#endregion
 
@@ -13,6 +16,7 @@ public class WorldFirePotion : WorldPotion
 		base.Awake();
 
 		damage = new Damage(2, DamageType.Fire);
+		chanceOfBurning = 25;
 	}
 
 	#endregion
@@ -23,6 +27,9 @@ public class WorldFirePotion : WorldPotion
 	{
 		var targetHealth = Target.GetComponent<HealthSystem>();
 		targetHealth.Damage(damage);
+
+		if (Random.Range(0, 100) < chanceOfBurning)
+			Target.GetComponent<Creature>().AddCondition(new Burning(damage.Amount, 1));
 	}
 
 	#endregion

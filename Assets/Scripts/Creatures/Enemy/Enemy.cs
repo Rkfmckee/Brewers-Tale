@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static HelperExtensions;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Creature
 {
 	#region Fields
 
@@ -62,8 +62,10 @@ public abstract class Enemy : MonoBehaviour
 
 	#region Events
 
-	protected virtual void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		References.Enemies.Add(this);
 
 		animator = GetComponentInChildren<Animator>();
@@ -72,6 +74,8 @@ public abstract class Enemy : MonoBehaviour
 
 		movementTime = 1;
 		CurrentState = EnemyState.Idle;
+
+		SetupInherentProperties();
 	}
 
 	private void Start()
@@ -85,6 +89,7 @@ public abstract class Enemy : MonoBehaviour
 	private void OnDestroy()
 	{
 		DropLoot();
+		CurrentState = EnemyState.Dead;
 
 		if (References.Enemies.Contains(this))
 			References.Enemies.Remove(this);
@@ -94,8 +99,18 @@ public abstract class Enemy : MonoBehaviour
 
 	#region Methods
 
+	protected virtual void SetupInherentProperties()
+	{
+		foreach (var condition in Conditions)
+		{
+			condition.IsInherent = true;
+		}
+	}
+
 	public void TakeTurn()
 	{
+		healthSystem.CheckForDamagingConditions();
+
 		if (CurrentSpace.SpaceNumber == 6)
 		{
 			Attack();
@@ -132,9 +147,11 @@ public abstract class Enemy : MonoBehaviour
 	{
 		foreach (var loot in lootTable)
 		{
+			// Check if we should spawn this loot
 			var percentage = Random.Range(0f, 100f);
 			if (percentage > loot.DropPercentage) continue;
 
+			// If so, how many to spawn, between 1 and MaxQuantity
 			var numberToDrop = Random.Range(1, loot.MaxQuantity + 1);
 			var numberDropped = 0;
 			for (int i = 0; i < numberToDrop; i++)
@@ -146,6 +163,7 @@ public abstract class Enemy : MonoBehaviour
 				numberDropped++;
 			}
 
+			// Add appropriate notification
 			switch (numberDropped)
 			{
 				case 0:

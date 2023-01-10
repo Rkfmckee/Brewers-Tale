@@ -9,6 +9,7 @@ public class EnemyTurn : Turn
 
 	private float startTime;
 	private float endTime;
+	private List<EnemyState> turnEndStates;
 
 	private List<Enemy> enemies;
 	private EnemySpawner enemySpawner;
@@ -30,6 +31,7 @@ public class EnemyTurn : Turn
 
 		startTime = 1;
 		endTime = 0.5f;
+		turnEndStates = new List<EnemyState> { EnemyState.Idle, EnemyState.Dead };
 
 		enemySpawner.Spawn();
 	}
@@ -45,6 +47,14 @@ public class EnemyTurn : Turn
 	#endregion
 
 	#region Coroutine
+
+	public override void EndTurn()
+	{
+		foreach (var enemy in enemies)
+		{
+			EndTemporaryConditions(enemy);
+		}
+	}
 
 	public IEnumerator StartEnemyTurns()
 	{
@@ -70,7 +80,7 @@ public class EnemyTurn : Turn
 		{
 			enemy.TakeTurn();
 
-			while (enemy.CurrentState != EnemyState.Idle)
+			while (!turnEndStates.Contains(enemy.CurrentState))
 			{
 				yield return null;
 			}
