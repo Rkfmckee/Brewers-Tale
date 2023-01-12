@@ -347,9 +347,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingItems:
-  - {fileID: 7161190641192275514, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
-  - {fileID: 7161190641192275514, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
-  - {fileID: 7461193643119589457, guid: 87f64df37a1cf7e4ca236fd6cf05d86b, type: 3}
+  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
+  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
+  - {fileID: 2123786637151207573, guid: 87f64df37a1cf7e4ca236fd6cf05d86b, type: 3}
   - {fileID: 3652999399898245699, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
   - {fileID: 3652999399898245699, guid: ba98b7f685b34e844a00ad0d58b73834, type: 3}
   - {fileID: 3652999399898245699, guid: ba98b7f685b34e844a00ad0d58b73834, type: 3}

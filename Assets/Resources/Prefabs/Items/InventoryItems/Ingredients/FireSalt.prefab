@@ -89,5 +89,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e335fca1804ebd4bad51c1e8c764290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Fire salts
-  itemDescription: Burning remnants of magical flames.
+  ingredientName: Fire salt
+  ingredientDescription: The burning remnants of magical flame

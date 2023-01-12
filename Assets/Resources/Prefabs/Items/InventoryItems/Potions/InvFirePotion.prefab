@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3460360136237427237}
   - component: {fileID: 3460360136237427235}
   - component: {fileID: 3460360136237427236}
-  - component: {fileID: 7161190641192275514}
+  - component: {fileID: 5223949939837867269}
   m_Layer: 5
   m_Name: InvFirePotion
   m_TagString: Untagged
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7161190641192275514
+--- !u!114 &5223949939837867269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,10 +86,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3460360136237427238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f7a45f0c5e45cb4daccaa0f6cdda53a, type: 3}
+  m_Script: {fileID: 11500000, guid: 01a88c8845e1bbe44b3b65a647fefb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Fire potion
-  itemDescription: Deals fire damage, with a chance to burn next turn.
-  energyCost: 1
-  worldPrefab: {fileID: 2645290090106049534, guid: 61dbdbed2745d354894e6f6e45593056, type: 3}
