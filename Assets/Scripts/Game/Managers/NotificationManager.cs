@@ -115,6 +115,8 @@ public class NotificationManager : MonoBehaviour
 		{
 			var healthPopupInfo = healthPopups[0];
 			var healthBar = healthPopupInfo.Item3;
+			if (healthBar == null) break;
+
 			var healthPopup = Instantiate(healthPopupPrefab, healthBar.transform).GetComponent<HealthPopup>();
 			healthPopup.Initialize(healthPopupInfo);
 			healthPopups.Remove(healthPopupInfo);
