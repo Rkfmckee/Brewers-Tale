@@ -55,7 +55,7 @@ public class EnergyManager : MonoBehaviour
 			var err = "Not enough energy";
 			if (!string.IsNullOrEmpty(error)) err += $" to {error}";
 
-			NotificationManager.Add(err, NotificationType.Error);
+			NotificationManager.AddNotification(err, NotificationType.Error);
 			return false;
 		}
 

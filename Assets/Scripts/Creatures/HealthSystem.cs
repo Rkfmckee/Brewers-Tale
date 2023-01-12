@@ -73,25 +73,25 @@ public class HealthSystem : MonoBehaviour
 		}
 	}
 
-	public void Damage(float damage, DamageType type)
+	private void Damage(float damage, DamageType type)
 	{
 		var actualDamage = CalculateModifiers(damage, type);
 		if (actualDamage == 0)
 		{
-			HealthPopup.Create(healthBar, "No damage", true);
+			NotificationManager.AddHealthPopup("No damage", NotificationType.Error, healthBar);
 			return;
 		}
 
 		var newHealth = CurrentHealth - actualDamage;
 		if (newHealth <= 0)
 		{
-			HealthPopup.Create(healthBar, "Dead", true);
+			NotificationManager.AddHealthPopup("Dead", NotificationType.Error, healthBar);
 			Destroy(gameObject);
 			return;
 		}
 
 		CurrentHealth = newHealth;
-		HealthPopup.Create(healthBar, actualDamage, true);
+		NotificationManager.AddHealthPopup($"{actualDamage} {type}", NotificationType.Error, healthBar);
 	}
 
 	public void Heal(float health)
@@ -99,13 +99,13 @@ public class HealthSystem : MonoBehaviour
 		var newHealth = CurrentHealth + health;
 		if (newHealth >= MaxHealth)
 		{
-			HealthPopup.Create(healthBar, "Full health", false);
+			NotificationManager.AddHealthPopup("Full health", NotificationType.Success, healthBar);
 			CurrentHealth = MaxHealth;
 			return;
 		}
 
 		CurrentHealth = newHealth;
-		HealthPopup.Create(healthBar, health, false);
+		NotificationManager.AddHealthPopup(health, NotificationType.Success, healthBar);
 	}
 
 	public void CheckForDamagingConditions()

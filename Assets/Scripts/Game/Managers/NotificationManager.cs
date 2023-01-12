@@ -9,9 +9,12 @@ public class NotificationManager : MonoBehaviour
 	private static NotificationManager instance;
 
 	public GameObject notificationPrefab;
+	public GameObject healthPopupPrefab;
 
 	private List<(string, NotificationType)> notifications;
 	private bool showingNotifications;
+	private List<(string, NotificationType, HealthBar)> healthPopups;
+	private bool showingHealthPopups;
 
 	#endregion
 
@@ -37,6 +40,7 @@ public class NotificationManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 
 		notifications = new List<(string, NotificationType)>();
+		healthPopups = new List<(string, NotificationType, HealthBar)>();
 		showingNotifications = false;
 	}
 
@@ -44,22 +48,38 @@ public class NotificationManager : MonoBehaviour
 
 	#region Methods
 
-	public static void Add(string text)
+	public static void AddNotification(string text)
 	{
-		NotificationManager.Instance.AddNotification(text, NotificationType.Info);
+		NotificationManager.AddNotification(text, NotificationType.Info);
 	}
 
-	public static void Add(string text, NotificationType type)
+	public static void AddNotification(string text, NotificationType type)
 	{
-		NotificationManager.Instance.AddNotification(text, type);
+		NotificationManager.Instance.Notification(text, type);
 	}
 
-	public void AddNotification(string text, NotificationType type)
+	public static void AddHealthPopup(float amount, NotificationType type, HealthBar healthBar)
+	{
+		NotificationManager.AddHealthPopup(amount.ToString(), type, healthBar);
+	}
+
+	public static void AddHealthPopup(string text, NotificationType type, HealthBar healthBar)
+	{
+		NotificationManager.Instance.HealthPopup(text, type, healthBar);
+	}
+
+	private void Notification(string text, NotificationType type)
 	{
 		if (notifications.Contains((text, type))) return;
 
 		notifications.Add((text, type));
 		if (!showingNotifications) StartCoroutine(ShowingNotifications());
+	}
+
+	private void HealthPopup(string text, NotificationType type, HealthBar healthBar)
+	{
+		healthPopups.Add((text, type, healthBar));
+		if (!showingHealthPopups) StartCoroutine(ShowingHealthPopups());
 	}
 
 	#endregion
@@ -85,6 +105,26 @@ public class NotificationManager : MonoBehaviour
 		}
 
 		showingNotifications = false;
+	}
+
+	private IEnumerator ShowingHealthPopups()
+	{
+		showingHealthPopups = true;
+
+		while (healthPopups.Count > 0)
+		{
+			var healthPopupInfo = healthPopups[0];
+			var healthBar = healthPopupInfo.Item3;
+			if (healthBar == null) break;
+
+			var healthPopup = Instantiate(healthPopupPrefab, healthBar.transform).GetComponent<HealthPopup>();
+			healthPopup.Initialize(healthPopupInfo);
+			healthPopups.Remove(healthPopupInfo);
+
+			yield return new WaitForSeconds(1);
+		}
+
+		showingHealthPopups = false;
 	}
 
 	#endregion

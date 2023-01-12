@@ -6,8 +6,6 @@ public class GameAssetManager : MonoBehaviour
 
 	private static GameAssetManager instance;
 
-	public GameObject HealthPopupPrefab;
-
 	#endregion
 
 	public static GameAssetManager Instance
