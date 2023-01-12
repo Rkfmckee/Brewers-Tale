@@ -162,8 +162,7 @@ public class ItemDetails : MonoBehaviour
 
 		if (!EnergyManager.HaveEnoughEnergy(energyCost, $"use {InventoryItem.ItemName}")) return;
 
-		var potionToThrow = inventoryPotion.WorldPrefab;
-		References.Brewer.TurnAndThrow(potionToThrow);
+		References.Brewer.TurnAndThrow(inventoryPotion);
 
 		InventoryItem.SlotInInventory.ItemInSlot = null;
 		Destroy(InventoryItem.gameObject);

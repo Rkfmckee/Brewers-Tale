@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class WorldPotion : MonoBehaviour
+public class WorldPotion : MonoBehaviour
 {
 	#region Constants
 
@@ -10,9 +10,6 @@ public abstract class WorldPotion : MonoBehaviour
 	#endregion
 
 	#region Field
-
-	[SerializeField]
-	private Color potionColour;
 
 	private GameObject splashPrefab;
 	private PotionType potionType;
@@ -26,16 +23,18 @@ public abstract class WorldPotion : MonoBehaviour
 
 	#region Properties
 
-	public GameObject Target { get; set; }
+	public Creature Target { get; set; }
+
+	public InventoryPotion InventoryPotion { get; set; }
 
 	#endregion
 
 	#region Events
 
-	protected virtual void Awake()
+	protected virtual void Start()
 	{
 		potionLiquid = transform.Find("Liquid").gameObject;
-		potionLiquid.GetComponent<MeshRenderer>().material.color = potionColour;
+		potionLiquid.GetComponent<MeshRenderer>().material.color = InventoryPotion.PotionColour;
 
 		splashPrefab = Resources.Load<GameObject>("Prefabs/Items/WorldItems/PotionSplash");
 
@@ -58,8 +57,6 @@ public abstract class WorldPotion : MonoBehaviour
 
 	#region Methods
 
-	protected abstract void AffectTarget();
-
 	private Vector3 CalculatePosition()
 	{
 		// Parabola algorithm from https://luminaryapps.com/blog/arcing-projectiles-in-unity/
@@ -81,9 +78,9 @@ public abstract class WorldPotion : MonoBehaviour
 	{
 		var splash = Instantiate(splashPrefab, transform.position, Quaternion.identity);
 		var particleSystem = splash.transform.Find("Particles").GetComponent<ParticleSystem>().main;
-		particleSystem.startColor = potionColour;
+		particleSystem.startColor = InventoryPotion.PotionColour;
 
-		AffectTarget();
+		InventoryPotion.AffectTarget(Target);
 
 		Destroy(splash, particleSystem.duration);
 		Destroy(gameObject);

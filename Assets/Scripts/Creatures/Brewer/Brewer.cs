@@ -62,17 +62,17 @@ public class Brewer : Creature
 
 	#region Methods
 
-	public void TurnAndThrow(GameObject potionToThrow)
+	public void TurnAndThrow(InventoryPotion potionToThrow)
 	{
 		StartCoroutine(TurningAndThrowing(potionToThrow));
 	}
 
-	private GameObject GetPotionTarget()
+	private Creature GetPotionTarget()
 	{
 		foreach (var space in References.EnemySpaces.OrderByDescending(e => e.SpaceNumber))
 		{
 			var enemy = space.EnemyInSpace;
-			if (enemy != null) return enemy.gameObject;
+			if (enemy != null) return enemy;
 		}
 
 		return null;
@@ -82,7 +82,7 @@ public class Brewer : Creature
 
 	#region Coroutines
 
-	private IEnumerator TurningAndThrowing(GameObject potionToThrow)
+	private IEnumerator TurningAndThrowing(InventoryPotion potionToThrow)
 	{
 		var turnLeftTime = animationLengths[BrewerState.TurningLeft.GetDescription()];
 		var turnRightTime = animationLengths[BrewerState.TurningRight.GetDescription()];
@@ -117,7 +117,7 @@ public class Brewer : Creature
 		transform.rotation = rotationTo;
 	}
 
-	private IEnumerator Throw(GameObject potionToThrow)
+	private IEnumerator Throw(InventoryPotion potionToThrow)
 	{
 		var potionTarget = GetPotionTarget();
 		if (!potionTarget)
@@ -134,9 +134,10 @@ public class Brewer : Creature
 		{
 			if (shouldThrowPotion && timer > throwTime / 3)
 			{
-				var potionObject = Instantiate(potionToThrow, throwPosition, Quaternion.identity);
+				var potionObject = Instantiate(potionToThrow.WorldPrefab, throwPosition, Quaternion.identity);
 				var potion = potionObject.GetComponent<WorldPotion>();
 				potion.Target = potionTarget;
+				potion.InventoryPotion = potionToThrow;
 
 				shouldThrowPotion = false;
 			}
