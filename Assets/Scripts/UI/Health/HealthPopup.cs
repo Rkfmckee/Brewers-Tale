@@ -20,12 +20,7 @@ public class HealthPopup : MonoBehaviour
 
 	private TextMeshProUGUI popupText;
 	private Canvas canvas;
-
-	#endregion
-
-	#region Properties
-
-	public Vector3 HealthBarPosition { get; set; }
+	public Vector3 healthBarPosition;
 
 	#endregion
 
@@ -49,7 +44,7 @@ public class HealthPopup : MonoBehaviour
 
 	private void Update()
 	{
-		var xPositionDifference = Mathf.Abs(transform.localPosition.x - HealthBarPosition.x);
+		var xPositionDifference = Mathf.Abs(transform.localPosition.x - healthBarPosition.x);
 		if (xPositionDifference >= SIDEWAYS_MOVEMENT_LIMIT) direction *= -1;
 
 		transform.localPosition += new Vector3(direction, UPWARDS_MOVEMENT_PER_FRAME, 0);
@@ -59,22 +54,16 @@ public class HealthPopup : MonoBehaviour
 
 	#region Methods
 
-	public static void Create(HealthBar healthBar, float amount, bool isDamage)
+	public void Initialize((string, NotificationType, HealthBar) healthPopupInfo)
 	{
-		HealthPopup.Create(healthBar, amount.ToString(), isDamage);
-	}
+		var text = healthPopupInfo.Item1;
+		var type = healthPopupInfo.Item2;
+		var healthBar = healthPopupInfo.Item3;
 
-	public static void Create(HealthBar healthBar, string text, bool isDamage)
-	{
-		var healthPopup = Instantiate(GameAssetManager.Instance.HealthPopupPrefab, healthBar.transform.position, Quaternion.identity).GetComponent<HealthPopup>();
-		healthPopup.HealthBarPosition = healthBar.transform.localPosition;
-		healthPopup.Initialize(text, isDamage);
-	}
-
-	public void Initialize(string text, bool isDamage)
-	{
-		var colour = isDamage ? Color.red : Color.green;
+		var colour = type == NotificationType.Success ? Color.green : Color.red;
 		colour.a = 0;
+
+		healthBarPosition = healthBar.transform.localPosition;
 
 		popupText.SetText(text);
 		popupText.color = colour;

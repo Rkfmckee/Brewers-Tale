@@ -10,9 +10,7 @@ public abstract class Enemy : Creature
 	[SerializeField]
 	private string enemyName;
 	[SerializeField]
-	protected int attackDamageAmount;
-	[SerializeField]
-	protected DamageType attackDamageType;
+	protected Damage damage;
 	[SerializeField]
 	private Loot[] lootTable;
 
@@ -169,10 +167,10 @@ public abstract class Enemy : Creature
 				case 0:
 					return;
 				case 1:
-					NotificationManager.Add($"Picked up {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+					NotificationManager.AddNotification($"Picked up {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
 					break;
 				default:
-					NotificationManager.Add($"Picked up {numberDropped}x {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
+					NotificationManager.AddNotification($"Picked up {numberDropped}x {loot.Item.ItemName} from {EnemyName}", NotificationType.Success);
 					break;
 			}
 		}
@@ -207,7 +205,7 @@ public abstract class Enemy : Creature
 			if (shouldCauseDamage && timer > attackTime / 2)
 			{
 				// Damage brewer
-				brewerHealth.Damage(attackDamageAmount, attackDamageType);
+				brewerHealth.Damage(damage);
 				shouldCauseDamage = false;
 			}
 

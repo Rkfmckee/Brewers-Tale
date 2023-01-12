@@ -11,7 +11,7 @@ public class InventoryFirePotion : InventoryPotion
 	public override GameObject WorldPrefab => Resources.Load<GameObject>("Prefabs/Items/WorldItems/WorldPotion");
 
 	public Damage Damage => new Damage(2, DamageType.Fire);
-	public int ChanceOfBurning = 25;
+	public int ChanceOfBurning => 25;
 
 	#endregion
 

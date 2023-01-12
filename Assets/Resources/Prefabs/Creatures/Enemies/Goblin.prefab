@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Goblin
-  attackDamageAmount: 3
-  attackDamageType: 0
+  damage:
+    Amount: 3
+    Type: 5
   lootTable:
   - Item: {fileID: 3652999399898245699, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
     DropPercentage: 80
@@ -70,9 +71,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 6
   healthBarHeight: 1
-  damageImmunities: 
-  damageResistances: 
-  damageVulnerabilities: 
 --- !u!1 &5494075352573203200
 GameObject:
   m_ObjectHideFlags: 0

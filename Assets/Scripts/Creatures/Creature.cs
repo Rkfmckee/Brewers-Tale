@@ -35,7 +35,7 @@ public abstract class Creature : MonoBehaviour
 		if (conditions.Where(c => c.GetType() == condition.GetType()).Any()) return;
 
 		conditions.Add(condition);
-		HealthPopup.Create(healthSystem.HealthBar, $"+ {condition.Name}", false);
+		NotificationManager.AddHealthPopup($"+ {condition.Name}", NotificationType.Success, healthSystem.HealthBar);
 	}
 
 	public void RemoveConditions(IEnumerable<ITemporaryCondition> conditions)
@@ -66,7 +66,7 @@ public abstract class Creature : MonoBehaviour
 		if (!conditions.Contains(condition)) return;
 
 		conditions.Remove(condition);
-		HealthPopup.Create(healthSystem.HealthBar, $"- {condition.Name}", true);
+		NotificationManager.AddHealthPopup($"- {condition.Name}", NotificationType.Error, healthSystem.HealthBar);
 	}
 
 	// Remove a type of condition
@@ -77,7 +77,7 @@ public abstract class Creature : MonoBehaviour
 		if (condition == null) return;
 
 		conditions.Remove(condition);
-		HealthPopup.Create(healthSystem.HealthBar, $"- {condition.Name}", true);
+		NotificationManager.AddHealthPopup($"- {condition.Name}", NotificationType.Error, healthSystem.HealthBar);
 	}
 
 	#endregion
