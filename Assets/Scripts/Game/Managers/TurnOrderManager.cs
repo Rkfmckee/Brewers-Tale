@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnOrderManager : MonoBehaviour
+public class TurnOrderManager : Singleton<TurnOrderManager>
 {
 	#region Fields
-
-	private static TurnOrderManager instance;
 
 	private Turn currentTurn;
 	private List<EnemySpace> enemySpaces;
@@ -13,17 +11,6 @@ public class TurnOrderManager : MonoBehaviour
 	#endregion
 
 	#region Properties
-
-	public static TurnOrderManager Instance
-	{
-		get
-		{
-			if (instance == null)
-				instance = Instantiate(Resources.Load<TurnOrderManager>($"Prefabs/Game/Managers/{nameof(TurnOrderManager)}"));
-
-			return instance;
-		}
-	}
 
 	public Turn CurrentTurn
 	{
@@ -43,11 +30,6 @@ public class TurnOrderManager : MonoBehaviour
 	#endregion
 
 	#region Events
-
-	private void Awake()
-	{
-		DontDestroyOnLoad(gameObject);
-	}
 
 	private void Start()
 	{

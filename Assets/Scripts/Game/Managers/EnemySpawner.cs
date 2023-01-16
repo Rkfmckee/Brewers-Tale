@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : Singleton<EnemySpawner>
 {
 	#region Fields
 
@@ -12,24 +12,11 @@ public class EnemySpawner : MonoBehaviour
 
 	#endregion
 
-	#region Events
-
-	private void Awake()
-	{
-		References.EnemySpawner = this;
-	}
-
-	private void Start()
-	{
-		spawnSpace = References.EnemySpaces[0];
-	}
-
-	#endregion
-
 	#region Methods
 
 	public void Spawn()
 	{
+		var spawnSpace = References.EnemySpaces[0];
 		if (enemyQueue.Count == 0) return;
 		if (spawnSpace.EnemyInSpace != null) return;
 

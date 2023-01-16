@@ -27,7 +27,7 @@ public class EnemyTurn : Turn
 	public EnemyTurn() : base()
 	{
 		enemies = References.Enemies;
-		enemySpawner = References.EnemySpawner;
+		enemySpawner = EnemySpawner.Instance;
 
 		startTime = 1;
 		endTime = 0.5f;

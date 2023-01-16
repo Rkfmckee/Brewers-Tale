@@ -17,7 +17,7 @@ public class CraftingResultSlot : Slot
 
 	public void SearchForCraftingRecipe()
 	{
-		var craftingRecipeManager = References.Crafting.RecipeManager;
+		var craftingRecipeManager = CraftingRecipeManager.Instance;
 		var craftingIngredients = new List<InventoryItem>();
 		var craftingRecipe = null as CraftingRecipe;
 

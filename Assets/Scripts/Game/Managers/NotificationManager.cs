@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotificationManager : MonoBehaviour
+public class NotificationManager : Singleton<NotificationManager>
 {
 	#region Fields
-
-	private static NotificationManager instance;
 
 	public GameObject notificationPrefab;
 	public GameObject healthPopupPrefab;
@@ -18,26 +16,11 @@ public class NotificationManager : MonoBehaviour
 
 	#endregion
 
-	#region Properties
-
-	public static NotificationManager Instance
-	{
-		get
-		{
-			if (instance == null)
-				instance = Instantiate(Resources.Load<NotificationManager>($"Prefabs/Game/Managers/{nameof(NotificationManager)}"));
-
-			return instance;
-		}
-	}
-
-	#endregion
-
 	#region Events
 
-	private void Awake()
+	protected override void Awake()
 	{
-		DontDestroyOnLoad(gameObject);
+		base.Awake();
 
 		notifications = new List<(string, NotificationType)>();
 		healthPopups = new List<(string, NotificationType, HealthBar)>();

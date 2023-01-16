@@ -1,11 +1,8 @@
 using TMPro;
-using UnityEngine;
 
-public class EnergyManager : MonoBehaviour
+public class EnergyManager : Singleton<EnergyManager>
 {
 	#region Fields
-
-	private static EnergyManager instance;
 
 	private int currentEnergy;
 
@@ -15,17 +12,6 @@ public class EnergyManager : MonoBehaviour
 
 	#region Properties
 
-	public static EnergyManager Instance
-	{
-		get
-		{
-			if (instance == null)
-				instance = Instantiate(Resources.Load<EnergyManager>($"Prefabs/Game/Managers/{nameof(EnergyManager)}"));
-
-			return instance;
-		}
-	}
-
 	public int CurrentEnergy { get => currentEnergy; }
 
 	public int MaxEnergy { get; set; }
@@ -34,9 +20,9 @@ public class EnergyManager : MonoBehaviour
 
 	#region Events
 
-	private void Awake()
+	protected override void Awake()
 	{
-		DontDestroyOnLoad(gameObject);
+		base.Awake();
 
 		currentEnergyText = WorldCanvasManager.BookCanvasRight.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
 		MaxEnergy = 3;

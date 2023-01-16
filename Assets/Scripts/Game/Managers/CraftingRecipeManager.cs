@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 
-public class CraftingRecipeManager : MonoBehaviour
+public class CraftingRecipeManager : Singleton<CraftingRecipeManager>
 {
 	#region Properties
 
@@ -12,9 +11,9 @@ public class CraftingRecipeManager : MonoBehaviour
 
 	#region Events
 
-	private void Awake()
+	protected override void Awake()
 	{
-		References.Crafting.RecipeManager = this;
+		base.Awake();
 
 		PopulateRecipes();
 	}

@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : Singleton<InventoryManager>
 {
 	#region Fields
 
-	private static InventoryManager instance;
+	private InventoryInitializer initializer;
 
 	private InventoryItem itemHeld;
 	private RectTransform itemHeldTransform;
@@ -23,16 +23,7 @@ public class InventoryManager : MonoBehaviour
 
 	#region Properties
 
-	public static InventoryManager Instance
-	{
-		get
-		{
-			if (instance == null)
-				instance = Instantiate(Resources.Load<InventoryManager>($"Prefabs/Game/Managers/{nameof(InventoryManager)}"));
-
-			return instance;
-		}
-	}
+	public static InventoryInitializer Initializer { get => Instance.initializer; }
 
 	public InventoryState ActiveInventory { get; set; }
 	public InventoryItem ItemHeld
@@ -49,8 +40,12 @@ public class InventoryManager : MonoBehaviour
 
 	#region Events
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
+		initializer = GetComponent<InventoryInitializer>();
+
 		ActiveInventory = InventoryState.Inventory;
 		camera = Camera.main;
 	}

@@ -1,16 +1,14 @@
+
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class LevelInitializer : MonoBehaviour
 {
 	#region Events
 
-	private void Awake()
-	{
-		References.LevelManager = this;
-	}
-
 	private void Start()
 	{
+		DontDestroyOnLoad(gameObject);
+
 		TurnOrderManager.Instance.CurrentTurn = new PlayerTurn();
 	}
 

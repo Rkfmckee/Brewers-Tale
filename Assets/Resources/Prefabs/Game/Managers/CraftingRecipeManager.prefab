@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1496001496267591631
+--- !u!1 &3629552605129515734
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4143572598150564739}
-  - component: {fileID: 4483498423611284631}
-  - component: {fileID: 4547842381816352894}
+  - component: {fileID: 4240846902301677275}
+  - component: {fileID: 3596618387501128538}
   m_Layer: 0
-  m_Name: InventoryManager
+  m_Name: CraftingRecipeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4143572598150564739
+--- !u!4 &4240846902301677275
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496001496267591631}
+  m_GameObject: {fileID: 3629552605129515734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,29 +32,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4483498423611284631
+--- !u!114 &3596618387501128538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496001496267591631}
+  m_GameObject: {fileID: 3629552605129515734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66b9ce4d969a2464c9ffb2087bf7dad0, type: 3}
+  m_Script: {fileID: 11500000, guid: 33c9688b07d44244bb02722d7b754ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4547842381816352894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496001496267591631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7718cf7cd5d917940be8ee25209eb1aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingItems:
-  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}

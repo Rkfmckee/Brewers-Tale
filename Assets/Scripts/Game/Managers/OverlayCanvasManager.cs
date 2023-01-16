@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class OverlayCanvasManager : MonoBehaviour
+public class OverlayCanvasManager : Singleton<OverlayCanvasManager>
 {
 	#region Fields
-
-	private static OverlayCanvasManager instance;
 
 	private Canvas canvas;
 
@@ -12,29 +10,17 @@ public class OverlayCanvasManager : MonoBehaviour
 
 	#region Properties
 
-	public static OverlayCanvasManager Instance
-	{
-		get
-		{
-			if (instance == null)
-			{
-				instance = Instantiate(Resources.Load<OverlayCanvasManager>($"Prefabs/Game/Managers/{nameof(OverlayCanvasManager)}"));
-				instance.canvas = GameObject.Find("OverlayCanvas").GetComponent<Canvas>();
-			}
-
-			return instance;
-		}
-	}
-
 	public static Canvas Canvas { get => Instance.canvas; }
 
 	#endregion
 
 	#region Events
 
-	private void Awake()
+	protected override void Awake()
 	{
-		DontDestroyOnLoad(gameObject);
+		base.Awake();
+
+		canvas = GameObject.Find("OverlayCanvas").GetComponent<Canvas>();
 	}
 
 	#endregion
