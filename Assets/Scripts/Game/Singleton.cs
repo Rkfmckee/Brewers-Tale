@@ -33,4 +33,10 @@ public abstract class Singleton<T> : MonoBehaviour
 	}
 
 	#endregion
+
+	#region Methods
+
+	public virtual void Initialize() { }
+
+	#endregion
 }

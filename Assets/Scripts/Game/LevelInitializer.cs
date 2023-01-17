@@ -9,7 +9,9 @@ public class LevelInitializer : MonoBehaviour
 	{
 		DontDestroyOnLoad(gameObject);
 
+		// Initialize singletons
 		TurnOrderManager.Instance.CurrentTurn = new PlayerTurn();
+		CreatureLocator.Instance.Initialize();
 	}
 
 	#endregion
