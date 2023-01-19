@@ -5,8 +5,10 @@ public class CreatureLocator : Singleton<CreatureLocator>
 	#region Fields
 
 	private int creatureMask;
+	private bool showingCreatureDetails;
 
 	private new Camera camera;
+	private WorldCanvasManager canvasManager;
 
 	#endregion
 
@@ -17,8 +19,10 @@ public class CreatureLocator : Singleton<CreatureLocator>
 		base.Awake();
 
 		camera = Camera.main;
+		canvasManager = WorldCanvasManager.Instance;
 
 		creatureMask = 1 << LayerMask.NameToLayer("Creature");
+		showingCreatureDetails = false;
 	}
 
 	private void Update()
@@ -33,11 +37,14 @@ public class CreatureLocator : Singleton<CreatureLocator>
 			var creature = objectHit.GetComponent<Creature>();
 			if (creature == null) { print($"{objectHit.name} isn't a creature"); return; }
 
-			// TODO:
-			// Check if we're showing this creature's details
-			// If not, show it
-			// If we are, and it's not this creature's, hide the old one
+			if (canvasManager.CurrentCreatureDetails(creature)) return;
+
+			WorldCanvasManager.Instance.ShowCreatureDetails(creature);
+			showingCreatureDetails = true;
+			return;
 		}
+
+		if (showingCreatureDetails) canvasManager.HideCreatureDetails();
 	}
 
 	#endregion

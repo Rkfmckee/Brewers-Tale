@@ -8,6 +8,11 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	private Canvas bookCanvasLeft;
 	private Canvas bookCanvasRight;
 
+	private Creature currentCreature;
+	private GameObject currentCreatureDetails;
+	private GameObject creatureDetailsPrefab;
+	private GameObject conditionDetails;
+
 	#endregion
 
 	#region Properties
@@ -24,10 +29,43 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	{
 		base.Awake();
 
-		var book = GameObject.Find("Book");
+		var book = GameObject.Find("Book").transform;
 		canvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
-		bookCanvasLeft = book.transform.Find("CanvasLeft").GetComponent<Canvas>();
-		bookCanvasRight = book.transform.Find("CanvasRight").GetComponent<Canvas>();
+		bookCanvasLeft = book.Find("CanvasLeft").GetComponent<Canvas>();
+		bookCanvasRight = book.Find("CanvasRight").GetComponent<Canvas>();
+
+		creatureDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/CreatureDetails");
+		conditionDetails = Resources.Load<GameObject>("Prefabs/UI/Creature/ConditionDetails");
+	}
+
+	#endregion
+
+	#region Methods
+
+	public bool CurrentCreatureDetails(Creature creature)
+	{
+		return ReferenceEquals(creature, currentCreature);
+	}
+
+	public void ShowCreatureDetails(Creature creature)
+	{
+		currentCreature = creature;
+		currentCreatureDetails = Instantiate(creatureDetailsPrefab, canvas.transform);
+		print($"Showing {creature.name} details");
+	}
+
+	public void HideCreatureDetails()
+	{
+		if (currentCreatureDetails == null) return;
+
+		currentCreature = null;
+		Destroy(currentCreatureDetails);
+		print("Hiding details");
+	}
+
+	private void AddConditionDetails(Creature creature)
+	{
+
 	}
 
 	#endregion
