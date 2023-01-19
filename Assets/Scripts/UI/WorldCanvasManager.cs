@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class WorldCanvasManager : Singleton<WorldCanvasManager>
@@ -9,9 +10,9 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	private Canvas bookCanvasRight;
 
 	private Creature currentCreature;
-	private GameObject currentCreatureDetails;
+	private CreatureDetails currentCreatureDetails;
 	private GameObject creatureDetailsPrefab;
-	private GameObject conditionDetails;
+	private GameObject conditionDetailsPrefab;
 
 	#endregion
 
@@ -35,7 +36,7 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 		bookCanvasRight = book.Find("CanvasRight").GetComponent<Canvas>();
 
 		creatureDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/CreatureDetails");
-		conditionDetails = Resources.Load<GameObject>("Prefabs/UI/Creature/ConditionDetails");
+		conditionDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/ConditionDetails");
 	}
 
 	#endregion
@@ -50,8 +51,10 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	public void ShowCreatureDetails(Creature creature)
 	{
 		currentCreature = creature;
-		currentCreatureDetails = Instantiate(creatureDetailsPrefab, canvas.transform);
-		print($"Showing {creature.name} details");
+		currentCreatureDetails = Instantiate(creatureDetailsPrefab, canvas.transform).GetComponent<CreatureDetails>();
+		currentCreatureDetails.transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creature.name);
+
+		AddConditionDetails(creature);
 	}
 
 	public void HideCreatureDetails()
@@ -59,13 +62,19 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 		if (currentCreatureDetails == null) return;
 
 		currentCreature = null;
-		Destroy(currentCreatureDetails);
-		print("Hiding details");
+		Destroy(currentCreatureDetails.gameObject);
 	}
 
 	private void AddConditionDetails(Creature creature)
 	{
+		foreach (var condition in creature.Conditions)
+		{
+			var conditionDetails = Instantiate(conditionDetailsPrefab, currentCreatureDetails.transform);
+			conditionDetails.transform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(condition.Name);
+			conditionDetails.transform.Find("Description").GetComponent<TextMeshProUGUI>().SetText(condition.Description);
+		}
 
+		currentCreatureDetails.UpdatePosition(creature);
 	}
 
 	#endregion
