@@ -5,14 +5,16 @@ public class CreatureDetails : MonoBehaviour
 {
 	#region Constants
 
-	public const float X_POSITION_OFFSET = 0.5f;
-	public const float Y_POSITION_OFFSET = 1;
+	private const float X_POSITION_OFFSET = 0.5f;
+	private const float Y_POSITION_OFFSET = 1;
+	private const float CHILD_SPACING_PIXELS = 5;
 
 	#endregion
 
 	#region Fields
 
 	private Creature creature;
+	private float childHeightPixels;
 
 	private RectTransform rectTransform;
 	private new Camera camera;
@@ -25,6 +27,8 @@ public class CreatureDetails : MonoBehaviour
 	{
 		rectTransform = GetComponent<RectTransform>();
 		camera = Camera.main;
+
+		childHeightPixels = transform.Find("CreatureName").GetComponent<RectTransform>().sizeDelta.y;
 	}
 
 	#endregion
@@ -36,7 +40,7 @@ public class CreatureDetails : MonoBehaviour
 		var creaturePosition = creature.transform.position;
 		var halfScreenWidth = Screen.width / 2;
 		var creatureOnRight = Mathf.Ceil(camera.WorldToScreenPoint(creaturePosition).x / halfScreenWidth) == 2;
-		var positionOffset = new Vector3(X_POSITION_OFFSET, Y_POSITION_OFFSET);
+		var positionOffset = new Vector3(X_POSITION_OFFSET, Y_POSITION_OFFSET, 0);
 
 		if (creatureOnRight)
 		{
@@ -56,6 +60,23 @@ public class CreatureDetails : MonoBehaviour
 		}
 
 		transform.position += positionOffset;
+		UpdatePositionsOfChildren();
+	}
+
+	private void UpdatePositionsOfChildren()
+	{
+		var numChildren = transform.childCount;
+		if (numChildren <= 1) return;
+
+		var yPositionOffset = childHeightPixels + CHILD_SPACING_PIXELS;
+		var currentYPosition = (yPositionOffset * (numChildren - 1)) - (yPositionOffset / 2);
+
+		for (int i = 0; i < numChildren; i++)
+		{
+			var child = transform.GetChild(i);
+			child.localPosition = new Vector3(0, currentYPosition, 0);
+			currentYPosition -= yPositionOffset;
+		}
 	}
 
 	#endregion

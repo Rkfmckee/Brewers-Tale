@@ -12,6 +12,7 @@ public class InventoryFirePotion : InventoryPotion
 
 	public Damage Damage => new Damage(2, DamageType.Fire);
 	public int ChanceOfBurning => 25;
+	public int BurningNumberOfTurns => 2;
 
 	#endregion
 
@@ -23,7 +24,7 @@ public class InventoryFirePotion : InventoryPotion
 		targetHealth.Damage(Damage);
 
 		if (Random.Range(0, 100) < ChanceOfBurning)
-			target.AddCondition(new Burning(Damage.Amount, 1));
+			target.AddCondition(new Burning(Damage.Amount, BurningNumberOfTurns));
 	}
 
 	#endregion
