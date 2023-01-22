@@ -50,8 +50,9 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 
 	public void ShowCreatureDetails(Creature creature)
 	{
+		var spawnPosition = creature.transform.position;
 		currentCreature = creature;
-		currentCreatureDetails = Instantiate(creatureDetailsPrefab, canvas.transform).GetComponent<CreatureDetails>();
+		currentCreatureDetails = Instantiate(creatureDetailsPrefab, spawnPosition, Quaternion.identity, canvas.transform).GetComponent<CreatureDetails>();
 		currentCreatureDetails.transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creature.name);
 
 		AddConditionDetails(creature);

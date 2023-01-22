@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class CreatureDetails : MonoBehaviour
 {
+	#region Constants
+
+	public const float X_POSITION_OFFSET = 0.5f;
+	public const float Y_POSITION_OFFSET = 1;
+
+	#endregion
+
 	#region Fields
 
 	private Creature creature;
@@ -26,18 +33,14 @@ public class CreatureDetails : MonoBehaviour
 
 	public void UpdatePosition(Creature creature)
 	{
-		// If the slot is on the right side of a page,
-		// Move the ItemDetails to the left side of the slot.
-		// The right side of the page is the 2nd or 4th quarter
-		// of the screen.
-
 		var creaturePosition = creature.transform.position;
 		var halfScreenWidth = Screen.width / 2;
 		var creatureOnRight = Mathf.Ceil(camera.WorldToScreenPoint(creaturePosition).x / halfScreenWidth) == 2;
+		var positionOffset = new Vector3(X_POSITION_OFFSET, Y_POSITION_OFFSET);
 
 		if (creatureOnRight)
 		{
-			rectTransform.localPosition *= -1;
+			positionOffset.x *= -1;
 
 			foreach (RectTransform child in transform)
 			{
@@ -51,6 +54,8 @@ public class CreatureDetails : MonoBehaviour
 				conditionDescription.GetComponent<TextMeshProUGUI>().horizontalAlignment = HorizontalAlignmentOptions.Right;
 			}
 		}
+
+		transform.position += positionOffset;
 	}
 
 	#endregion

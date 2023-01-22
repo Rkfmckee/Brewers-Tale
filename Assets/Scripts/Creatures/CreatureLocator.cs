@@ -29,7 +29,7 @@ public class CreatureLocator : Singleton<CreatureLocator>
 	{
 		var ray = camera.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hitInfo;
-		Debug.DrawRay(camera.transform.position, ray.direction, Color.yellow);
+		//Debug.DrawRay(camera.transform.position, ray.direction, Color.yellow);
 
 		if (Physics.Raycast(ray, out hitInfo, int.MaxValue, creatureMask))
 		{
