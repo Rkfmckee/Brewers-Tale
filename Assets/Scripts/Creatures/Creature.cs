@@ -33,7 +33,6 @@ public abstract class Creature : MonoBehaviour
 
 		solidMaterial = GetComponentInChildren<Renderer>().material;
 		healthSystem = GetComponent<HealthSystem>();
-		conditions.Add(new Burning(0, 10));
 	}
 
 	#endregion
