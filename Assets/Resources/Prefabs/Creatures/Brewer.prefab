@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8de5073f62fde448afc6842b863251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparentMaterial: {fileID: 2100000, guid: 0744a33a0f526884e9fbd60c1e5c001b, type: 2}
 --- !u!114 &3381209630111395643
 MonoBehaviour:
   m_ObjectHideFlags: 0

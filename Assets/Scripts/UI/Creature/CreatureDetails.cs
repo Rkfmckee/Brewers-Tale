@@ -13,7 +13,7 @@ public class CreatureDetails : MonoBehaviour
 
 	#region Fields
 
-	private Creature creature;
+	private Creature targetCreature;
 	private float childHeightPixels;
 
 	private RectTransform rectTransform;
@@ -31,12 +31,18 @@ public class CreatureDetails : MonoBehaviour
 		childHeightPixels = transform.Find("CreatureName").GetComponent<RectTransform>().sizeDelta.y;
 	}
 
+	private void OnDestroy()
+	{
+		ShowOtherCreatures(true);
+	}
+
 	#endregion
 
 	#region Properties
 
 	public void UpdatePosition(Creature creature)
 	{
+		targetCreature = creature;
 		var creaturePosition = creature.transform.position;
 		var halfScreenWidth = Screen.width / 2;
 		var creatureOnRight = Mathf.Ceil(camera.WorldToScreenPoint(creaturePosition).x / halfScreenWidth) == 2;
@@ -60,7 +66,11 @@ public class CreatureDetails : MonoBehaviour
 		}
 
 		transform.position += positionOffset;
+		var resetZPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
+		transform.localPosition = resetZPosition;
+
 		UpdatePositionsOfChildren();
+		ShowOtherCreatures(false);
 	}
 
 	private void UpdatePositionsOfChildren()
@@ -76,6 +86,24 @@ public class CreatureDetails : MonoBehaviour
 			var child = transform.GetChild(i);
 			child.localPosition = new Vector3(0, currentYPosition, 0);
 			currentYPosition -= yPositionOffset;
+		}
+	}
+
+	private void ShowOtherCreatures(bool shouldShow)
+	{
+		var creatures = References.Creatures;
+
+		foreach (var creature in creatures)
+		{
+			if (targetCreature == creature) continue;
+
+			var material = shouldShow ? creature.SolidMaterial : creature.TransparentMaterial;
+			var renderers = creature.GetComponentsInChildren<Renderer>();
+
+			foreach (var renderer in renderers)
+			{
+				renderer.material = material;
+			}
 		}
 	}
 

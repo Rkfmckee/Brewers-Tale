@@ -7,14 +7,20 @@ public abstract class Creature : MonoBehaviour
 {
 	#region Fields
 
+	[SerializeField]
+	private Material transparentMaterial;
+
 	private readonly List<Condition> conditions = new List<Condition>();
 
+	private Material solidMaterial;
 	protected HealthSystem healthSystem;
 
 	#endregion
 
 	#region Properties
 
+	public Material TransparentMaterial => transparentMaterial;
+	public Material SolidMaterial => solidMaterial;
 	public ReadOnlyCollection<Condition> Conditions => conditions.AsReadOnly();
 
 	#endregion
@@ -23,7 +29,11 @@ public abstract class Creature : MonoBehaviour
 
 	protected virtual void Awake()
 	{
+		References.Creatures.Add(this);
+
+		solidMaterial = GetComponentInChildren<Renderer>().material;
 		healthSystem = GetComponent<HealthSystem>();
+		conditions.Add(new Burning(0, 10));
 	}
 
 	#endregion

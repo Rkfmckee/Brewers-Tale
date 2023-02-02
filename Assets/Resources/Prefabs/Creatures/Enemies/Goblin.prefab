@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75c58b67a41c144abce09e4bcc021db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparentMaterial: {fileID: 2100000, guid: c2f4b6a05c45e284b90e2407200dc4dc, type: 2}
   enemyName: Goblin
   damage:
     Amount: 3
