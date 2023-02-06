@@ -12,7 +12,6 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	private Creature currentCreature;
 	private CreatureDetails currentCreatureDetails;
 	private GameObject creatureDetailsPrefab;
-	private GameObject conditionDetailsPrefab;
 
 	#endregion
 
@@ -36,7 +35,6 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 		bookCanvasRight = book.Find("CanvasRight").GetComponent<Canvas>();
 
 		creatureDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/CreatureDetails");
-		conditionDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/ConditionDetails");
 	}
 
 	#endregion
@@ -53,9 +51,7 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 		var spawnPosition = creature.transform.position;
 		currentCreature = creature;
 		currentCreatureDetails = Instantiate(creatureDetailsPrefab, spawnPosition, Quaternion.identity, canvas.transform).GetComponent<CreatureDetails>();
-		currentCreatureDetails.transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creature.name);
-
-		AddConditionDetails(creature);
+		currentCreatureDetails.Initialize(creature);
 	}
 
 	public void HideCreatureDetails()
@@ -64,18 +60,6 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 
 		currentCreature = null;
 		Destroy(currentCreatureDetails.gameObject);
-	}
-
-	private void AddConditionDetails(Creature creature)
-	{
-		foreach (var condition in creature.Conditions)
-		{
-			var conditionDetails = Instantiate(conditionDetailsPrefab, currentCreatureDetails.transform);
-			conditionDetails.transform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(condition.Name);
-			conditionDetails.transform.Find("Description").GetComponent<TextMeshProUGUI>().SetText(condition.Description);
-		}
-
-		currentCreatureDetails.UpdatePosition(creature);
 	}
 
 	#endregion

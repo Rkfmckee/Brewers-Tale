@@ -13,6 +13,9 @@ public class CreatureDetails : MonoBehaviour
 
 	#region Fields
 
+	[SerializeField]
+	private GameObject conditionDetailsPrefab;
+
 	private Creature targetCreature;
 	private float childHeightPixels;
 
@@ -40,10 +43,33 @@ public class CreatureDetails : MonoBehaviour
 
 	#region Properties
 
-	public void UpdatePosition(Creature creature)
+	public void Initialize(Creature creature)
 	{
 		targetCreature = creature;
-		var creaturePosition = creature.transform.position;
+
+		var creatureName = creature is Enemy ? (creature as Enemy).EnemyName : creature.name;
+		transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creatureName);
+
+		UpdatePosition();
+		AddConditionDetails();
+		ShowOtherCreatures(false);
+	}
+
+	private void AddConditionDetails()
+	{
+		foreach (var condition in targetCreature.Conditions)
+		{
+			var conditionDetails = Instantiate(conditionDetailsPrefab, transform);
+			conditionDetails.transform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(condition.Name);
+			conditionDetails.transform.Find("Description").GetComponent<TextMeshProUGUI>().SetText(condition.Description);
+		}
+
+		UpdatePositionsOfConditions();
+	}
+
+	private void UpdatePosition()
+	{
+		var creaturePosition = targetCreature.transform.position;
 		var halfScreenWidth = Screen.width / 2;
 		var creatureOnRight = Mathf.Ceil(camera.WorldToScreenPoint(creaturePosition).x / halfScreenWidth) == 2;
 		var positionOffset = new Vector3(X_POSITION_OFFSET, Y_POSITION_OFFSET, 0);
@@ -68,12 +94,9 @@ public class CreatureDetails : MonoBehaviour
 		transform.position += positionOffset;
 		var resetZPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
 		transform.localPosition = resetZPosition;
-
-		UpdatePositionsOfChildren();
-		ShowOtherCreatures(false);
 	}
 
-	private void UpdatePositionsOfChildren()
+	private void UpdatePositionsOfConditions()
 	{
 		var numChildren = transform.childCount;
 		if (numChildren <= 1) return;
