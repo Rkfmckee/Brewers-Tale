@@ -33,6 +33,10 @@ public abstract class Creature : MonoBehaviour
 
 		solidMaterial = GetComponentInChildren<Renderer>().material;
 		healthSystem = GetComponent<HealthSystem>();
+
+		conditions.Add(new Burning(2, 10));
+		conditions.Add(new FireImmunity());
+		conditions.Add(new PhysicalResistance());
 	}
 
 	#endregion

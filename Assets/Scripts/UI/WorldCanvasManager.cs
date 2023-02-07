@@ -50,7 +50,7 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	{
 		var spawnPosition = creature.transform.position;
 		currentCreature = creature;
-		currentCreatureDetails = Instantiate(creatureDetailsPrefab, spawnPosition, Quaternion.identity, canvas.transform).GetComponent<CreatureDetails>();
+		currentCreatureDetails = Instantiate(creatureDetailsPrefab, bookCanvasRight.transform).GetComponent<CreatureDetails>();
 		currentCreatureDetails.Initialize(creature);
 	}
 

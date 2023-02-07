@@ -21,6 +21,7 @@ public class CreatureDetails : MonoBehaviour
 
 	private RectTransform rectTransform;
 	private new Camera camera;
+	private Transform conditionGroup;
 
 	#endregion
 
@@ -32,6 +33,7 @@ public class CreatureDetails : MonoBehaviour
 		camera = Camera.main;
 
 		childHeightPixels = transform.Find("CreatureName").GetComponent<RectTransform>().sizeDelta.y;
+		conditionGroup = transform.Find("Conditions");
 	}
 
 	private void OnDestroy()
@@ -50,7 +52,6 @@ public class CreatureDetails : MonoBehaviour
 		var creatureName = creature is Enemy ? (creature as Enemy).EnemyName : creature.name;
 		transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creatureName);
 
-		UpdatePosition();
 		AddConditionDetails();
 		ShowOtherCreatures(false);
 	}
@@ -59,56 +60,9 @@ public class CreatureDetails : MonoBehaviour
 	{
 		foreach (var condition in targetCreature.Conditions)
 		{
-			var conditionDetails = Instantiate(conditionDetailsPrefab, transform);
+			var conditionDetails = Instantiate(conditionDetailsPrefab, conditionGroup);
 			conditionDetails.transform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(condition.Name);
 			conditionDetails.transform.Find("Description").GetComponent<TextMeshProUGUI>().SetText(condition.Description);
-		}
-
-		UpdatePositionsOfConditions();
-	}
-
-	private void UpdatePosition()
-	{
-		var creaturePosition = targetCreature.transform.position;
-		var halfScreenWidth = Screen.width / 2;
-		var creatureOnRight = Mathf.Ceil(camera.WorldToScreenPoint(creaturePosition).x / halfScreenWidth) == 2;
-		var positionOffset = new Vector3(X_POSITION_OFFSET, Y_POSITION_OFFSET, 0);
-
-		if (creatureOnRight)
-		{
-			positionOffset.x *= -1;
-
-			foreach (RectTransform child in transform)
-			{
-				child.pivot = new Vector2(1, child.pivot.y);
-
-				var conditionName = child.Find("Name");
-				var conditionDescription = child.Find("Description");
-				if (conditionName == null || conditionDescription == null) continue;
-
-				conditionName.GetComponent<TextMeshProUGUI>().horizontalAlignment = HorizontalAlignmentOptions.Right;
-				conditionDescription.GetComponent<TextMeshProUGUI>().horizontalAlignment = HorizontalAlignmentOptions.Right;
-			}
-		}
-
-		transform.position += positionOffset;
-		var resetZPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
-		transform.localPosition = resetZPosition;
-	}
-
-	private void UpdatePositionsOfConditions()
-	{
-		var numChildren = transform.childCount;
-		if (numChildren <= 1) return;
-
-		var yPositionOffset = childHeightPixels + CHILD_SPACING_PIXELS;
-		var currentYPosition = (yPositionOffset * (numChildren - 1)) - (yPositionOffset / 2);
-
-		for (int i = 0; i < numChildren; i++)
-		{
-			var child = transform.GetChild(i);
-			child.localPosition = new Vector3(0, currentYPosition, 0);
-			currentYPosition -= yPositionOffset;
 		}
 	}
 
