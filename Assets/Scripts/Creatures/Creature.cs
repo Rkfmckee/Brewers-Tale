@@ -33,10 +33,12 @@ public abstract class Creature : MonoBehaviour
 
 		solidMaterial = GetComponentInChildren<Renderer>().material;
 		healthSystem = GetComponent<HealthSystem>();
+	}
 
-		conditions.Add(new Burning(2, 10));
-		conditions.Add(new DamageImmunity(DamageType.Fire));
-		conditions.Add(new DamageResistance(DamageType.Physical));
+	protected virtual void OnDestroy()
+	{
+		if (References.Creatures.Contains(this))
+			References.Creatures.Remove(this);
 	}
 
 	#endregion

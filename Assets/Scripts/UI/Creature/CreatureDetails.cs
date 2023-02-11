@@ -86,6 +86,7 @@ public class CreatureDetails : MonoBehaviour
 		foreach (var creature in creatures)
 		{
 			if (targetCreature == creature) continue;
+			if (!creature.enabled) continue;
 
 			var material = shouldShow ? creature.SolidMaterial : creature.TransparentMaterial;
 			var renderers = creature.GetComponentsInChildren<Renderer>();
