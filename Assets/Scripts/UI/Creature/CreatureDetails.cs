@@ -8,20 +8,23 @@ public class CreatureDetails : MonoBehaviour
 	private const float X_POSITION_OFFSET = 0.5f;
 	private const float Y_POSITION_OFFSET = 1;
 	private const float CHILD_SPACING_PIXELS = 5;
+	private const float CREATURE_PREVIEW_CAMERA_Z_OFFSET = -1.5f;
+	private const float CREATURE_PREVIEW_CAMERA_Y_DEFAULT = 0.5f;
 
 	#endregion
 
 	#region Fields
 
-	[SerializeField]
-	private GameObject conditionDetailsPrefab;
+	[SerializeField] private GameObject conditionDetailsPrefab;
+	[SerializeField] private GameObject creaturePreviewCameraPrefab;
 
 	private Creature targetCreature;
 	private float childHeightPixels;
 
 	private RectTransform rectTransform;
-	private new Camera camera;
 	private Transform conditionGroup;
+	private new Camera camera;
+	private Camera creaturePreviewCamera;
 
 	#endregion
 
@@ -38,6 +41,7 @@ public class CreatureDetails : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		Destroy(creaturePreviewCamera.gameObject);
 		ShowOtherCreatures(true);
 	}
 
@@ -53,6 +57,7 @@ public class CreatureDetails : MonoBehaviour
 		transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creatureName);
 
 		AddConditionDetails();
+		CreateCreaturePreview();
 		ShowOtherCreatures(false);
 	}
 
@@ -64,6 +69,14 @@ public class CreatureDetails : MonoBehaviour
 			conditionDetails.transform.Find("Name").GetComponent<TextMeshProUGUI>().SetText(condition.Name);
 			conditionDetails.transform.Find("Description").GetComponent<TextMeshProUGUI>().SetText(condition.Description);
 		}
+	}
+
+	private void CreateCreaturePreview()
+	{
+		var creatureCollider = targetCreature.GetComponentInChildren<CapsuleCollider>();
+		var spawnHeight = creatureCollider ? creatureCollider.height / 2 : CREATURE_PREVIEW_CAMERA_Y_DEFAULT;
+		var spawnPosition = targetCreature.transform.position + new Vector3(0, spawnHeight, CREATURE_PREVIEW_CAMERA_Z_OFFSET);
+		creaturePreviewCamera = Instantiate(creaturePreviewCameraPrefab, spawnPosition, Quaternion.identity).GetComponent<Camera>();
 	}
 
 	private void ShowOtherCreatures(bool shouldShow)
