@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class WorldCanvasManager : Singleton<WorldCanvasManager>
@@ -7,6 +8,10 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	private Canvas canvas;
 	private Canvas bookCanvasLeft;
 	private Canvas bookCanvasRight;
+
+	private Creature currentCreature;
+	private CreatureDetails currentCreatureDetails;
+	private GameObject creatureDetailsPrefab;
 
 	#endregion
 
@@ -24,10 +29,37 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	{
 		base.Awake();
 
-		var book = GameObject.Find("Book");
+		var book = GameObject.Find("Book").transform;
 		canvas = GameObject.Find("WorldCanvas").GetComponent<Canvas>();
-		bookCanvasLeft = book.transform.Find("CanvasLeft").GetComponent<Canvas>();
-		bookCanvasRight = book.transform.Find("CanvasRight").GetComponent<Canvas>();
+		bookCanvasLeft = book.Find("CanvasLeft").GetComponent<Canvas>();
+		bookCanvasRight = book.Find("CanvasRight").GetComponent<Canvas>();
+
+		creatureDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/CreatureDetails");
+	}
+
+	#endregion
+
+	#region Methods
+
+	public bool CurrentCreatureDetails(Creature creature)
+	{
+		return ReferenceEquals(creature, currentCreature);
+	}
+
+	public void ShowCreatureDetails(Creature creature)
+	{
+		var spawnPosition = creature.transform.position;
+		currentCreature = creature;
+		currentCreatureDetails = Instantiate(creatureDetailsPrefab, bookCanvasRight.transform).GetComponent<CreatureDetails>();
+		currentCreatureDetails.Initialize(creature);
+	}
+
+	public void HideCreatureDetails()
+	{
+		if (currentCreatureDetails == null) return;
+
+		currentCreature = null;
+		Destroy(currentCreatureDetails.gameObject);
 	}
 
 	#endregion

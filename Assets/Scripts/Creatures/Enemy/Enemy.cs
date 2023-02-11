@@ -84,8 +84,10 @@ public abstract class Enemy : Creature
 		CurrentSpace = enemySpaces[0];
 	}
 
-	private void OnDestroy()
+	protected override void OnDestroy()
 	{
+		base.OnDestroy();
+
 		DropLoot();
 		CurrentState = EnemyState.Dead;
 

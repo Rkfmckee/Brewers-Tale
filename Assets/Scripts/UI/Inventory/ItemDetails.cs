@@ -75,10 +75,6 @@ public class ItemDetails : MonoBehaviour
 		InventoryManager.Instance.ActiveInventory = InventoryState.ItemDetails;
 	}
 
-	private void Start()
-	{
-	}
-
 	private void Update()
 	{
 		if (Input.GetButtonDown("Fire1"))
@@ -131,7 +127,7 @@ public class ItemDetails : MonoBehaviour
 	{
 		// If the slot is on the right side of a page,
 		// Move the ItemDetails to the left side of the slot.
-		// The right side of the page, is the 2nd or 4th quarter
+		// The right side of the page is the 2nd or 4th quarter
 		// of the screen.
 
 		var slotPosition = InventoryItem.SlotInInventory.transform.position;
