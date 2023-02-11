@@ -35,8 +35,8 @@ public abstract class Creature : MonoBehaviour
 		healthSystem = GetComponent<HealthSystem>();
 
 		conditions.Add(new Burning(2, 10));
-		conditions.Add(new FireImmunity());
-		conditions.Add(new PhysicalResistance());
+		conditions.Add(new DamageImmunity(DamageType.Fire));
+		conditions.Add(new DamageResistance(DamageType.Physical));
 	}
 
 	#endregion
