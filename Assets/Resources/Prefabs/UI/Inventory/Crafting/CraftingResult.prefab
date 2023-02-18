@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7b2aae1f20ea6274c9b249dde4c2c970, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 93214f9ddc6bc244682145fe145c1a35, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeState: 0
-  regularSprite: {fileID: 21300000, guid: 7b2aae1f20ea6274c9b249dde4c2c970, type: 3}
-  highlightSprite: {fileID: 21300000, guid: 36432f4503e45ef4e8df295cea88f025, type: 3}
+  regularSprite: {fileID: 21300000, guid: 93214f9ddc6bc244682145fe145c1a35, type: 3}
+  highlightSprite: {fileID: 21300000, guid: 504ecd2d00f896b4eb616acfe2d5d1dd, type: 3}
 --- !u!114 &4724579555271945121
 MonoBehaviour:
   m_ObjectHideFlags: 0

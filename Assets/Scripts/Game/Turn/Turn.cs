@@ -19,9 +19,7 @@ public abstract class Turn
 		var endTurnButton = WorldCanvasManager.BookCanvasRight.transform.Find("EndTurn").GetComponent<Button>();
 		var endTurnText = isPlayerTurn ? "End turn" : TurnText;
 		endTurnButton.interactable = isPlayerTurn;
-		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().SetText(endTurnText);
-
-		WorldCanvasManager.BookCanvasRight.transform.Find("Energy").gameObject.SetActive(isPlayerTurn);
+		endTurnButton.transform.Find("TurnText").GetComponent<TextMeshProUGUI>().SetText(endTurnText);
 	}
 
 	#endregion
