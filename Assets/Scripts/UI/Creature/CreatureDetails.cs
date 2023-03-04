@@ -17,6 +17,7 @@ public class CreatureDetails : MonoBehaviour
 
 	[SerializeField] private GameObject conditionDetailsPrefab;
 	[SerializeField] private GameObject creaturePreviewCameraPrefab;
+	[SerializeField] private Transform creatureTitleBar;
 
 	private Creature targetCreature;
 	private float childHeightPixels;
@@ -35,7 +36,6 @@ public class CreatureDetails : MonoBehaviour
 		rectTransform = GetComponent<RectTransform>();
 		camera = Camera.main;
 
-		childHeightPixels = transform.Find("CreatureName").GetComponent<RectTransform>().sizeDelta.y;
 		conditionGroup = transform.Find("Conditions");
 	}
 
@@ -54,7 +54,7 @@ public class CreatureDetails : MonoBehaviour
 		targetCreature = creature;
 
 		var creatureName = creature is Enemy ? (creature as Enemy).EnemyName : creature.name;
-		transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creatureName);
+		WorldCanvasManager.BookCanvasRight.transform.Find("Pages").Find("Creature").Find("Titlebar").Find("Title").GetComponent<TextMeshProUGUI>().SetText(creatureName);
 
 		AddConditionDetails();
 		CreateCreaturePreview();

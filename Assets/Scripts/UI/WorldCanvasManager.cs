@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class WorldCanvasManager : Singleton<WorldCanvasManager>
@@ -12,6 +11,7 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	private Creature currentCreature;
 	private CreatureDetails currentCreatureDetails;
 	private GameObject creatureDetailsPrefab;
+	private TabGroup tabGroup;
 
 	#endregion
 
@@ -37,6 +37,11 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 		creatureDetailsPrefab = Resources.Load<GameObject>("Prefabs/UI/Creature/CreatureDetails");
 	}
 
+	private void Start()
+	{
+		tabGroup = References.TabGroup;
+	}
+
 	#endregion
 
 	#region Methods
@@ -48,10 +53,11 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 
 	public void ShowCreatureDetails(Creature creature)
 	{
-		var spawnPosition = creature.transform.position;
 		currentCreature = creature;
 		currentCreatureDetails = Instantiate(creatureDetailsPrefab, bookCanvasRight.transform).GetComponent<CreatureDetails>();
 		currentCreatureDetails.Initialize(creature);
+
+		tabGroup.ShowCreatureTab(true);
 	}
 
 	public void HideCreatureDetails()
@@ -60,6 +66,8 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 
 		currentCreature = null;
 		Destroy(currentCreatureDetails.gameObject);
+
+		tabGroup.ShowCreatureTab(false);
 	}
 
 	#endregion

@@ -1839,6 +1839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTab: {fileID: 5937854181360130243}
+  creatureTab: {fileID: 1799266328}
 --- !u!224 &800981019 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8632399668178018097, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
@@ -3628,6 +3629,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49c8d945ec95b8f459db94f43719aff3, type: 3}
+--- !u!114 &1799266328 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1486055255029945946, guid: df9576e86d7ee164fb4b44a1b64fb4b2, type: 3}
+  m_PrefabInstance: {fileID: 384855642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28bede01e3760e42a1c82917e485b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902071556
 GameObject:
   m_ObjectHideFlags: 0

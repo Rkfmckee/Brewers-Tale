@@ -4,16 +4,25 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
-	#region Properties
+	#region Fields
 
 	[SerializeField]
 	private Tab defaultTab;
+	[SerializeField]
+	private Tab creatureTab;
 
+	private Tab currentTab;
+	private Tab beforeCreatureTab;
 	private List<Tab> tabs;
 
 	#endregion
 
 	#region Events
+
+	private void Awake()
+	{
+		References.TabGroup = this;
+	}
 
 	private void Start()
 	{
@@ -24,6 +33,7 @@ public class TabGroup : MonoBehaviour
 		}
 
 		ShowPage(defaultTab);
+		ShowCreatureTab(false);
 	}
 
 	#endregion
@@ -36,11 +46,24 @@ public class TabGroup : MonoBehaviour
 		tabs.Add(tab);
 	}
 
+	public void ShowCreatureTab(bool show)
+	{
+		creatureTab.gameObject.SetActive(show);
+		var tabToShow = show ? creatureTab : beforeCreatureTab;
+		beforeCreatureTab = show ? currentTab : null;
+
+		ShowPage(tabToShow);
+	}
+
 	private void ShowPage(Tab tab)
 	{
+		if (tab == null) return;
+
 		HideAllPages();
+
 		tab.Page.SetActive(true);
 		tab.IsActive = true;
+		currentTab = tab;
 	}
 
 	private void HideAllPages()
