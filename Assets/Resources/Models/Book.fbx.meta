@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: 0211449fd8c937346a9004b8e74ea777
+guid: 0cdff24cbed6188488a991b96abb2bac
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Brown
-    second: {fileID: 2100000, guid: 7d9420f2e4361f842b819e02c50ddd9e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Gradient
-    second: {fileID: 2100000, guid: 82de63f9ba3b43a4e88ac082f190bc24, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
