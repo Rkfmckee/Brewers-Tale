@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5937854181384234082}
   - component: {fileID: 5937854181384234077}
   - component: {fileID: 5937854181384234076}
-  - component: {fileID: 5635973368438117834}
+  - component: {fileID: 1486055255029945946}
+  - component: {fileID: 7088605820012884180}
   m_Layer: 5
   m_Name: Tab
   m_TagString: Untagged
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5635973368438117834
+--- !u!114 &1486055255029945946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,7 +133,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5937854181384234078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1f355bea590f6d4cbd4669a0ec93d47, type: 3}
+  m_Script: {fileID: 11500000, guid: b28bede01e3760e42a1c82917e485b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  page: {fileID: 0}
+  activeSprite: {fileID: 21300000, guid: 48ea3e51e365a0343a3b417368668c5b, type: 3}
+  inactiveSprite: {fileID: 21300000, guid: 4d64007879edfc944a17f2583867f43b, type: 3}
+--- !u!114 &7088605820012884180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937854181384234078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117fca2e3d24f3748adb1395f27058a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activeState: 0

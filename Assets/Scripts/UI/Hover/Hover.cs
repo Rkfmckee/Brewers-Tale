@@ -13,15 +13,15 @@ public class Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	[SerializeField]
 	private Sprite highlightSprite;
 	private Color highlightColour;
-	private Color regularColour;
+	protected Color regularColour;
 
-	private Image image;
+	protected Image image;
 
 	#endregion
 
 	#region Events
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		image = GetComponent<Image>();
 
