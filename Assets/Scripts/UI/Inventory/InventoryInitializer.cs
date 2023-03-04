@@ -20,8 +20,8 @@ public class InventoryInitializer : MonoBehaviour
 	private void Awake()
 	{
 		inventorySlotPrefab = Resources.Load<GameObject>("Prefabs/UI/Inventory/InventorySlot");
-		inventorySlotGroup = WorldCanvasManager.BookCanvasLeft.transform.Find("Inventory").Find("InventorySlots");
-		numberOfSlots = 34;
+		inventorySlotGroup = WorldCanvasManager.BookCanvasLeft.transform.Find("InventorySlots");
+		numberOfSlots = 44;
 	}
 
 	private void Start()
