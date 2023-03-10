@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NotificationManager : Singleton<NotificationManager>
@@ -13,6 +14,8 @@ public class NotificationManager : Singleton<NotificationManager>
 	private bool showingNotifications;
 	private List<(string, NotificationType, HealthBar)> healthPopups;
 	private bool showingHealthPopups;
+	private TextMeshProUGUI inventoryTitle;
+	private Transform titlebar;
 
 	#endregion
 
@@ -21,6 +24,9 @@ public class NotificationManager : Singleton<NotificationManager>
 	protected override void Awake()
 	{
 		base.Awake();
+
+		titlebar = WorldCanvasManager.BookCanvasLeft.transform.Find("Titlebar");
+		inventoryTitle = titlebar.Find("Title").GetComponent<TextMeshProUGUI>();
 
 		notifications = new List<(string, NotificationType)>();
 		healthPopups = new List<(string, NotificationType, HealthBar)>();
@@ -38,7 +44,7 @@ public class NotificationManager : Singleton<NotificationManager>
 
 	public static void AddNotification(string text, NotificationType type)
 	{
-		NotificationManager.Instance.Notification(text, type);
+		NotificationManager.Instance.CreateNotification(text, type);
 	}
 
 	public static void AddHealthPopup(float amount, NotificationType type, HealthBar healthBar)
@@ -48,10 +54,10 @@ public class NotificationManager : Singleton<NotificationManager>
 
 	public static void AddHealthPopup(string text, NotificationType type, HealthBar healthBar)
 	{
-		NotificationManager.Instance.HealthPopup(text, type, healthBar);
+		NotificationManager.Instance.CreateHealthPopup(text, type, healthBar);
 	}
 
-	private void Notification(string text, NotificationType type)
+	private void CreateNotification(string text, NotificationType type)
 	{
 		if (notifications.Contains((text, type))) return;
 
@@ -59,7 +65,7 @@ public class NotificationManager : Singleton<NotificationManager>
 		if (!showingNotifications) StartCoroutine(ShowingNotifications());
 	}
 
-	private void HealthPopup(string text, NotificationType type, HealthBar healthBar)
+	private void CreateHealthPopup(string text, NotificationType type, HealthBar healthBar)
 	{
 		healthPopups.Add((text, type, healthBar));
 		if (!showingHealthPopups) StartCoroutine(ShowingHealthPopups());
@@ -72,10 +78,11 @@ public class NotificationManager : Singleton<NotificationManager>
 	private IEnumerator ShowingNotifications()
 	{
 		showingNotifications = true;
+		yield return FadeInventoryTitle(true);
 
 		while (notifications.Count > 0)
 		{
-			var notification = Instantiate(notificationPrefab, WorldCanvasManager.BookCanvasRight.transform.Find("Notifications")).GetComponent<Notification>();
+			var notification = Instantiate(notificationPrefab, titlebar.Find("Notifications")).GetComponent<Notification>();
 			var notificationInfo = notifications[0];
 			notification.Initialize(notificationInfo);
 
@@ -87,6 +94,7 @@ public class NotificationManager : Singleton<NotificationManager>
 			notifications.Remove(notificationInfo);
 		}
 
+		yield return FadeInventoryTitle(false);
 		showingNotifications = false;
 	}
 
@@ -108,6 +116,33 @@ public class NotificationManager : Singleton<NotificationManager>
 		}
 
 		showingHealthPopups = false;
+	}
+
+	private IEnumerator FadeInventoryTitle(bool fadeOut)
+	{
+		var colour = inventoryTitle.color;
+		var fadeSeconds = Notification.FADE_IN_SECONDS;
+
+		if (fadeOut)
+		{
+			while (colour.a > 0)
+			{
+				colour.a -= (Time.deltaTime / fadeSeconds);
+				inventoryTitle.color = colour;
+
+				yield return null;
+			}
+		}
+		else
+		{
+			while (colour.a < 1)
+			{
+				colour.a += (Time.deltaTime / fadeSeconds);
+				inventoryTitle.color = colour;
+
+				yield return null;
+			}
+		}
 	}
 
 	#endregion

@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notificationPrefab: {fileID: 4558144604533233699, guid: 8c796ef1693b413488d922bbc5be55cc, type: 3}
   healthPopupPrefab: {fileID: 8322743572190146775, guid: 72b8fb01db9ffba4991795b870f3f6d2, type: 3}
+  notificationGroup: {fileID: 0}
