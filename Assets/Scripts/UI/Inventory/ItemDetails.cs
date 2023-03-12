@@ -114,6 +114,8 @@ public class ItemDetails : MonoBehaviour
 		potionLabel.gameObject.SetActive(isPotion);
 		potionOptions.gameObject.SetActive(isPotion);
 
+		if (isPotion) potionLabel.GetComponent<TextMeshProUGUI>().text = $"Potion: {(inventoryItem as InventoryPotion).EnergyCost}";
+
 		if (inventoryItem.SlotInInventory is not InventorySlot)
 		{
 			ingredientOptions.gameObject.SetActive(false);
