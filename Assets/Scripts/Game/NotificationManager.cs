@@ -96,6 +96,7 @@ public class NotificationManager : Singleton<NotificationManager>
 
 		yield return FadeInventoryTitle(false);
 		showingNotifications = false;
+		notifications.Clear();
 	}
 
 	private IEnumerator ShowingHealthPopups()
@@ -116,6 +117,7 @@ public class NotificationManager : Singleton<NotificationManager>
 		}
 
 		showingHealthPopups = false;
+		healthPopups.Clear();
 	}
 
 	private IEnumerator FadeInventoryTitle(bool fadeOut)
