@@ -232,8 +232,8 @@ public class InventoryManager : Singleton<InventoryManager>
 	{
 		foreach (var result in results)
 		{
-			var inventorySlot = result.gameObject.GetComponent<T>();
-			if (inventorySlot != null) return inventorySlot;
+			var slot = result.gameObject.GetComponent<T>();
+			if (slot != null) return slot;
 		}
 
 		return default;
