@@ -6,6 +6,7 @@ public static class References
 	public static Brewer Brewer;
 	public static List<Enemy> Enemies = new List<Enemy>();
 	public static List<EnemySpace> EnemySpaces = new List<EnemySpace>();
+	public static TabGroup TabGroup;
 
 	public static class Inventory
 	{

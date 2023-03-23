@@ -24,7 +24,7 @@ public class EnergyManager : Singleton<EnergyManager>
 	{
 		base.Awake();
 
-		currentEnergyText = WorldCanvasManager.BookCanvasRight.transform.Find("Energy").Find("EnergyLevel").GetComponent<TextMeshProUGUI>();
+		currentEnergyText = WorldCanvasManager.BookCanvasRight.transform.Find("Pages").Find("Crafting").Find("EndTurn").Find("Energy").GetComponent<TextMeshProUGUI>();
 		MaxEnergy = 3;
 	}
 

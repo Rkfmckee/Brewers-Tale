@@ -17,14 +17,19 @@ public class CreatureDetails : MonoBehaviour
 
 	[SerializeField] private GameObject conditionDetailsPrefab;
 	[SerializeField] private GameObject creaturePreviewCameraPrefab;
+	[SerializeField] private Transform creatureTitleBar;
 
 	private Creature targetCreature;
-	private float childHeightPixels;
 
 	private RectTransform rectTransform;
 	private Transform conditionGroup;
 	private new Camera camera;
 	private Camera creaturePreviewCamera;
+
+	private HealthSystem healthSystem;
+	private Transform healthBar;
+	private TextMeshProUGUI currentHealth;
+	private TextMeshProUGUI maxHealth;
 
 	#endregion
 
@@ -35,8 +40,12 @@ public class CreatureDetails : MonoBehaviour
 		rectTransform = GetComponent<RectTransform>();
 		camera = Camera.main;
 
-		childHeightPixels = transform.Find("CreatureName").GetComponent<RectTransform>().sizeDelta.y;
 		conditionGroup = transform.Find("Conditions");
+	}
+
+	private void Update()
+	{
+		SetCreatureHealth();
 	}
 
 	private void OnDestroy()
@@ -53,12 +62,24 @@ public class CreatureDetails : MonoBehaviour
 	{
 		targetCreature = creature;
 
+		healthSystem = targetCreature.GetComponent<HealthSystem>();
+		healthBar = transform.Find("HealthBar").Find("Health");
+		currentHealth = transform.Find("HealthBar").Find("HealthText").Find("CurrentHealth").GetComponent<TextMeshProUGUI>();
+		maxHealth = transform.Find("HealthBar").Find("HealthText").Find("MaxHealth").GetComponent<TextMeshProUGUI>();
+
 		var creatureName = creature is Enemy ? (creature as Enemy).EnemyName : creature.name;
-		transform.Find("CreatureName").Find("Name").GetComponent<TextMeshProUGUI>().SetText(creatureName);
+		WorldCanvasManager.BookCanvasRight.transform.Find("Pages").Find("Creature").Find("Titlebar").Find("Title").GetComponent<TextMeshProUGUI>().SetText(creatureName);
 
 		AddConditionDetails();
 		CreateCreaturePreview();
 		ShowOtherCreatures(false);
+	}
+
+	private void SetCreatureHealth()
+	{
+		healthBar.localScale = new Vector3(healthSystem.CurrentHealth / healthSystem.MaxHealth, 1, 1);
+		currentHealth.text = healthSystem.CurrentHealth.ToString();
+		maxHealth.text = healthSystem.MaxHealth.ToString();
 	}
 
 	private void AddConditionDetails()

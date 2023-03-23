@@ -16,12 +16,10 @@ public abstract class Turn
 	public Turn()
 	{
 		var isPlayerTurn = this is PlayerTurn;
-		var endTurnButton = WorldCanvasManager.BookCanvasRight.transform.Find("EndTurn").GetComponent<Button>();
+		var endTurnButton = WorldCanvasManager.BookCanvasRight.transform.Find("Pages").Find("Crafting").Find("EndTurn").GetComponent<Button>();
 		var endTurnText = isPlayerTurn ? "End turn" : TurnText;
 		endTurnButton.interactable = isPlayerTurn;
-		endTurnButton.transform.Find("Text").GetComponent<TextMeshProUGUI>().SetText(endTurnText);
-
-		WorldCanvasManager.BookCanvasRight.transform.Find("Energy").gameObject.SetActive(isPlayerTurn);
+		endTurnButton.transform.Find("TurnText").GetComponent<TextMeshProUGUI>().SetText(endTurnText);
 	}
 
 	#endregion

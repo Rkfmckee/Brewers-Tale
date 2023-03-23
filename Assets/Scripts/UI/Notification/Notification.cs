@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Notification : MonoBehaviour
 {
-	#region Fields
+	#region Constants
 
-	private float fadeInSeconds;
-	private float fadeOutSeconds;
-	private float secondsToShow;
+	public const float FADE_IN_SECONDS = 0.5f;
+	private const float FADE_OUT_SECONDS = 1f;
+	private const float SECONDS_TO_SHOW = 3f;
+
+	#endregion
+
+	#region Fields
 
 	private TextMeshProUGUI notificationText;
 
@@ -19,10 +23,6 @@ public class Notification : MonoBehaviour
 	private void Awake()
 	{
 		notificationText = GetComponent<TextMeshProUGUI>();
-
-		fadeInSeconds = 0.5f;
-		fadeOutSeconds = 1;
-		secondsToShow = 3;
 	}
 
 	#endregion
@@ -34,16 +34,20 @@ public class Notification : MonoBehaviour
 		var text = info.Item1;
 		var type = info.Item2;
 
-		var colour = GetNotificationColour(type);
-		colour.a = 0;
-
 		notificationText.SetText(text);
-		notificationText.color = colour;
+
+		var possibleColour = GetNotificationColour(type);
+		if (possibleColour.HasValue)
+		{
+			var colour = possibleColour.Value;
+			colour.a = 0;
+			notificationText.color = colour;
+		}
 
 		StartCoroutine(FadeInAndOut());
 	}
 
-	private Color GetNotificationColour(NotificationType type)
+	private Color? GetNotificationColour(NotificationType type)
 	{
 		switch (type)
 		{
@@ -53,7 +57,7 @@ public class Notification : MonoBehaviour
 				return Color.red;
 		}
 
-		return Color.white;
+		return null;
 	}
 
 	#endregion
@@ -66,17 +70,17 @@ public class Notification : MonoBehaviour
 
 		while (colour.a < 1)
 		{
-			colour.a += (Time.deltaTime / fadeInSeconds);
+			colour.a += (Time.deltaTime / FADE_IN_SECONDS);
 			notificationText.color = colour;
 
 			yield return null;
 		}
 
-		yield return new WaitForSeconds(secondsToShow);
+		yield return new WaitForSeconds(SECONDS_TO_SHOW);
 
 		while (colour.a > 0)
 		{
-			colour.a -= (Time.deltaTime / fadeOutSeconds);
+			colour.a -= (Time.deltaTime / FADE_OUT_SECONDS);
 			notificationText.color = colour;
 
 			yield return null;
