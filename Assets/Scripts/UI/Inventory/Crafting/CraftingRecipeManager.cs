@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 public class CraftingRecipeManager : Singleton<CraftingRecipeManager>
 {
 	#region Properties
 
-	public List<CraftingRecipe> Recipes { get; set; }
+	public CraftingRecipe[] Recipes { get; set; }
 
 	#endregion
 
@@ -15,7 +16,7 @@ public class CraftingRecipeManager : Singleton<CraftingRecipeManager>
 	{
 		base.Awake();
 
-		PopulateRecipes();
+		Recipes = Resources.LoadAll<CraftingRecipe>("CraftingRecipes");
 	}
 
 	#endregion
@@ -33,20 +34,6 @@ public class CraftingRecipeManager : Singleton<CraftingRecipeManager>
 		}
 
 		return null;
-	}
-
-	private void PopulateRecipes()
-	{
-		Recipes = new List<CraftingRecipe>();
-		var recipeNames = AssetDatabase.FindAssets(null, new[] { "Assets/Resources/CraftingRecipes" });
-
-		foreach (var recipeName in recipeNames)
-		{
-			var path = AssetDatabase.GUIDToAssetPath(recipeName);
-			var recipe = AssetDatabase.LoadAssetAtPath<CraftingRecipe>(path);
-
-			Recipes.Add(recipe);
-		}
 	}
 
 	private bool IngredientsAreTheSame(List<InventoryItem> ingredientsA, List<InventoryItem> ingredientsB)
