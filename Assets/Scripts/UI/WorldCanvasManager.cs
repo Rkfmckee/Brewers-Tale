@@ -21,6 +21,8 @@ public class WorldCanvasManager : Singleton<WorldCanvasManager>
 	public static Canvas BookCanvasLeft { get => Instance.bookCanvasLeft; }
 	public static Canvas BookCanvasRight { get => Instance.bookCanvasRight; }
 
+	public Transform EnemyQueue => bookCanvasRight.transform.Find("Pages").Find("Crafting").Find("EnemyQueue").Find("Queue");
+
 	#endregion
 
 	#region Events

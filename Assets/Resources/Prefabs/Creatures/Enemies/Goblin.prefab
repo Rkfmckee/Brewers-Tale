@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transparentMaterial: {fileID: 2100000, guid: c2f4b6a05c45e284b90e2407200dc4dc, type: 2}
   enemyName: Goblin
+  queueIcon: {fileID: 21300000, guid: fe363ce49e604a84b9ed0240dda54d72, type: 3}
   damage:
     Amount: 3
     Type: 5

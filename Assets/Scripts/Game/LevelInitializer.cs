@@ -12,6 +12,7 @@ public class LevelInitializer : MonoBehaviour
 		// Initialize singletons
 		TurnOrderManager.Instance.CurrentTurn = new PlayerTurn();
 		CreatureLocator.Instance.Initialize();
+		EnemySpawner.Instance.CreateQueueUI();
 	}
 
 	#endregion

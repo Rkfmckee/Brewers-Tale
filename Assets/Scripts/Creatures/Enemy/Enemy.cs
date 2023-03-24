@@ -7,12 +7,10 @@ public abstract class Enemy : Creature
 {
 	#region Fields
 
-	[SerializeField]
-	private string enemyName;
-	[SerializeField]
-	protected Damage damage;
-	[SerializeField]
-	private Loot[] lootTable;
+	[SerializeField] private string enemyName;
+	[SerializeField] private Sprite queueIcon;
+	[SerializeField] protected Damage damage;
+	[SerializeField] private Loot[] lootTable;
 
 	protected float? animationSpeed;
 	private EnemyState currentState;
@@ -29,6 +27,7 @@ public abstract class Enemy : Creature
 	#region Properties
 
 	public string EnemyName => enemyName;
+	public Sprite QueueIcon => queueIcon;
 
 	public EnemyState CurrentState
 	{
