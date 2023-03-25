@@ -35,15 +35,11 @@ public abstract class Creature : MonoBehaviour
 		healthSystem = GetComponent<HealthSystem>();
 	}
 
-	protected virtual void OnDestroy()
-	{
-		if (References.Creatures.Contains(this))
-			References.Creatures.Remove(this);
-	}
-
 	#endregion
 
 	#region Methods
+
+	#region Conditions
 
 	public void AddCondition(Condition condition)
 	{
@@ -93,6 +89,14 @@ public abstract class Creature : MonoBehaviour
 
 		conditions.Remove(condition);
 		NotificationManager.AddHealthPopup($"- {condition.Name}", NotificationType.Error, healthSystem.HealthBar);
+	}
+
+	#endregion
+
+	public virtual void Dead()
+	{
+		if (References.Creatures.Contains(this))
+			References.Creatures.Remove(this);
 	}
 
 	#endregion

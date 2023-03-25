@@ -46,6 +46,18 @@ public class EnemyTurn : Turn
 
 	#endregion
 
+	#region Method
+
+	private bool TurnEnded(Enemy enemy)
+	{
+		// Enemy's turn has ended if it's in a finished state
+		// Or if it no longer exists
+		return turnEndStates.Contains(enemy.CurrentState)
+			|| enemy == null;
+	}
+
+	#endregion
+
 	#region Coroutine
 
 	public override void EndTurn()
@@ -80,7 +92,7 @@ public class EnemyTurn : Turn
 		{
 			enemy.TakeTurn();
 
-			while (!turnEndStates.Contains(enemy.CurrentState))
+			while (!TurnEnded(enemy))
 			{
 				yield return null;
 			}

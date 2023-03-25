@@ -85,9 +85,7 @@ public class HealthSystem : MonoBehaviour
 		var newHealth = CurrentHealth - actualDamage;
 		if (newHealth <= 0)
 		{
-			NotificationManager.AddHealthPopup("Dead", NotificationType.Error, healthBar);
-			Destroy(gameObject);
-			return;
+			Dead();
 		}
 
 		CurrentHealth = newHealth;
@@ -117,6 +115,15 @@ public class HealthSystem : MonoBehaviour
 		{
 			Damage(condition.Damage);
 		}
+	}
+
+	private void Dead()
+	{
+		NotificationManager.AddHealthPopup("Dead", NotificationType.Error, healthBar);
+		creature.Dead();
+
+		Destroy(gameObject);
+		return;
 	}
 
 	private float CalculateModifiers(float damage, DamageType type)
