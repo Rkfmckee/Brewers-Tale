@@ -83,17 +83,6 @@ public abstract class Enemy : Creature
 		CurrentSpace = enemySpaces[0];
 	}
 
-	protected override void OnDestroy()
-	{
-		base.OnDestroy();
-
-		DropLoot();
-		CurrentState = EnemyState.Dead;
-
-		if (References.Enemies.Contains(this))
-			References.Enemies.Remove(this);
-	}
-
 	#endregion
 
 	#region Methods
@@ -140,6 +129,17 @@ public abstract class Enemy : Creature
 	{
 		CurrentSpace = space;
 		StartCoroutine(MovingToSpace(CurrentSpace));
+	}
+
+	public override void Dead()
+	{
+		base.Dead();
+
+		DropLoot();
+		CurrentState = EnemyState.Dead;
+
+		if (References.Enemies.Contains(this))
+			References.Enemies.Remove(this);
 	}
 
 	private void DropLoot()
