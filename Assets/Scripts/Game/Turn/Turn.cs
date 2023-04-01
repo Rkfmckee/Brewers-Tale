@@ -36,10 +36,10 @@ public abstract class Turn
 
 	protected void EndTemporaryConditions(Creature creature)
 	{
-		var temporaryConditions = creature.Conditions.OfType<ITemporaryCondition>();
+		var temporaryConditions = creature.Conditions.OfType<TemporaryCondition>();
 		if (temporaryConditions == null) return;
 
-		var finishedConditions = new List<ITemporaryCondition>();
+		var finishedConditions = new List<TemporaryCondition>();
 
 		foreach (var condition in temporaryConditions)
 		{

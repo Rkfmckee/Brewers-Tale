@@ -49,26 +49,12 @@ public abstract class Creature : MonoBehaviour
 		NotificationManager.AddHealthPopup($"+ {condition.Name}", NotificationType.Success, healthSystem.HealthBar);
 	}
 
-	public void RemoveConditions(IEnumerable<ITemporaryCondition> conditions)
-	{
-		foreach (var condition in conditions)
-		{
-			RemoveCondition(condition);
-		}
-	}
-
 	public void RemoveConditions(IEnumerable<Condition> conditions)
 	{
 		foreach (var condition in conditions)
 		{
 			RemoveCondition(condition);
 		}
-	}
-
-	// Remove a specific instance of a temporary condition
-	public void RemoveCondition(ITemporaryCondition condition)
-	{
-		RemoveCondition(condition as Condition);
 	}
 
 	// Remove a specific instance of a condition

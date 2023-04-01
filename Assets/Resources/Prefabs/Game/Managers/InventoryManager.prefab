@@ -58,9 +58,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingItems:
-  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
+  - {fileID: 2123786637151207573, guid: 87f64df37a1cf7e4ca236fd6cf05d86b, type: 3}
   - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
   - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
   - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
   - {fileID: 3652999399898245699, guid: c43c59631ca13484c8aaed75758c0bf6, type: 3}
-  - {fileID: 5874849183817870986, guid: 1ae269cb116e0ba459935e98bce3a8f5, type: 3}
+  - {fileID: 3652999399898245699, guid: 73f83e59110493d47b89c580a7db05fd, type: 3}
