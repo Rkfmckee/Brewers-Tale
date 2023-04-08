@@ -1,10 +1,9 @@
-public abstract class DamagingCondition : Condition, ITemporaryCondition
+public abstract class DamagingCondition : TemporaryCondition
 {
 	#region Properties
 
-	public override string Description => $"Deals {Damage.Amount} {Damage.Type} damage for {NumberOfTurns} {TurnOrTurns()}.";
+	public override string Description => $"Deals {Damage.Amount} {Damage.Type} damage for {NumberOfTurnsText}.";
 	public Damage Damage { get; set; }
-	public int NumberOfTurns { get; set; }
 
 	#endregion
 
@@ -14,16 +13,6 @@ public abstract class DamagingCondition : Condition, ITemporaryCondition
 	{
 		Damage = new Damage(damageAmount, damageType);
 		NumberOfTurns = numberOfTurns;
-	}
-
-	#endregion
-
-	#region Methods
-
-	private string TurnOrTurns()
-	{
-		if (NumberOfTurns == 1) return "turn";
-		return "turns";
 	}
 
 	#endregion

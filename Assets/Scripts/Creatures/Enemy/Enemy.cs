@@ -206,7 +206,7 @@ public abstract class Enemy : Creature
 			if (shouldCauseDamage && timer > attackTime / 2)
 			{
 				// Damage brewer
-				brewerHealth.Damage(damage);
+				brewerHealth.Damage(damage, this);
 				shouldCauseDamage = false;
 			}
 

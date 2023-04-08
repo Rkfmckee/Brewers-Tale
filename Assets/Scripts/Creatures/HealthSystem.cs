@@ -60,17 +60,41 @@ public class HealthSystem : MonoBehaviour
 
 	#region Methods
 
-	public void Damage(Damage damage)
+	#region Heal
+
+	public void Heal(float health)
 	{
-		Damage(damage.Amount, damage.Type);
+		var newHealth = CurrentHealth + health;
+		if (newHealth >= MaxHealth)
+		{
+			NotificationManager.AddHealthPopup("Full health", NotificationType.Success, healthBar);
+			CurrentHealth = MaxHealth;
+			return;
+		}
+
+		CurrentHealth = newHealth;
+		NotificationManager.AddHealthPopup(health, NotificationType.Success, healthBar);
 	}
 
-	public void Damage(Damage[] damageList)
+	#endregion
+
+	#region Damage
+
+	public void Damage(Damage damage, Creature attacker = null)
+	{
+		Damage(damage.Amount, damage.Type);
+
+		if (attacker) CheckForAttackerBacklash(attacker);
+	}
+
+	public void Damage(Damage[] damageList, Creature attacker = null)
 	{
 		foreach (var damage in damageList)
 		{
 			Damage(damage.Amount, damage.Type);
 		}
+
+		if (attacker) CheckForAttackerBacklash(attacker);
 	}
 
 	private void Damage(float damage, DamageType type)
@@ -92,18 +116,14 @@ public class HealthSystem : MonoBehaviour
 		NotificationManager.AddHealthPopup($"{actualDamage} {type}", NotificationType.Error, healthBar);
 	}
 
-	public void Heal(float health)
+	public void CheckForAttackerBacklash(Creature attacker)
 	{
-		var newHealth = CurrentHealth + health;
-		if (newHealth >= MaxHealth)
-		{
-			NotificationManager.AddHealthPopup("Full health", NotificationType.Success, healthBar);
-			CurrentHealth = MaxHealth;
-			return;
-		}
+		// If we have any conditions which cause backlash to attacker
+		var thornWrapped = creature.Conditions.OfType<ThornWrapped>().SingleOrDefault();
+		if (thornWrapped == null) return;
 
-		CurrentHealth = newHealth;
-		NotificationManager.AddHealthPopup(health, NotificationType.Success, healthBar);
+		// Then do the thing
+		attacker.GetComponent<HealthSystem>().Damage(thornWrapped.Damage);
 	}
 
 	public void CheckForDamagingConditions()
@@ -126,6 +146,9 @@ public class HealthSystem : MonoBehaviour
 		return;
 	}
 
+	#endregion
+
+	#region Modifiers
 	private float CalculateModifiers(float damage, DamageType type)
 	{
 		damage = CalculateImmunities(damage, type);
@@ -165,5 +188,6 @@ public class HealthSystem : MonoBehaviour
 		return damage;
 	}
 
+	#endregion
 	#endregion
 }
