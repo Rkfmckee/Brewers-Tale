@@ -4,7 +4,6 @@ public abstract class Condition
 
 	public abstract string Name { get; }
 	public abstract string Description { get; }
-	public virtual bool IsInherent { get; set; } = false;
 
 	#endregion
 }
