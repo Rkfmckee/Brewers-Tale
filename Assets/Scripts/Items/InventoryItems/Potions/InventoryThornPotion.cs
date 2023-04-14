@@ -20,8 +20,8 @@ public class InventoryThornPotion : InventoryPotion
 
 	public override void AffectTarget(Creature target)
 	{
-		if (Random.Range(0, 100) < ChanceOfThornWrapped)
-			target.AddCondition(new ThornWrapped(Damage, ThornWrappedNumberOfTurns));
+		//if (Random.Range(0, 100) < ChanceOfThornWrapped)
+		//target.AddCondition(new ThornWrapped(Damage, ThornWrappedNumberOfTurns));
 	}
 
 	#endregion

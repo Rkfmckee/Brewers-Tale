@@ -10,9 +10,9 @@ public class ThornWrapped : TemporaryCondition
 
 	#region Constructors
 
-	public ThornWrapped(Damage damage, int numberOfTurns)
+	public ThornWrapped(int damageAmount, int numberOfTurns)
 	{
-		Damage = damage;
+		Damage = new Damage(damageAmount, DamageType.Physical);
 		NumberOfTurns = numberOfTurns;
 	}
 

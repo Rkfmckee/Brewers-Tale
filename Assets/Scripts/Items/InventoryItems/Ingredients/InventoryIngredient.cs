@@ -1,20 +1,13 @@
-using UnityEngine;
-
-public class InventoryIngredient : InventoryItem
+public abstract class InventoryIngredient : InventoryItem
 {
-	#region Fields
-
-	[SerializeField]
-	private string ingredientName;
-	[SerializeField]
-	private string ingredientDescription;
-
-	#endregion
-
 	#region Properties
 
-	public string IngredientName { get => ingredientName; }
-	public string IngredientDescription { get => ingredientDescription; }
+	public abstract string IngredientName { get; }
+	public string IngredientDescription => string.IsNullOrEmpty(EffectDescription) ? AestheticDescription : $"{AestheticDescription}\nEffects: {EffectDescription}";
+	public abstract string AestheticDescription { get; }
+	public virtual string EffectDescription { get; }
+	public virtual Damage Damage { get; }
+	public virtual Condition Condition { get; }
 
 	#endregion
 }

@@ -1,3 +1,6 @@
+using System;
+
+[Serializable]
 public abstract class Condition
 {
 	#region Properties
