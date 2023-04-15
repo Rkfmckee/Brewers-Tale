@@ -15,34 +15,34 @@ public class CraftingResultSlot : Slot
 
 	#region Methods
 
-	public void SearchForCraftingRecipe()
-	{
-		var craftingRecipeManager = CraftingRecipeManager.Instance;
-		var craftingIngredients = new List<InventoryItem>();
-		var craftingRecipe = null as CraftingRecipe;
+	// public void SearchForCraftingRecipe()
+	// {
+	// 	var craftingRecipeManager = CraftingRecipeManager.Instance;
+	// 	var craftingIngredients = new List<InventoryItem>();
+	// 	var craftingRecipe = null as CraftingRecipe;
 
-		if (ItemInSlot)
-		{
-			// Get rid of the previous crafting result
-			Destroy(itemInstance);
-			ItemInSlot = null;
-		}
+	// 	if (ItemInSlot)
+	// 	{
+	// 		// Get rid of the previous crafting result
+	// 		Destroy(itemInstance);
+	// 		ItemInSlot = null;
+	// 	}
 
-		foreach (var craftingSlot in References.Crafting.Slots)
-		{
-			if (!craftingSlot.ItemInSlot) continue;
+	// 	foreach (var craftingSlot in References.Crafting.Slots)
+	// 	{
+	// 		if (!craftingSlot.ItemInSlot) continue;
 
-			var ingredient = craftingSlot.ItemInSlot.GetComponent<InventoryItem>();
-			if (ingredient) craftingIngredients.Add(ingredient);
-		}
+	// 		var ingredient = craftingSlot.ItemInSlot.GetComponent<InventoryItem>();
+	// 		if (ingredient) craftingIngredients.Add(ingredient);
+	// 	}
 
-		if (craftingIngredients.Count == 0) return;
+	// 	if (craftingIngredients.Count == 0) return;
 
-		craftingRecipe = craftingRecipeManager.FindRecipe(craftingIngredients);
-		if (!craftingRecipe) return;
+	// 	craftingRecipe = craftingRecipeManager.FindRecipe(craftingIngredients);
+	// 	if (!craftingRecipe) return;
 
-		ItemInSlot = craftingRecipe.Result;
-	}
+	// 	ItemInSlot = craftingRecipe.Result;
+	// }
 
 	public override void ItemPickedUp()
 	{

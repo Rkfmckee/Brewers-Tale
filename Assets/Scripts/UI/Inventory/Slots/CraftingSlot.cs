@@ -1,5 +1,14 @@
+using System.Linq;
+using UnityEngine;
+
 public class CraftingSlot : InventoryCraftingSlot
 {
+	#region Fields
+
+	[SerializeField][Range(1, 3)] private int slotNumber;
+
+	#endregion
+
 	#region Events
 
 	protected override void Awake()
@@ -7,6 +16,7 @@ public class CraftingSlot : InventoryCraftingSlot
 		base.Awake();
 
 		References.Crafting.Slots.Add(this);
+		References.Crafting.Slots = References.Crafting.Slots.OrderBy(s => s.slotNumber).ToList();
 	}
 
 	#endregion
@@ -22,7 +32,7 @@ public class CraftingSlot : InventoryCraftingSlot
 	{
 		base.UpdateInventoryItem();
 
-		References.Crafting.ResultSlot.SearchForCraftingRecipe();
+		CraftingManager.Instance.CheckForValidRecipe();
 	}
 
 	#endregion

@@ -22,6 +22,8 @@ public abstract class Slot : MonoBehaviour
 		}
 	}
 
+	public GameObject ItemInstance => itemInstance;
+
 	#endregion
 
 	#region Events

@@ -273,7 +273,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1265506076931630568, guid: 49c8d945ec95b8f459db94f43719aff3, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1265506076931630568, guid: 49c8d945ec95b8f459db94f43719aff3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -859,11 +859,11 @@ RectTransform:
   m_Children:
   - {fileID: 800981019}
   - {fileID: 952898809}
-  - {fileID: 8502231203550442976}
   - {fileID: 1601817083}
   - {fileID: 1408101480}
   - {fileID: 1066733086}
   - {fileID: 1228266746}
+  - {fileID: 8502231203550442976}
   m_Father: {fileID: 1632914971}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2086,13 +2086,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 354898234}
     m_Modifications:
+    - target: {fileID: 2097636893810709506, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
+      propertyPath: slotNumber
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8632399668178018096, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
       propertyPath: m_Name
       value: CraftingSlot 3
       objectReference: {fileID: 0}
     - target: {fileID: 8632399668178018097, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8632399668178018097, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3287,6 +3291,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 354898234}
     m_Modifications:
+    - target: {fileID: 2097636893810709506, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
+      propertyPath: slotNumber
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8632399668178018096, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
       propertyPath: m_Name
       value: CraftingSlot 2
@@ -3883,7 +3891,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1265506076931630568, guid: 49c8d945ec95b8f459db94f43719aff3, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1265506076931630568, guid: 49c8d945ec95b8f459db94f43719aff3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11708,7 +11716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4173817617622595207, guid: 60ac59fbb9e81f64481d2472c7e374ad, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4173817617622595207, guid: 60ac59fbb9e81f64481d2472c7e374ad, type: 3}
       propertyPath: m_SizeDelta.x
@@ -16138,7 +16146,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 354898234}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -16455,6 +16463,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 354898234}
     m_Modifications:
+    - target: {fileID: 2097636893810709506, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
+      propertyPath: slotNumber
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8632399668178018096, guid: f5e4cf0031ef3a74f9af51d26f62f7e0, type: 3}
       propertyPath: m_Name
       value: CraftingSlot 1
