@@ -17,28 +17,37 @@ public class InventoryPotion : InventoryItem, IItemEffect
 	public override string ItemName => potionName;
 	public override string ItemDescription => potionDescription;
 
-	public virtual List<Damage> Damage => damage;
-	public virtual Condition Condition => condition;
+	public List<Damage> Damage => damage;
+	public Condition Condition => condition;
 
-	public virtual Color PotionColour { get; }
-	public virtual int EnergyCost { get; }
-	public virtual GameObject WorldPrefab { get; }
+	public Color PotionColour { get; }
+	public int EnergyCost => 1;
+	public GameObject WorldPrefab { get; }
 
 	#endregion
 
 	#region Methods
 
-	public void CreatePotion(string name, string description, List<Damage> damage, Condition condition)
+	public void CreatePotion(Dictionary<DamageType, int> damageDict, Condition conditionEffect)
 	{
-		potionName = name;
-		potionDescription = description;
-		this.damage = damage;
-		this.condition = condition;
+		potionName = "Potion";
+		potionDescription = "";
+		damage = new List<Damage>();
+		condition = conditionEffect;
+
+		foreach (var damageType in damageDict.Keys)
+		{
+			var damageAmount = damageDict[damageType];
+			damage.Add(new Damage(damageAmount, damageType));
+			potionDescription += $"{damageAmount} {damageType}, ";
+		}
+
+		potionDescription = potionDescription.Trim();
+		potionDescription = potionDescription.Trim(',');
 	}
 
 	public void AffectTarget(Creature target)
 	{
-
 	}
 
 	#endregion

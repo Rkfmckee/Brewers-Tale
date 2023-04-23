@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e505f0125cd21545ad500a1b0ce05f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potionPrefab: {fileID: 3460360136237427238, guid: e5de9f2939c243b4ea844c1ac9a8468d, type: 3}

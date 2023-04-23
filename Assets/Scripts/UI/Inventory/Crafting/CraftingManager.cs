@@ -1,8 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class CraftingManager : Singleton<CraftingManager>
 {
+	#region Fields
+
+	[SerializeField] private GameObject potionPrefab;
+
+	private Dictionary<DamageType, DamageType> oppositeTypes;
+
+	#endregion
+
 	#region Properties
 
 	// Keep this for now, so unique item recipes can be defined
@@ -15,6 +24,12 @@ public class CraftingManager : Singleton<CraftingManager>
 	protected override void Awake()
 	{
 		base.Awake();
+
+		oppositeTypes = new Dictionary<DamageType, DamageType>
+		{
+			{ DamageType.Fire, DamageType.Cold },
+			{ DamageType.Cold, DamageType.Fire }
+		};
 	}
 
 	#endregion
@@ -23,35 +38,56 @@ public class CraftingManager : Singleton<CraftingManager>
 
 	public void CheckForValidRecipe()
 	{
-		var craftingSlots = References.Crafting.Slots;
-		var craftingResultSlot = References.Crafting.ResultSlot;
+		RemoveCurrentResult();
 
-		// Remove whatever item is currently in CraftingResultSlot
-		if (craftingResultSlot.ItemInSlot)
+		var ingredients = BuildListOfIngredients();
+		if (InvalidRecipe(ingredients)) return;
+
+		var potionDamage = GetPotionDamage(ingredients);
+		var potionCondition = GetPotionCondition(ingredients);
+
+		// If a valid potion can be created, set it to CraftingResultSlot.ItemInSlot
+		if (potionDamage.Count <= 0 && potionCondition == null) return;
+
+		var potion = Instantiate(potionPrefab).GetComponent<InventoryPotion>();
+		potion.CreatePotion(potionDamage, potionCondition);
+		References.Crafting.ResultSlot.ItemInSlot = potion;
+	}
+
+	private void RemoveCurrentResult()
+	{
+		if (References.Crafting.ResultSlot.ItemInSlot)
 		{
-			Destroy(craftingResultSlot.ItemInstance);
-			craftingResultSlot.ItemInSlot = null;
+			Destroy(References.Crafting.ResultSlot.ItemInstance);
+			References.Crafting.ResultSlot.ItemInSlot = null;
 		}
+	}
 
-		// Get each ingredient in the crafting slots
+	private List<InventoryItem> BuildListOfIngredients()
+	{
 		var ingredients = new List<InventoryItem>();
-		foreach (var craftingSlot in craftingSlots)
+		foreach (var craftingSlot in References.Crafting.Slots)
 		{
 			var ingredient = craftingSlot.ItemInSlot;
 			if (ingredient) ingredients.Add(ingredient);
 		}
 
+		return ingredients;
+	}
+
+	private bool InvalidRecipe(List<InventoryItem> ingredients)
+	{
 		// If the ingredients don't include either a water bottle or a potion, it's not valid
 		var hasWaterBottle = ingredients.Any(i => i is WaterBottle);
 		var hasPotion = ingredients.Any(i => i is InventoryPotion);
 
-		// Exclusive Or - basically, only continue if either a water bottle or a potion exist,
-		// but not if both or neither exist
-		if (!(hasWaterBottle ^ hasPotion)) return;
-		print("Is valid");
+		// ^ is XOR
+		return !(hasWaterBottle ^ hasPotion);
+	}
 
+	private Dictionary<DamageType, int> GetPotionDamage(List<InventoryItem> ingredients)
+	{
 		var potionDamage = new Dictionary<DamageType, int>();
-		var potionCondition = null as Condition;
 
 		// Convert ingredients to IItemEffect and combine all damage
 		foreach (var ingredient in ingredients)
@@ -69,18 +105,52 @@ public class CraftingManager : Singleton<CraftingManager>
 			}
 		}
 
-		// Make sure opposite damage types cancel out
-
-		// Decide which condition to use depending on precedence
-
-		// If a valid potion can be created, set it to CraftingResultSlot.ItemInSlot
-
-		// Otherwise, do nothing.
+		CheckForOppositeTypes(ref potionDamage);
+		return potionDamage;
 	}
 
-	// Will only be used alongside Recipes list. If that is removed, this will be too.
+	private void CheckForOppositeTypes(ref Dictionary<DamageType, int> damageDict)
+	{
+	restart:
+		foreach (var currentType in damageDict.Keys)
+		{
+			if (!oppositeTypes.ContainsKey(currentType)) continue;
+			if (!damageDict.ContainsKey(oppositeTypes[currentType])) continue;
+
+			var currentAmount = damageDict[currentType];
+			var oppositeType = oppositeTypes[currentType];
+			var oppositeAmount = damageDict[oppositeType];
+
+			var newCurrentAmount = currentAmount - oppositeAmount;
+			var newOppositeAmount = oppositeAmount - currentAmount;
+
+			if (newCurrentAmount <= 0)
+			{
+				damageDict.Remove(currentType);
+				damageDict[oppositeType] = newOppositeAmount;
+				goto restart;
+			}
+
+			if (newOppositeAmount <= 0)
+			{
+				damageDict.Remove(oppositeType);
+				damageDict[currentType] = newCurrentAmount;
+				goto restart;
+			}
+		}
+	}
+
+	private Condition GetPotionCondition(List<InventoryItem> ingredients)
+	{
+		// Decide which condition to use depending on precedence
+
+		return null;
+	}
+
 	private bool IngredientsAreTheSame(List<InventoryItem> ingredientsA, List<InventoryItem> ingredientsB)
 	{
+		// Will only be used alongside Recipes list. If that is removed, this will be too.
+
 		var lookUp = new Dictionary<string, int>();
 
 		if (ingredientsA == null || ingredientsB == null || ingredientsA.Count != ingredientsB.Count) return false;

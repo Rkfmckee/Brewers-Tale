@@ -64,6 +64,11 @@ public abstract class Slot : MonoBehaviour
 			itemInstance.name = itemInSlot.name;
 			itemInSlot = itemInstance.GetComponent<InventoryItem>();
 		}
+		else
+		{
+			itemInstance = itemInSlot.gameObject;
+			itemInstance.name = itemInSlot.name;
+		}
 
 		itemInSlot.SlotInInventory = this;
 		itemInSlot.transform.SetParent(transform, false);
