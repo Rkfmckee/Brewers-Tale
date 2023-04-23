@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-
 public abstract class InventoryIngredient : InventoryItem
 {
 	#region Properties
 
-	public abstract string IngredientName { get; }
-	public string IngredientDescription => string.IsNullOrEmpty(EffectDescription) ? AestheticDescription : $"{AestheticDescription}\nEffects: {EffectDescription}";
-	public abstract string AestheticDescription { get; }
+	public override string ItemDescription => string.IsNullOrEmpty(EffectDescription) ? IngredientDescription : $"{IngredientDescription}\nEffects: {EffectDescription}";
+	public abstract string IngredientDescription { get; }
 	public virtual string EffectDescription { get; }
 
 	#endregion

@@ -1,5 +1,5 @@
 public class WaterBottle : InventoryIngredient
 {
-	public override string IngredientName => "Water bottle";
-	public override string AestheticDescription => $"The basis of all potions.";
+	public override string ItemName => "Water bottle";
+	public override string IngredientDescription => $"The basis of all potions.";
 }

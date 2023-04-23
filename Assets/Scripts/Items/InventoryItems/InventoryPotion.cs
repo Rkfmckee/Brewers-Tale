@@ -1,24 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InventoryPotion : InventoryItem, IItemEffect
+public class InventoryPotion : InventoryItem, IItemEffect
 {
+	#region Fields
+
+	private string potionName;
+	private string potionDescription;
+	private List<Damage> damage;
+	private Condition condition;
+
+	#endregion
+
 	#region Properties
 
-	public virtual string PotionName { get; }
-	public virtual string PotionDescription { get; }
+	public override string ItemName => potionName;
+	public override string ItemDescription => potionDescription;
+
+	public virtual List<Damage> Damage => damage;
+	public virtual Condition Condition => condition;
+
 	public virtual Color PotionColour { get; }
 	public virtual int EnergyCost { get; }
 	public virtual GameObject WorldPrefab { get; }
-
-	// IItemEffect
-	public virtual Damage Damage { get; }
-	public virtual Condition Condition { get; }
 
 	#endregion
 
 	#region Methods
 
-	public abstract void AffectTarget(Creature target);
+	public void CreatePotion(string name, string description, List<Damage> damage, Condition condition)
+	{
+		potionName = name;
+		potionDescription = description;
+		this.damage = damage;
+		this.condition = condition;
+	}
+
+	public void AffectTarget(Creature target)
+	{
+
+	}
 
 	#endregion
 }

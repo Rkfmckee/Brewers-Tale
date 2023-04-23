@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class CraftingManager : Singleton<CraftingManager>
 {
@@ -58,15 +57,16 @@ public class CraftingManager : Singleton<CraftingManager>
 		foreach (var ingredient in ingredients)
 		{
 			// Ignore no effect ingredients, like WaterBottle
-			if (ingredient is not IItemEffect) return;
+			if (ingredient is not IItemEffect) continue;
+			var effects = ingredient as IItemEffect;
 
-			var damageType = (ingredient as IItemEffect).Damage.Type;
-			var damageAmount = (ingredient as IItemEffect).Damage.Amount;
-
-			if (potionDamage.ContainsKey(damageType))
-				potionDamage[damageType] += damageAmount;
-			else
-				potionDamage.Add(damageType, damageAmount);
+			foreach (var damage in effects.Damage)
+			{
+				if (potionDamage.ContainsKey(damage.Type))
+					potionDamage[damage.Type] += damage.Amount;
+				else
+					potionDamage.Add(damage.Type, damage.Amount);
+			}
 		}
 
 		// Make sure opposite damage types cancel out
