@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class InventoryPotion : InventoryItem
+public abstract class InventoryPotion : InventoryItem, IItemEffect
 {
 	#region Properties
 
@@ -9,6 +9,10 @@ public abstract class InventoryPotion : InventoryItem
 	public virtual Color PotionColour { get; }
 	public virtual int EnergyCost { get; }
 	public virtual GameObject WorldPrefab { get; }
+
+	// IItemEffect
+	public virtual Damage Damage { get; }
+	public virtual Condition Condition { get; }
 
 	#endregion
 

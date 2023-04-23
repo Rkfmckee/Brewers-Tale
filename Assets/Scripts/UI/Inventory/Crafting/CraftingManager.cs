@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CraftingManager : Singleton<CraftingManager>
@@ -41,11 +42,36 @@ public class CraftingManager : Singleton<CraftingManager>
 			if (ingredient) ingredients.Add(ingredient);
 		}
 
-		// If one of them is a WaterBottle, check the others are InventoryIngredients (can't combine water bottle with potion)
+		// If the ingredients don't include either a water bottle or a potion, it's not valid
+		var hasWaterBottle = ingredients.Any(i => i is WaterBottle);
+		var hasPotion = ingredients.Any(i => i is InventoryPotion);
 
-		// If one of them is a potion, get it's current effects
+		// Exclusive Or - basically, only continue if either a water bottle or a potion exist,
+		// but not if both or neither exist
+		if (!(hasWaterBottle ^ hasPotion)) return;
+		print("Is valid");
 
-		// Combine the effects, taking into account opposite damage types, and condition precedence
+		var potionDamage = new Dictionary<DamageType, int>();
+		var potionCondition = null as Condition;
+
+		// Convert ingredients to IItemEffect and combine all damage
+		foreach (var ingredient in ingredients)
+		{
+			// Ignore no effect ingredients, like WaterBottle
+			if (ingredient is not IItemEffect) return;
+
+			var damageType = (ingredient as IItemEffect).Damage.Type;
+			var damageAmount = (ingredient as IItemEffect).Damage.Amount;
+
+			if (potionDamage.ContainsKey(damageType))
+				potionDamage[damageType] += damageAmount;
+			else
+				potionDamage.Add(damageType, damageAmount);
+		}
+
+		// Make sure opposite damage types cancel out
+
+		// Decide which condition to use depending on precedence
 
 		// If a valid potion can be created, set it to CraftingResultSlot.ItemInSlot
 
