@@ -58,10 +58,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingItems:
-  - {fileID: 2123786637151207573, guid: 87f64df37a1cf7e4ca236fd6cf05d86b, type: 3}
-  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
-  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
-  - {fileID: 5223949939837867269, guid: 2c1769d1db6922547ba4eb04a5d79834, type: 3}
   - {fileID: -4764024517368187250, guid: ce8e372702eadb34fb0f06bb1855c4ef, type: 3}
   - {fileID: -7231534570910726166, guid: c43c59631ca13484c8aaed75758c0bf6, type: 3}
   - {fileID: -365239922243687228, guid: ba98b7f685b34e844a00ad0d58b73834, type: 3}
