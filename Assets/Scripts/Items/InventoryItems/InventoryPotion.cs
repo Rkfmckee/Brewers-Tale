@@ -30,8 +30,6 @@ public class InventoryPotion : InventoryItem, IItemEffect
 
 	public void CreatePotion(Dictionary<DamageType, int> damageDict, Condition conditionEffect)
 	{
-		potionName = "Potion";
-		potionDescription = "";
 		damage = new List<Damage>();
 		condition = conditionEffect;
 
@@ -39,15 +37,40 @@ public class InventoryPotion : InventoryItem, IItemEffect
 		{
 			var damageAmount = damageDict[damageType];
 			damage.Add(new Damage(damageAmount, damageType));
-			potionDescription += $"{damageAmount} {damageType}, ";
 		}
 
-		potionDescription = potionDescription.Trim();
-		potionDescription = potionDescription.Trim(',');
+		var highestDamageType = GetHighestDamageType(damage);
+
+		potionName = "";
+		if (condition != null) potionName += $"{condition.Name} ";
+		potionName += "Potion";
+		if (highestDamageType.HasValue) potionName += $" of {highestDamageType.GetDescription()}";
+
+		potionDescription = GetEffectDescription();
 	}
 
 	public void AffectTarget(Creature target)
 	{
+	}
+
+	private DamageType? GetHighestDamageType(List<Damage> damageList)
+	{
+		if (damageList == null) return null;
+		if (damageList.Count == 0) return null;
+
+		var highestType = damageList[0].Type;
+		var highestAmount = damageList[0].Amount;
+
+		foreach (var damage in damageList)
+		{
+			if (damage.Amount > highestAmount)
+			{
+				highestType = damage.Type;
+				highestAmount = damage.Amount;
+			}
+		}
+
+		return highestType;
 	}
 
 	#endregion

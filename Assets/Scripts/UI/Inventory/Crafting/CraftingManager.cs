@@ -77,6 +77,9 @@ public class CraftingManager : Singleton<CraftingManager>
 
 	private bool InvalidRecipe(List<InventoryItem> ingredients)
 	{
+		if (ingredients.Count == 0) return true;
+		if (!ingredients.Any(i => i is IItemEffect)) return true;
+
 		// If the ingredients don't include either a water bottle or a potion, it's not valid
 		var hasWaterBottle = ingredients.Any(i => i is WaterBottle);
 		var hasPotion = ingredients.Any(i => i is InventoryPotion);
@@ -95,6 +98,8 @@ public class CraftingManager : Singleton<CraftingManager>
 			// Ignore no effect ingredients, like WaterBottle
 			if (ingredient is not IItemEffect) continue;
 			var effects = ingredient as IItemEffect;
+
+			if (effects.Damage == null || effects.Damage.Count == 0) continue;
 
 			foreach (var damage in effects.Damage)
 			{
@@ -143,8 +148,20 @@ public class CraftingManager : Singleton<CraftingManager>
 	private Condition GetPotionCondition(List<InventoryItem> ingredients)
 	{
 		// Decide which condition to use depending on precedence
+		// The condition first encountered is preferable, so player has control of which to use
+		var condition = null as Condition;
 
-		return null;
+		foreach (var ingredient in ingredients)
+		{
+			// Ignore no effect ingredients, like WaterBottle
+			if (ingredient is not IItemEffect) continue;
+			var effects = ingredient as IItemEffect;
+
+			if (effects.Condition == null) continue;
+			if (condition == null) condition = effects.Condition;
+		}
+
+		return condition;
 	}
 
 	private bool IngredientsAreTheSame(List<InventoryItem> ingredientsA, List<InventoryItem> ingredientsB)
