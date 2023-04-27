@@ -12,7 +12,7 @@ public class ThornWrapped : TemporaryCondition
 
 	public ThornWrapped(int damageAmount, int numberOfTurns)
 	{
-		Damage = new Damage(damageAmount, DamageType.Physical);
+		Damage = new Damage(damageAmount, DamageType.Piercing);
 		NumberOfTurns = numberOfTurns;
 	}
 

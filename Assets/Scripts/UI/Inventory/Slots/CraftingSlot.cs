@@ -32,7 +32,7 @@ public class CraftingSlot : InventoryCraftingSlot
 	{
 		base.UpdateInventoryItem();
 
-		CraftingManager.Instance.CheckForValidRecipe();
+		References.Crafting.ResultSlot.CheckForValidRecipe();
 	}
 
 	#endregion

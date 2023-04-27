@@ -3702,7 +3702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b8af1d425696243b9b026d4ef7fc0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInSlot: {fileID: 0}
 --- !u!114 &1569063089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8183,7 +8182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222ec4b7f59c99543a52066a4a5c6f9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInSlot: {fileID: 0}
 --- !u!23 &2776760588118721300
 MeshRenderer:
   m_ObjectHideFlags: 0

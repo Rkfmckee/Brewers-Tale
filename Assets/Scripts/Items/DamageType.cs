@@ -5,5 +5,5 @@ public enum DamageType
 	Explosive,
 	Fire,
 	Lightning,
-	Physical
+	Piercing
 }

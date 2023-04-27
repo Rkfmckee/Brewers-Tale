@@ -105,4 +105,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a0c187aa5a36c41bbcede9543b3fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemInSlot: {fileID: 0}
+  potionPrefab: {fileID: 3460360136237427238, guid: e5de9f2939c243b4ea844c1ac9a8468d, type: 3}

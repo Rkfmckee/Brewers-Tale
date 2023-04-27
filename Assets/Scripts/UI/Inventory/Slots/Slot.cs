@@ -4,7 +4,6 @@ public abstract class Slot : MonoBehaviour
 {
 	#region Fields
 
-	[SerializeField]
 	private InventoryItem itemInSlot;
 	protected GameObject itemInstance;
 
